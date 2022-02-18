@@ -1,0 +1,289 @@
+
+IndexDB 数据库操作指南_马优晨 - CSDN 博客_indexdb
+在写这篇文章的时候，确实有一点点小困了。但是对于 IndexDB 数据库研究了整整三天的心血，在蓝瘦，香菇还是决定把这个东西介绍给大家。
+
+目前 IndexDB 数据库已经发展的很快了，IndexedDB 的储存空间比 localStorage 大得多，一般来说不少于 250MB。IE 的储存上限是 250MB，Chrome 和 Opera 是剩余空间的某个百分比，Firefox 则没有上限。对于传统的 Cookie 最多也就 4KB，所以这个货算是存东西非常多了。
+
+但是：注意，注意，注意，这货竟然不支持操作 DOM，哎，果然是有优点，必有缺点，就像你眼中的 “美女” 一样，虽然优点很多，也是有缺点的。但是这毫不影响，我们爱她的勇气。
+
+参考文献作者:
+作者：Raymond Camden，Tiffany Brown，David Fahlander，阮一峰
+
+目前在国内使用 IndexDB 数据库的很少，很少，但我还是想强忍着” 班门弄斧 “一次。毕竟知识是需要分享才能相互学习，取长补短嘛。
+
+这里我要从以下几点概述：
+一、判断浏览器是否支持 indexedDB
+二、创建 IndexDB 数据库
+三、创建数据仓库（数据库的表格）
+四、向数据库中添加数据
+五、删除数据库中的数据
+六、更新数据库中的数据
+七、如何遍历数据
+八、设置索引获得的数据
+在这里通过一个实例来融合所有的功能：
+第一步：写个 HTML 页面，准备上 JS 代码
+<!doctype html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+    <title>IndexDB数据库操作指南</title>
+    </head>
+
+    <script type="text/javascript">
+    </script>
+
+    <body>
+       <b >数据库测试系统，请在控制台查看数据库变化情况.....</b>
+    </body>
+    </html>
+（记住这里运行要以服务器形式运行），有些同学不是很明白，那就上两张图，就懂了
+
+
+（图一）
+
+图一为文件形式打开
+
+
+（图二）
+
+图二为服务器形式打开
+
+第二步：判断浏览器是否支持 IndexDB（从这里开始都是 script 标签里面的代码）
+<script type="text/javascript">
+          window.onload = function(){
+          justifyIndexDEB();        //判断是否支持indexedDB执行下面函数
+    }
+
+    function justifyIndexDEB(){
+        if("indexedDB" in window) {
+            // 支持
+            console.log(" 支持indexedDB...");
+            createindexDB();    //创建数据库，接下来我们就到这里来了嘛
+        } else {
+            // 不支持
+            console.log("不支持indexedDB...");
+            window.indexedDB = window.mozIndexedDB || window.webkitIndexedDB;
+        }
+    }
+    </script>
+第三步：创建数据库和数据仓库
+function createindexDB(){  
+
+    //1-我们先创建一个对象，放一些数据比如dbInfo ，可以设置数据库名字dbName，数据库的版本dbVersion 
+
+        var dbInfo = {       
+                dbName:"DataBase",
+                dbVersion: 2021,
+                dbInstance: {}
+            };
+
+    //2-创建数据库 indexedDB.open方法用于打开数据库。返回的是一个对象，第一个参数是数据库名称，格式为字符串。第二个参数是数据库版本。
+
+    var openRequest = window.indexedDB.open(dbInfo.dbName,dbInfo.dbVersion);
+
+    //3-创建数据库时会处罚三个事件之一，这三个事件，分别是upgradeneeded，success，onerror，意思就不说了吧，不懂得可以用字典查嘛。
+
+    openRequest.onupgradeneeded = function(e) {    //第一次打开数据库 ^-*
+
+            console.log("第一次打开该数据库，或者数据库版本发生变化....");
+            var db = e.target.result;
+            var storeNames = db.objectStoreNames;
+
+           //创建数据库的表格（或者叫数据库仓库）
+            if(!storeNames.contains('chart')){
+                db.createObjectStore('chart',{
+                    keyPath:"goodId",
+                    autoIncrement:true
+                })
+            }
+        }
+
+    openRequest.onsuccess = function(e) {          //success：打开成功^-^  
+         console.log("数据库打开成功...");
+            var db = e.target.result;
+            var trans = db.transaction(["chart"],"readwrite");
+            var store = trans.objectStore("chart");
+
+      //4-这里面我要写很多要调用的函数了，比如，下面.....wu la wu la.....
+
+            add_data(db);  //数据库中添加数据   ------->xian说这个啦
+            del_data(db);  //数据库中删除数据
+            deal_data(db); //读取数据
+            update_data(db);//更新数据（类似于Add方法）
+            traverse_data(db); //遍历数据
+    }
+
+    openRequest.onerror = function(e) {              //error：打开失败*-*
+
+        console.log("数据库打开失败..."); 
+        console.dir(e);
+       }
+    }
+第四步：向数据库中添加数据
+function add_data(db){  
+               var name = "添加数据" 
+
+    //1-把前面创建的数据库，传递过来 
+
+               var db = db;    
+
+    //2-返回一个事务对象,indexDB 数据库只有  readwrite 以及readonly两个可爱的状态。 
+
+               var tt = db.transaction(["chart"],"readwrite");  
+
+    //3-objectStore方法用于返回指定的对象仓库(数据库表格)对象。 
+
+               var store =  tt.objectStore("chart");         
+
+    //4-创建一个要添加的对象。          
+
+               var o = {
+                   p: 123,
+                   q: 789,
+                   aa: "hello",
+                   bb:{
+                       qq:11,
+                       ss:"ttt",
+                       mm:"fff"
+                   }
+               };
+
+     //5-添加数据：add方法的第一个参数是所要添加的数据，第二个参数是这条数据对应的键名（key）       
+
+               var request = store.add(o); 
+     //6-添加数据：add方法也有两个事件，一个error一个success可以在回调函数中调用。
+               request.onerror = function(e) {
+                 console.log("Error",e.target.error.name);
+                // error handler
+                   console.log("数据添加失败...");
+                }
+
+                request.onsuccess = function(e) {
+                // success handler
+                    console.log("数据添加成功...");
+
+                }
+            }
+第五步：数据库里面删除数据
+写到这里都凌晨 1:20 了，我的老腰啊，算了，还是坚持把这篇文章写完吧，还好代码都是以前写好的，话不多说，开始啦~~~~~~~~~~~
+
+function del_data(db){     
+
+     //1-把前面创建的数据库，传递过来  
+
+        var db = db;   
+
+     //2-返回一个事务对象,indexDB 数据库只有  readwrite 以及readonly两个可爱的状态。 返回一个事务对象。 
+
+        var t = db.transaction(["chart"], "readwrite");  
+
+    //3-objectStore方法用于返回“数据库表格”对象。delete方法的参数是数据的键名         
+
+        var req  = t.objectStore("chart").delete(2);   
+
+    //4-删除数据：delete方法也有两个事件，一个error一个success可以在回调函数中调用。 
+
+         req.onerror = function(e) {
+         console.log("Error",e.target.error.name);
+        // error handler
+           console.log("删除数据失败！");
+        }
+
+        req.onsuccess = function(e) {
+        // success handler
+            console.log("删除数据成功！");
+        }
+    }
+第六步：更新数据库中的数据
+unction update_data(db){ 
+
+    //1-把前面创建的数据库，传递过来  
+
+       var db = db;  
+
+    //2-返回一个事务对象,indexDB 数据库只有  readwrite 以及readonly两个可爱的状态。 返回一个事务对象。 
+
+       var trans = db.transaction(["chart"],"readwrite");        
+       var store =  trans.objectStore("chart");   
+
+    //3-创建一个要添加的对象，类似于add方法，但是这里对象的名称一定要和前面一样。              
+        var o = {
+            LOVE:201314,
+            M:"mayouchen",
+            Z:"zhangxuejing"
+        };  
+
+    //4-更新记录：put方法。  
+
+        var request = store.put(o);
+    }
+第七步：如何遍历数据
+//遍历数据：openCursor方法 (openCursor方法，它在当前对象仓库里面建立一个读取光标（cursor）)
+    function  traverse_data(db){
+
+    //1-把前面创建的数据库，传递过来  
+
+        var db = db;
+
+    //2-返回一个事务对象,indexDB 数据库只有  readwrite 以及readonly两个可爱的状态。 返回一个事务对象。 
+
+        var trans = db.transaction(["chart"], "readonly");   
+
+    //3-objectStore方法用于返回指定的对象仓库(数据库表格)对象。 
+
+        var store = trans.objectStore("chart");     
+
+    //4-创建一个游标，和Oracle里面的游标一模一样，类似JAVA里面的容器遍历的iterator()就是一个性能，估计发明IndexDB的作者可能的认真学过JAVA，这里纯属虚构，忽略，忽略......   
+
+        var cursor = store.openCursor();
+
+        cursor.onsuccess = function(e) {
+        var res = e.target.result;                
+        if(res) {
+                console.log("Key", res.key);
+                console.dir("Data", res.value);
+                res.continue();    
+
+    //5-continue方法将光标移到下一个数据对象，如果当前数据对象已经是最后一个数据了，则光标指向null。
+             }
+        }
+    }
+第八步：设置索引获得的数据
+最后一步了，少侠一定要好好学，学会了 IndexDB 八部，以后我也不敢保证，看运气喽………….^-^
+
+function create_index(db){ 
+
+    //1-设置数据库中的数据对象 
+
+        var o = {
+            LOVE:201314,
+            M:"mayouchen",
+            Z:"zhangxuejing"
+        };
+
+
+    //2-创建索引 
+
+        var store = db.createObjectStore("o", { autoIncrement:true }); 
+
+    //3-设置索引  createIndex方法接受三个参数，第一个是索引名称，第二个是建立索引的属性名，第三个是参数对象。  
+
+        store.createIndex("M","M", {unique:false});  
+        store.createIndex("Z","Z", {unique:true});
+
+    //4-通过索引获取数据
+        var t = db.transaction(["o"],"readonly");
+        var store = t.objectStore("o");
+        var index = store.index("M");
+
+        var request = index.get(M);
+        var request = index.get(M);
+        console.log("通过索引获取数据:"+request);
+    }
+终于写完了，也终于不会在蓝瘦，香菇了。现在 IndexDB 的相关资料在网上都不是很详细，希望此文能帮助更多的人了解 IndexDB。说的也是，自己都被感动了，早点休息，以后在写出更精彩的文章。
+
+全文完
+本文由 简悦 SimpRead 优化，用以提升阅读体验
+使用了 全新的简悦词法分析引擎 beta，点击查看详细说明
+这里我要从以下几点概述：
+在这里通过一个实例来融合所有的功能：
