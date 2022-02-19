@@ -16,11 +16,12 @@
 			</div>
 	</h1>
 	<div id="window" style="display: none;margin-top: 15px;margin-right: 15px; margin-left: -15px;">
-		<form class="layui-form" action="javascript:void(0);">  
+		<form class="layui-form" action="javascript:void(0);" lay-filter="example">  
 			<div class="layui-form-item">
 				<label class="layui-form-label">占事标题</label>
 				<div class="layui-input-block">
-					<input type="text" name="username" lay-verify="required" lay-reqtext="占事标题为必填" placeholder="请输入" autocomplete="off" class="layui-input">
+					<input type="text" name="title" lay-reqtext="占事标题为必填" placeholder="请输入" autocomplete="off" class="layui-input">
+					<!-- <input type="text" name="title" lay-verify="required" lay-reqtext="占事标题为必填" placeholder="请输入" autocomplete="off" class="layui-input"> -->
 				</div>
 			</div> 
 			<div class="layui-form-item">
@@ -47,13 +48,13 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">起卦时间</label>
 				<div class="layui-input-inline">
-					<input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+					<input type="text" name="datetime" lay-verify="required" lay-reqtext="时间为必填" id="datetime" readonly="" lay-verify="datetime" placeholder="yyyy-MM-dd HH:mm:ss" autocomplete="off" class="layui-input">
 				</div>
 			</div> 
 			<div class="layui-form-item">
 				<label class="layui-form-label">六爻</label>
 				<div class="layui-input-block">
-					<select name="interest" lay-filter="aihao">
+					<select name="yao6" lay-filter="aihao">
 						<option value="-1"></option>
 						<option value="0">老阴─  ─ x (0背)</option>
 						<option value="1">少阳────   (1背)</option>
@@ -63,7 +64,7 @@
 				</div>
 				<label class="layui-form-label">五爻</label>
 				<div class="layui-input-block">
-					<select name="interest" lay-filter="aihao">
+					<select name="yao5" lay-filter="aihao">
 						<option value="-1"></option>
 						<option value="0">老阴─  ─ x (0背)</option>
 						<option value="1">少阳────   (1背)</option>
@@ -73,7 +74,7 @@
 				</div>
 				<label class="layui-form-label">四爻</label>
 				<div class="layui-input-block">
-					<select name="interest" lay-filter="aihao">
+					<select name="yao4" lay-filter="aihao">
 						<option value="-1"></option>
 						<option value="0">老阴─  ─ x (0背)</option>
 						<option value="1">少阳────   (1背)</option>
@@ -83,7 +84,7 @@
 				</div>
 				<label class="layui-form-label">三爻</label>
 				<div class="layui-input-block">
-					<select name="interest" lay-filter="aihao">
+					<select name="yao3" lay-filter="aihao">
 						<option value="-1"></option>
 						<option value="0">老阴─  ─ x (0背)</option>
 						<option value="1">少阳────   (1背)</option>
@@ -93,7 +94,7 @@
 				</div>
 				<label class="layui-form-label">二爻</label>
 				<div class="layui-input-block">
-					<select name="interest" lay-filter="aihao">
+					<select name="yao2" lay-filter="aihao">
 						<option value="-1"></option>
 						<option value="0">老阴─  ─ x (0背)</option>
 						<option value="1">少阳────   (1背)</option>
@@ -103,7 +104,7 @@
 				</div>
 				<label class="layui-form-label">一爻</label>
 				<div class="layui-input-block">
-					<select name="interest" lay-filter="aihao">
+					<select name="yao1" lay-filter="aihao">
 						<option value="-1"></option>
 						<option value="0">老阴─  ─ x (0背)</option>
 						<option value="1">少阳────   (1背)</option>
@@ -112,26 +113,33 @@
 					</select>
 				</div>
 			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">排盘</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					<button class="layui-btn layui-btn-danger" id="close">关闭</button>
+				</div>
+			</div>
 		</form>
 	</div> 
 	
-	<table style="font-size:14px;white-space: nowrap;">
+	<table style="font-size:14px;white-space: nowrap;margin-left: 5px;">
 		<tbody><tr>
 			<td>
 				<b>占问：</b>
-					<span id="return-txt">未填写</span><br>
+					<span id="title"></span><br>
 				<b>占类：</b>
 				 忽略·忽略
 				<br>  
 				<b>时间：</b>
-				<span style="display:inline-block;">2022-02-19 01:28<span id="theTime"> 周六</span></span> 
+				<span style="display:inline-block;"  id="theTime"></span> 
 				<br>
 				<span>
 					<b>干支：</b>
-					<span>壬寅 </span>
-					<span style="color:red;font-weight:700">壬寅 癸卯</span>
-					<span>癸丑 </span>
-					<span>(旬空 辰巳)</span>
+					<span id="nianzhu">壬寅 </span>
+					<span id="yuerizhu" style="color:red;font-weight:700">壬寅 癸卯</span>
+					<span id="shizhu">癸丑 </span>
+					<span id="xunkong">(旬空 辰巳)</span>
 				</span>
 				<br>
 
@@ -161,79 +169,196 @@
 				<div style="border-bottom: 1px solid #e8e8e8;text-align:center;margin-top:3px;margin-bottom: 5px"></div>
 				   
 
-				<table border="0" style="width: 100%;text-align: left;font-size: 14px;">
-					<th>六神</th><th>伏神</th><th>天雷无妄(巽</th><th></th><th></th><th>雷火丰(坎)</th><th></th>
-					<tr>
-						<td>白虎</td>
-						<td></td>
-						<td>妻财壬戌土 
-								<span style="font-family: '宋体';font-size:18px;">
-									<img style="height:10px;width:40px;" src="./yangyao.png">
-							  </span> 
-						</td>
-						<td>世</td>
-						<td>Ⅹ</td>
-						<td>官鬼壬申金
-							<span style="font-family: '宋体';font-size:18px;">
-								<img style="height:10px;width:40px;" src="./yinyao.png">
-							</span>
-						</td>
-						<td>应</td>
-					</tr>
-					<tr>
-						<td>白虎</td>
-						<td>子孙丙申金</td>
-						<td>妻财壬戌土</td>
-						<td>世</td>
-						<td>〇</td>
-						<td>官鬼壬申金</td>
-						<td>应</td>
-					</tr>
-					<tr>
-						<td>白虎</td>
-						<td></td>
-						<td>妻财壬戌土</td>
-						<td>世</td>
-						<td></td>
-						<td>官鬼壬申金</td>
-						<td>应</td>
-					</tr>
-					<tr>
-						<td>白虎</td>
-						<td></td>
-						<td>妻财壬戌土</td>
-						<td>世</td>
-						<td></td>
-						<td>官鬼壬申金</td>
-						<td>应</td>
-					</tr>
-					<tr>
-						<td>白虎</td>
-						<td></td>
-						<td>妻财壬戌土</td>
-						<td>世</td>
-						<td></td>
-						<td>官鬼壬申金</td>
-						<td>应</td>
-					</tr>
-					<tr>
-						<td>白虎</td>
-						<td></td>
-						<td>妻财壬戌土</td>
-						<td>世</td>
-						<td></td>
-						<td>官鬼壬申金</td>
-						<td>应</td>
-					</tr> 
+				<table border="0" style="width: 100%;text-align: left;font-size: 18px;display: none;" id="yaowei"> 
+					<div > 
+						<th>六神</th><th>&nbsp;&nbsp;</th>
+						<th id="zhuyao"></th>
+						<th></th><th></th>
+						<th id="fuyao"></th>
+						<th></th>
+					</div>
+					<div>
+						<tr>
+							<td id="liuyao_liushen">白虎</td>
+							<td></td>
+							<td>
+									<span id="liuyao_yaowei">妻财壬戌土</span>	 
+									<span style="font-family: '宋体';font-size:18px;" id="liuyao_yaotu">
+										<img style="height:10px;width:40px;" src="./yangyao.png">
+									</span>  
+							</td>
+							<td id="liuyao_shiyin">&nbsp;世&nbsp;</td>
+							<td id="liuyao_bianyao">&nbsp;&nbsp;</td>
+							<td>
+							  <span id="liuyao_yaowei_bian">官鬼壬申金</span>	
+								<span style="font-family: '宋体';font-size:18px;" id="liuyao_yaotu_bian">
+									<img style="height:10px;width:40px;" src="./yinyao.png">
+								</span>
+							</td>
+							<td id="liuyao_shiyin_bian">&nbsp;应&nbsp;</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td id="liuyao_fushen">&nbsp;</td>
+							<td></td>
+							<td></td>
+						</tr> 
+					</div>  
+
+					<div>
+						<tr>
+							<td id="wuyao_liushen">白虎</td>
+							<td></td>
+							<td>
+									<span id="wuyao_yaowei">妻财壬戌土</span>	 
+									<span style="font-family: '宋体';font-size:18px;" id="wuyao_yaotu">
+										<img style="height:10px;width:40px;" src="./yangyao.png">
+									</span>  
+							</td>
+							<td id="wuyao_shiyin">&nbsp;世&nbsp;</td>
+							<td id="wuyao_bianyao">&nbsp;&nbsp;</td>
+							<td>
+							  <span id="wuyao_yaowei_bian">官鬼壬申金</span>	
+								<span style="font-family: '宋体';font-size:18px;" id="wuyao_yaotu_bian">
+									<img style="height:10px;width:40px;" src="./yinyao.png">
+								</span>
+							</td>
+							<td id="wuyao_shiyin_bian">&nbsp;应&nbsp;</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td id="wuyao_fushen">&nbsp;</td>
+							<td></td>
+							<td></td>
+						</tr> 
+					</div>
+
+					<div>
+						<tr>
+							<td id="siyao_liushen">白虎</td>
+							<td></td>
+							<td>
+									<span id="siyao_yaowei">妻财壬戌土</span>	 
+									<span style="font-family: '宋体';font-size:18px;" id="siyao_yaotu">
+										<img style="height:10px;width:40px;" src="./yangyao.png">
+									</span>  
+							</td>
+							<td id="siyao_shiyin">&nbsp;世&nbsp;</td>
+							<td id="siyao_bianyao">&nbsp;&nbsp;</td>
+							<td>
+							  <span id="siyao_yaowei_bian">官鬼壬申金</span>	
+								<span style="font-family: '宋体';font-size:18px;" id="siyao_yaotu_bian">
+									<img style="height:10px;width:40px;" src="./yinyao.png">
+								</span>
+							</td>
+							<td id="siyao_shiyin_bian">&nbsp;应&nbsp;</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td id="siyao_fushen">&nbsp;</td>
+							<td></td>
+							<td></td>
+						</tr> 
+					</div>
+
+					<div>
+						<tr>
+							<td id="sanyao_liushen">白虎</td>
+							<td></td>
+							<td>
+									<span id="sanyao_yaowei">妻财壬戌土</span>	 
+									<span style="font-family: '宋体';font-size:18px;" id="sanyao_yaotu">
+										<img style="height:10px;width:40px;" src="./yangyao.png">
+									</span>  
+							</td>
+							<td id="sanyao_shiyin">&nbsp;世&nbsp;</td>
+							<td id="sanyao_bianyao">&nbsp;&nbsp;</td>
+							<td>
+							  <span id="sanyao_yaowei_bian">官鬼壬申金</span>	
+								<span style="font-family: '宋体';font-size:18px;" id="sanyao_yaotu_bian">
+									<img style="height:10px;width:40px;" src="./yinyao.png">
+								</span>
+							</td>
+							<td id="sanyao_shiyin_bian">&nbsp;应&nbsp;</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td id="sanyao_fushen">&nbsp;</td>
+							<td></td>
+							<td></td>
+						</tr> 
+					</div>
+
+					<div>
+						<tr>
+							<td id="eryao_liushen">白虎</td>
+							<td></td>
+							<td>
+									<span id="eryao_yaowei">妻财壬戌土</span>	 
+									<span style="font-family: '宋体';font-size:18px;" id="eryao_yaotu">
+										<img style="height:10px;width:40px;" src="./yangyao.png">
+									</span>  
+							</td>
+							<td id="eryao_shiyin">&nbsp;世&nbsp;</td>
+							<td id="eryao_bianyao">&nbsp;&nbsp;</td>
+							<td>
+							  <span id="eryao_yaowei_bian">官鬼壬申金</span>	
+								<span style="font-family: '宋体';font-size:18px;" id="eryao_yaotu_bian">
+									<img style="height:10px;width:40px;" src="./yinyao.png">
+								</span>
+							</td>
+							<td id="eryao_shiyin_bian">&nbsp;应&nbsp;</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td id="eryao_fushen">&nbsp;</td>
+							<td></td>
+							<td></td>
+						</tr> 
+					</div>
+
+					<div>
+						<tr>
+							<td id="yiyao_liushen">白虎</td>
+							<td></td>
+							<td>
+									<span id="yiyao_yaowei">妻财壬戌土</span>	 
+									<span style="font-family: '宋体';font-size:18px;" id="yiyao_yaotu">
+										<img style="height:10px;width:40px;" src="./yangyao.png">
+									</span>  
+							</td>
+							<td id="yiyao_shiyin">&nbsp;世&nbsp;</td>
+							<td id="yiyao_bianyao">&nbsp;&nbsp;</td>
+							<td>
+							  <span id="yiyao_yaowei_bian">官鬼壬申金</span>	
+								<span style="font-family: '宋体';font-size:18px;" id="yiyao_yaotu_bian">
+									<img style="height:10px;width:40px;" src="./yinyao.png">
+								</span>
+							</td>
+							<td id="yiyao_shiyin_bian">&nbsp;应&nbsp;</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td id="yiyao_fushen">&nbsp;</td>
+							<td></td>
+							<td></td>
+						</tr> 
+					</div>
+				
 				</table>
 				<div style="border-bottom: 1px solid #e8e8e8;text-align:center;margin-top:3px;margin-bottom: 5px"></div>
 
 			</td>
 		</tr></tbody>
 	</table>
-
-
-	<script src="./set.js"></script>
+ 
 	<script src="./paipan.js"></script>
+	<script src="./set.js"></script>
 </body>
 </html>
