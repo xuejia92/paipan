@@ -24,7 +24,7 @@ layui.use(['form', 'laydate','layer'], function(){
   laydate.render({
     elem: '#datetime' 
     ,type:'datetime'
-    ,value: new Date().Format("yyyy-MM-dd hh:mm:ss")
+    ,value: new Date().Format("yyyy/MM/dd hh:mm:ss")
     ,isInitValue: true
   });  
 
