@@ -162,7 +162,7 @@
 				<div style="border-bottom: 1px solid #e8e8e8;text-align:center;margin-top:3px;margin-bottom: 5px"></div>
 				   
 
-				<table border="0" style="width: 100%;text-align: left;font-size: 17px;display: none;" id="yaowei"> 
+				<table border="0" style="width: 100%;text-align: left;font-size: 17px;display: none;line-height: 105%;" id="yaowei"> 
 					<div > 
 						<th>六神</th><th>&nbsp;&nbsp;</th>
 						<th id="zhuyao"></th>
@@ -352,5 +352,13 @@
 	</table>
   
 	<script src="./set.js"+ Math.random()></script> 
+	<script>
+		window.onpageshow = function(event) { 
+		　　if (event.persisted) { 
+					 alert("1")
+		　　　　window.location.reload() 
+		　　}  
+		};
+	</script>
 </body>
 </html>
