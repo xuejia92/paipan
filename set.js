@@ -1844,5 +1844,9 @@ var curShenSha ={
     return false;
   });
 
-  
+  window.onpageshow = function(event) {
+  　　if (event.persisted) {
+  　　　　window.location.reload() 
+  　　}
+  };
 });
