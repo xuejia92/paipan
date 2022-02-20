@@ -766,16 +766,24 @@ layui.use(['form', 'laydate','layer'], function(){
           break;
         }
     } 
-    
-    $("#yiyao_liushen").text(liushen[liushen_index_num])  
-    $("#eryao_liushen").text(liushen[++liushen_index_num])  
-    $("#sanyao_liushen").text(liushen[++liushen_index_num])  
-    $("#siyao_liushen").text(liushen[++liushen_index_num])  
-    $("#wuyao_liushen").text(liushen[++liushen_index_num])  
-    $("#liuyao_liushen").text(liushen[++liushen_index_num])  
+    $("#yiyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[liushen_index_num]+"</a>")  
+    $("#eryao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")  
+    $("#sanyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")  
+    $("#siyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")  
+    $("#wuyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")  
+    $("#liuyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")   
+    $('.liushen').click(function(){
+      var name = $(this).text();
+      if(name=="青龙") layer.msg("青龙：骨架、喜庆、色情、无私、清白、正直、高大、体面、清高、崭新、左面等等");
+      if(name=="朱雀") layer.msg("朱雀：发热、炎症、争讼、投诉、打听、言谈、标识、广告、热闹、文书、前面等等");
+      if(name=="勾陈") layer.msg("勾陈：堆积、凝结、土地、老实、木讷、肥胖、牢狱、外表、陈旧、历史、居中等等");
+      if(name=="螣蛇") layer.msg("螣蛇：筋络、恐惧、惊怕、忐忑、担忧、风险、弯曲、空管、阴暗、内在、通道等等");
+      if(name=="玄武") layer.msg("玄武：呼吸、隐私、隐瞒、藏匿、负面、偷盗、主观、细微、小人、难测、后面等等");
+      if(name=="白虎") layer.msg("白虎：血液、灾祸、哀怨、不满、疾病、权威、死丧、粗鲁、强硬、破旧、右面等等"); 
+    });
   
     $("#nianzhu").html(this.ng+this.nz);
-    $("#yuerizhu").html(this.yg+this.yz+" "+this.rg+this.rz);
+    $("#yuerizhu").html(this.yg+this.yz+"(<a id='yuelin' href='javascript:void(0);'></a>) "+this.rg+this.rz+"(<a id='rilin' href='javascript:void(0);'></a>) ");
     $("#shizhu").html(this.sg+this.sz);
     $("#xunkong").html("(旬空 "+this.xk+")");
     layer.closeAll();
@@ -1806,17 +1814,75 @@ var curShenSha ={
     
     //展示神煞
     var cou = 0;
+    $("#shensha").html("");
     for(var key in curShenSha){
       if(curShenSha[key]=="") continue;
-      $("#shensha").append("<span style='width:10%'>"+key+"--"+curShenSha[key]+" </span>");
+      $("#shensha").append("<span style='width:10%'><a class='shensha' href='javascript:void(0);'>"+key+"</a>--"+curShenSha[key]+" </span>");
       cou++; 
       if(cou%4==0){ 
         $("#shensha").append("<br>");
       }
     } 
+    $('.shensha').click(function(){ 
+      var name = $(this).text();
+      if(name=="贵人") layer.msg("贵人：寓意与个人、社交、人际相关");
+      if(name=="禄神") layer.msg("禄神：寓意财禄、待遇、饮食、生活、收益、回报、非专业等方面");
+      if(name=="羊刃") layer.msg("羊刃：寓意工作、单位、物件、器质、利器、项目、维护、专业性等方面");
+      if(name=="文昌") layer.msg("文昌：寓意技能、能力、水平、聪明、策划、难度、技术性等方面");
+      if(name=="驿马") layer.msg("驿马：寓意奔波、远近、流动性、动静性质等方面");
+      if(name=="桃花") layer.msg("桃花：寓意女性、孩子、感情、装潢、广告、条文、门面、学历、荣耀等方面");
+      if(name=="将星") layer.msg("将星：寓意核心、重要性、程度、幅度、效率等方面");
+      if(name=="劫煞") layer.msg("劫煞：寓意难关、阻碍、祸患、劫数、问题、烦恼等方面");
+      if(name=="华盖") layer.msg("华盖：寓意被动、无奈、聪明、迥异、怪僻、个性等方面");
+      if(name=="谋星") layer.msg("谋星：寓意主动性的计划、谋划、策划、打算、预期等方面");
+      if(name=="天医") layer.msg("天医：寓意疾病、医药、医学、医生、保养等方面");
+      if(name=="天喜") layer.msg("天喜：寓意喜事、喜庆、好事、商业、铺面、热闹、节假、旅游、玩乐等方面");
+      if(name=="灾煞") layer.msg("灾煞：寓意难关、阻碍、劫数、问题、麻烦等方面");
+    });
   
     
-  
+    $("#yiyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();}); 
+    $("#eryao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#sanyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#siyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#wuyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#liuyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#yiyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();}); 
+    $("#eryao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#sanyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#siyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#wuyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#yiyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#liuyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#eryao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();}); 
+    $("#sanyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#siyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#wuyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#liuyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+
+
+    this.diZhiwuXing=function(gan){  //地支五行
+      var wux="";
+        if(gan=="甲"||gan=="乙" || gan=="寅" || gan=="卯") wux="木";
+        if(gan=="丙"||gan=="丁"|| gan=="丙" || gan=="丁") wux="火";
+        if(gan=="戊"||gan=="己"|| gan=="辰" || gan=="巳" || gan=="午" || gan=="未") wux="土";
+        if(gan=="庚"||gan=="辛"|| gan=="申" || gan=="酉") wux="金";
+        if(gan=="壬"||gan=="癸"|| gan=="子" || gan=="亥") wux="水";
+        return wux;
+    }
+    var benKuaWuxin = guaWuxin[zhuyao[0]];
+    var yuelin = this.yz;
+    var rilin = this.rz;
+    var yueLiuqing = this.wuXinShenke(benKuaWuxin,this.diZhiwuXing(yuelin)); 
+    var riLiuqing = this.wuXinShenke(benKuaWuxin,this.diZhiwuXing(rilin));
+    console.log(yueLiuqing,riLiuqing)
+    $("#yuelin").html(yueLiuqing);
+    $("#rilin").html(riLiuqing);
+    //日令月令的六亲
+
+    $("#yuelin").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    $("#rilin").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
+    
   
     
     
@@ -1828,7 +1894,11 @@ var curShenSha ={
     console.log(zhuLiuYao);
     console.log(fuLiuYao)
     console.log(fuyaowei) //伏神位置
-    console.log(curShenSha)
+    console.log(curShenSha) 
+
+    $("#fenxi").click(function(){
+      layer.msg($("#yongshen").text());
+    });
 
 
 
