@@ -31,24 +31,10 @@
 			</div> 
 			<div class="layui-form-item">
 				<label class="layui-form-label">占事类别</label>
-				<div class="layui-input-inline">
-					<select name="quiz1">
-						<option value="">请选择省</option>
-						<option value="浙江" selected="">浙江省</option>
-						<option value="你的工号">江西省</option>
-						<option value="你最喜欢的老师">福建省</option>
-					</select>
+				<div class="layui-input-block">
+					<input type="radio" name="leibie" value="1" title="事态卦" checked="">
+					<input type="radio" name="leibie" value="2" title="心态卦"> 
 				</div>
-				<div class="layui-input-inline">
-					<select name="quiz2">
-						<option value="">请选择市</option>
-						<option value="杭州">杭州</option>
-						<option value="宁波" disabled="">宁波</option>
-						<option value="温州">温州</option>
-						<option value="温州">台州</option>
-						<option value="温州">绍兴</option>
-					</select>
-				</div> 
 			</div>  
 			<div class="layui-form-item">
 				<label class="layui-form-label">起卦时间</label>
@@ -134,7 +120,7 @@
 				<b>占问：</b>
 					<span id="title"></span><br>
 				<b>占类：</b>
-				 忽略·忽略
+				 <span id="leibie"></span>
 				<br>  
 				<b>时间：</b>
 				<span style="display:inline-block;"  id="theTime"></span> 
@@ -359,8 +345,22 @@
 
 			</td>
 		</tr></tbody>
-	</table>
-  
+	</table> 
+
+	<table id="fenxi" style="width: 100%;font-size: 15px;" border=1> 
+			<th style="width:10%;">类型</th><th>分析结果</th>
+			<tr>
+				<td>吉凶:</td>
+				<td id="jixiong"> 
+				</td> 
+			</tr>  
+			<tr>
+				<td>应期:</td>
+				<td id="yingqi">  
+				</td>
+			</tr> 
+	</table> 
+
 	<script src="./set.js"+ Math.random()></script> 
 	<script>
 		window.onpageshow = function(event) { 

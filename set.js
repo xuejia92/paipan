@@ -63,6 +63,7 @@ layui.use(['form', 'laydate','layer'], function(){
   form.on('submit(demo1)', function(data){
     var title = data.field.title;
     var datetime = data.field.datetime;
+    var leibie = data.field.leibie;
     var yao1 = data.field.yao1;
     var yao2 = data.field.yao2;
     var yao3 = data.field.yao3;
@@ -88,6 +89,7 @@ layui.use(['form', 'laydate','layer'], function(){
     $("#title").text(title);
     $("#theTime").text(datetime);
     $("#beimian").text(yao1+","+yao2+","+yao3+","+yao4+","+yao5+","+yao6); 
+    $("#leibie").text(leibie==1?"事态卦":"心态卦");
 
     //八卦判断 321 654 传的是阴阳1,0
     this.bagua = function(yao){   
@@ -143,6 +145,7 @@ layui.use(['form', 'laydate','layer'], function(){
 
     var zhu = ["",0,0,0,0,0,0];
     var fu = ["",0,0,0,0,0,0];
+    var bianyao = {}
 
     if(yao1==1){
       $("#yiyao_yaotu").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
@@ -160,6 +163,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#yiyao_yaotu").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#yiyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#yiyao_bianyao").html('&nbsp;〇&nbsp;');
+      bianyao[1] = "阳变阴";
       zhu[1] = 1;
       fu[1] = 0; 
     } 
@@ -167,6 +171,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#yiyao_yaotu").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#yiyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#yiyao_bianyao").html('&nbsp;✖&nbsp;'); 
+      bianyao[1] = "阴变阳";
       zhu[1] = 0;
       fu[1] = 1;
     } 
@@ -188,6 +193,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#eryao_yaotu").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#eryao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yinyao.png">'); 
       $("#eryao_bianyao").html('&nbsp;〇&nbsp;'); 
+      bianyao[2] = "阳变阴";
       zhu[2] = 1;
       fu[2] = 0;
     } 
@@ -195,6 +201,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#eryao_yaotu").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#eryao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#eryao_bianyao").html('&nbsp;✖&nbsp;'); 
+      bianyao[2] = "阴变阳";
       zhu[2] = 0;
       fu[2] = 1;
     } 
@@ -216,6 +223,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#sanyao_yaotu").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#sanyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#sanyao_bianyao").html('&nbsp;〇&nbsp;'); 
+      bianyao[3] = "阳变阴";
       zhu[3] = 1;
       fu[3] = 0;
     } 
@@ -223,6 +231,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#sanyao_yaotu").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#sanyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#sanyao_bianyao").html('&nbsp;✖&nbsp;'); 
+      bianyao[3] = "阴变阳";
       zhu[3] = 0;
       fu[3] = 1;
     } 
@@ -244,6 +253,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#siyao_yaotu").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#siyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#siyao_bianyao").html('&nbsp;〇&nbsp;'); 
+      bianyao[4] = "阳变阴";
       zhu[4] = 1;
       fu[4] = 0;
     } 
@@ -251,6 +261,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#siyao_yaotu").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#siyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#siyao_bianyao").html('&nbsp;✖&nbsp;'); 
+      bianyao[4] = "阴变阳";
       zhu[4] = 0;
       fu[4] = 1;
     } 
@@ -272,6 +283,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#wuyao_yaotu").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#wuyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#wuyao_bianyao").html('&nbsp;〇&nbsp;'); 
+      bianyao[5] = "阳变阴";
       zhu[5] = 1;
       fu[5] = 0;
     } 
@@ -279,6 +291,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#wuyao_yaotu").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#wuyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#wuyao_bianyao").html('&nbsp;✖&nbsp;'); 
+      bianyao[5] = "阴变阳";
       zhu[5] = 0;
       fu[5] = 1;
     } 
@@ -300,6 +313,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#liuyao_yaotu").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#liuyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#liuyao_bianyao").html('&nbsp;〇&nbsp;'); 
+      bianyao[6] = "阳变阴";
       zhu[6] = 1;
       fu[6] = 0;
     } 
@@ -307,6 +321,7 @@ layui.use(['form', 'laydate','layer'], function(){
       $("#liuyao_yaotu").html('<img style="height:10px;width:40px;" src="./yinyao.png">');
       $("#liuyao_yaotu_bian").html('<img style="height:10px;width:40px;" src="./yangyao.png">');
       $("#liuyao_bianyao").html('&nbsp;✖&nbsp;'); 
+      bianyao[6] = "阴变阳";
       zhu[6] = 0;
       fu[6] = 1;
     } 
@@ -424,7 +439,7 @@ layui.use(['form', 'laydate','layer'], function(){
     }
 
     //五行生克
-    this.shengKe = function(zj,yj){
+    shengKe = function(zj,yj){
       var jmsht = {
         '金':['土','火','水','木','金'],
         '木':['水','金','火','土','木'],
@@ -441,7 +456,7 @@ layui.use(['form', 'laydate','layer'], function(){
     }
 
     //六亲生克
-    this.liuQinShengKe = function(zj,yj){
+    liuQinShengKe = function(zj,yj){
       var jmsht = {
         '父母':['官鬼','妻财','兄弟','子孙','父母'],
         '官鬼':['妻财','子孙','父母','兄弟','官鬼'],
@@ -458,7 +473,7 @@ layui.use(['form', 'laydate','layer'], function(){
     }
 
     //判断两个地支相合还是相冲
-    this.diZhiXiangChongHe = function(zj,yj){
+    diZhiXiangChongHe = function(zj,yj){
       if(zj=="子" && yj=="丑") return "合";
       if(zj=="丑" && yj=="子") return "合"; 
       if(zj=="亥" && yj=="寅") return "合";
@@ -766,12 +781,19 @@ layui.use(['form', 'laydate','layer'], function(){
           break;
         }
     } 
+    var liuShenZu = {}
     $("#yiyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[liushen_index_num]+"</a>")  
+    liuShenZu["爻1"] = liushen[liushen_index_num]
     $("#eryao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")  
+    liuShenZu["爻2"] = liushen[(liushen_index_num)]
     $("#sanyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")  
+    liuShenZu["爻3"] = liushen[(liushen_index_num)]
     $("#siyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")  
+    liuShenZu["爻4"] = liushen[(liushen_index_num)]
     $("#wuyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")  
+    liuShenZu["爻5"] = liushen[(liushen_index_num)]
     $("#liuyao_liushen").html("<a class='liushen' href='javascript:void(0);'>"+liushen[++liushen_index_num]+"</a>")   
+    liuShenZu["爻6"] = liushen[(liushen_index_num)]
     $('.liushen').click(function(){
       var name = $(this).text();
       if(name=="青龙") layer.msg("青龙：骨架、喜庆、色情、无私、清白、正直、高大、体面、清高、崭新、左面等等");
@@ -1840,32 +1862,36 @@ var curShenSha ={
       if(name=="灾煞") layer.msg("灾煞：寓意难关、阻碍、劫数、问题、麻烦等方面");
     });
   
-    
-    $("#yiyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();}); 
-    $("#eryao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#sanyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#siyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#wuyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#liuyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#yiyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();}); 
-    $("#eryao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#sanyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#siyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#wuyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#yiyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#liuyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#eryao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();}); 
-    $("#sanyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#siyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#wuyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#liuyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-
+    yongshen_wei = [];
+    if(leibie==1){
+      $("#yiyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻1","主爻"];}); 
+      $("#eryao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻2","主爻"];});
+      $("#sanyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻3","主爻"];});
+      $("#siyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻4","主爻"];});
+      $("#wuyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻5","主爻"];});
+      $("#liuyao_yaowei").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻6","主爻"];});
+      $("#yiyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻1","变爻"];}); 
+      $("#eryao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻2","变爻"];});
+      $("#sanyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻3","变爻"];});
+      $("#siyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻4","变爻"];});
+      $("#wuyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻5","变爻"];}); 
+      $("#liuyao_yaowei_bian").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻6","变爻"];});
+      $("#yiyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻1","伏神"];}); 
+      $("#eryao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻2","伏神"];}); 
+      $("#sanyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻3","伏神"];});
+      $("#siyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻4","伏神"];});
+      $("#wuyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻5","伏神"];});
+      $("#liuyao_fushen").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=["爻6","伏神"];});
+    }else{
+      $("#yongshen").html("(直接定位子孙爻或官鬼爻)");
+      $("#fenxi").show();
+    } 
 
     this.diZhiwuXing=function(gan){  //地支五行
       var wux="";
         if(gan=="甲"||gan=="乙" || gan=="寅" || gan=="卯") wux="木";
-        if(gan=="丙"||gan=="丁"|| gan=="丙" || gan=="丁") wux="火";
-        if(gan=="戊"||gan=="己"|| gan=="辰" || gan=="巳" || gan=="午" || gan=="未") wux="土";
+        if(gan=="丙"||gan=="丁"|| gan=="巳" || gan=="午") wux="火";
+        if(gan=="戊"||gan=="己"|| gan=="辰" || gan=="未") wux="土";
         if(gan=="庚"||gan=="辛"|| gan=="申" || gan=="酉") wux="金";
         if(gan=="壬"||gan=="癸"|| gan=="子" || gan=="亥") wux="水";
         return wux;
@@ -1874,30 +1900,123 @@ var curShenSha ={
     var yuelin = this.yz;
     var rilin = this.rz;
     var yueLiuqing = this.wuXinShenke(benKuaWuxin,this.diZhiwuXing(yuelin)); 
-    var riLiuqing = this.wuXinShenke(benKuaWuxin,this.diZhiwuXing(rilin));
-    console.log(yueLiuqing,riLiuqing)
-    $("#yuelin").html(yueLiuqing);
-    $("#rilin").html(riLiuqing);
+    var riLiuqing = this.wuXinShenke(benKuaWuxin,this.diZhiwuXing(rilin)); 
+    $("#yuelin").html(yueLiuqing+yuelin+this.diZhiwuXing(yuelin));
+    $("#rilin").html(riLiuqing+rilin+this.diZhiwuXing(rilin));
     //日令月令的六亲
 
-    $("#yuelin").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    $("#rilin").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();});
-    
-  
-    
+    if(leibie==1){
+      $("#yuelin").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=[$(this).text(),"月令"];});
+      $("#rilin").click(function(){$("#yongshen").html($(this).text());$("#fenxi").show();yongshen_wei=[$(this).text(),"日令"];}); 
+    }else{
+      $("#yongshen").html("(直接定位子孙爻或官鬼爻)");
+      $("#fenxi").show();
+    }  
     
     //////////////数据分析//////////////////////////
     //////////////数据分析//////////////////////////
     //////////////数据分析//////////////////////////
     //////////////数据分析//////////////////////////
 
-    console.log(zhuLiuYao);
-    console.log(fuLiuYao)
-    console.log(fuyaowei) //伏神位置
-    console.log(curShenSha) 
+    //按用神顺序找到对应的用神
+    this.findYongShen = function(yongShen){
+         
+    }
+
+    var bianyaoZu = {}
+    for(var key in bianyao){
+      bianyaoZu["爻"+key]=[zhuLiuYao[6-key],fuLiuYao[6-key],bianyao[key]];
+    }
+    var fuyaoZu = {}
+    for(var key in fuyaowei){
+      fuyaoZu["爻"+fuyaowei[key][0]]=fuyaowei[key][1];
+    }
+    //组爻
+    var jihe = {
+      "爻6":{"主爻":zhuLiuYao[0],"变爻":fuLiuYao[0],"六亲":liuShenZu["爻6"]},
+      "爻5":{"主爻":zhuLiuYao[1],"变爻":fuLiuYao[1],"六亲":liuShenZu["爻5"]},
+      "爻4":{"主爻":zhuLiuYao[2],"变爻":fuLiuYao[2],"六亲":liuShenZu["爻4"]}, 
+      "爻3":{"主爻":zhuLiuYao[3],"变爻":fuLiuYao[3],"六亲":liuShenZu["爻3"]}, 
+      "爻2":{"主爻":zhuLiuYao[4],"变爻":fuLiuYao[4],"六亲":liuShenZu["爻2"]}, 
+      "爻1":{"主爻":zhuLiuYao[5],"变爻":fuLiuYao[5],"六亲":liuShenZu["爻1"]},  
+      "主世":[zhuLiuYao[6-zhuLiuYao[6]],"爻"+String(6-zhuLiuYao[6])],
+      "主应":[zhuLiuYao[6-zhuLiuYao[7]],"爻"+String(6-zhuLiuYao[7])],
+      "变世":[fuLiuYao[6-fuLiuYao[6]],"爻"+String(6-fuLiuYao[6])],
+      "变应":[fuLiuYao[6-fuLiuYao[7]],"爻"+String(6-fuLiuYao[7])],
+      "变爻":bianyaoZu,
+      "日令":[riLiuqing+rilin+this.diZhiwuXing(rilin),rilin,this.diZhiwuXing(rilin)],
+      "月令":[yueLiuqing+yuelin+this.diZhiwuXing(yuelin),yuelin,this.diZhiwuXing(yuelin)],
+      "用神":{},
+      "标题":title,
+      "占类":leibie,
+      "时间":datetime,
+      "背面":[yao1,yao2,yao3,yao4,yao5,yao6],
+      "神煞":curShenSha,
+      "伏神":fuyaoZu,
+      "分析结果":{},
+    };
+     
+    //月令对用神的旺衰影响
+    yueAndYongShen = function(jihe){ 
+       jihe["分析结果"]["月令"]=[];
+       if(jihe["用神"]["爻支"]==jihe["月令"][1]) jihe["分析结果"]["月令"].push([2,"临月建"]);
+       if("合"==diZhiXiangChongHe(jihe["用神"]["爻支"],jihe["月令"][1])) jihe["分析结果"]["月令"].push([2,"月合"]);
+       if(jihe["月令"][2]+"生"+jihe["用神"]["五行"]==shengKe(jihe["用神"]["五行"],jihe["月令"][2])) jihe["分析结果"]["月令"].push([1,"月生"]);
+       if(jihe["用神"]["爻支"]!=jihe["月令"][1] && jihe["用神"]["五行"]==jihe["月令"][2]) jihe["分析结果"]["月令"].push([1,"月扶"]);
+
+       if("冲"==diZhiXiangChongHe(jihe["用神"]["爻支"],jihe["月令"][1])) jihe["分析结果"]["月令"].push([-2,"逢月破"]); 
+       if(jihe["月令"][2]+"克"+jihe["用神"]["五行"]==shengKe(jihe["用神"]["五行"],jihe["月令"][2])) jihe["分析结果"]["月令"].push([-1,"月克"]);
+       if("冲"!=diZhiXiangChongHe(jihe["用神"]["爻支"],jihe["月令"][1]) && jihe["用神"]["五行"]+"生"+jihe["月令"][2]==shengKe(jihe["用神"]["五行"],jihe["月令"][2])) jihe["分析结果"]["月令"].push([-1,"月上休囚"]);
+       if("冲"!=diZhiXiangChongHe(jihe["用神"]["爻支"],jihe["月令"][1]) && jihe["用神"]["五行"]+"克"+jihe["月令"][2]==shengKe(jihe["用神"]["五行"],jihe["月令"][2])) jihe["分析结果"]["月令"].push([-1,"月上休囚"]);
+
+       if(jihe["用神"]["五行"]=="水" && "丑"==jihe["月令"][1]) jihe["分析结果"]["月令"].push([0,"月平相"]);
+       if(jihe["用神"]["五行"]=="木" && "辰"==jihe["月令"][1]) jihe["分析结果"]["月令"].push([0,"月平相"]);
+       if(jihe["用神"]["五行"]=="火" && "未"==jihe["月令"][1]) jihe["分析结果"]["月令"].push([0,"月平相"]);
+       if(jihe["用神"]["五行"]=="金" && "戌"==jihe["月令"][1]) jihe["分析结果"]["月令"].push([0,"月平相"]);
+       return jihe;
+    }
+
+
+    jixiong = function(){
+      if(leibie==1){ //事态挂
+        var ysText = $("#yongshen").text();
+        if(ysText.length<=1) {
+          layer.msg("请先选择一个用神");
+          return;
+        } 
+        jihe["用神"] = {"主":ysText,"六亲":ysText.length<=5?ysText.substr(0,2):ysText.substr(4,2),"爻支":ysText.substr(-2,1),"五行":ysText.substr(-1,1),"位置":yongshen_wei};   
+        console.log(jihe) 
+        $("#jixiong").text("");
+        //月令对用神的旺衰影响
+        $("#jixiong").append("用神在月令：")
+        jihe = yueAndYongShen(jihe);
+        for(var i=0;i<=jihe["分析结果"]["月令"].length-1;i++){  
+          $("#jixiong").append("<span class='yueheke'>"+jihe["分析结果"]["月令"][i][1]+"</span>,")
+        }
+        //碰上爻与月令相合又相克，如卯与戌；或爻与月令相冲又相扶，如丑与未；两种方向相反的卦理相撞，论旺还是论衰？
+        // $('.yueheke').click(function(){ 
+        //   if(jihe["分析结果"]["月令"].length==2 && jihe["分析结果"]["月令"][0][1]=="月合" && jihe["分析结果"]["月令"][1][1]=="月克"){
+        //     for(var i=0;i<=jihe["分析结果"]["月令"].length-1;i++){  
+        //       if(jihe["分析结果"]["月令"][i][1]=="月合" || jihe["分析结果"]["月令"][i][1]=="月克"){
+        //         jihe["分析结果"]["月令"].splice(i,1);
+        //       }
+        //     }
+        //   }
+        //   console.log(jihe)
+        // });
+        
+        //日令对用神的旺衰影响
+
+
+
+      }else{//心态卦
+        var yongshen = $("#yongshen").text();
+        layer.msg("心态卦没写");
+      }
+    }
 
     $("#fenxi").click(function(){
-      layer.msg($("#yongshen").text());
+       jixiong();
     });
 
 
