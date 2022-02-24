@@ -9,9 +9,9 @@
 	<meta http-equiv="Cache-control" content="no-cache,must-revalidate">
 	<meta http-equiv="Cache" content="no-cache">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="./layui/css/layui.css"> 
 	<script src="./jquery.js"></script> 
-	<script src="./layui/layui.js"></script> 
-	<link rel="stylesheet" href="./layui/css/layui.css">
+	<script src="./layui/layui.js"></script>  
 	<title>六爻排盘</title>
 </head>
 <body class="no-cache">
@@ -150,6 +150,7 @@
 					<b>用神：</b>
 					<span>
 						<font color="blue" id="yongshen"></font>
+						<button type="button" id="zuzhi" style="display: none;" class="layui-btn layui-btn-danger layui-btn-xs">组织</button>
 						<button type="button" id="fenxi" style="display: none;" class="layui-btn layui-btn-normal layui-btn-xs">分析</button>
 						<div style="color: green;">(选取顺序:世应位>动爻>多则有异取异>静爻>日令月令>伏神)</div>
 					</span> 
@@ -360,15 +361,37 @@
 				</td>
 			</tr> 
 	</table> 
+ 
+		<script type="text/html" id="yueheke">
+			<div class="layui-form-item" >  
+				<div class="layui-input-block" style="margin-left: 0px;">
+					月合：<input type="radio" name="yueheke" value="0" title="月合"><br>
+					月克：<input type="radio" name="yueheke" value="1" title="月克"> 
+				</div>
+			</div>
+		</script> 
+ 
+		<script type="text/html" id="yuechongfu">
+			<div class="layui-form-item" >  
+				<div class="layui-input-block" style="margin-left: 0px;">
+					月扶：<input type="radio" name="yuechongfu" value="0" title="月扶"><br>
+					月冲：<input type="radio" name="yuechongfu" value="1" title="月冲"> 
+				</div>
+			</div>
+		</script> 
 
-	<script src="./set.js"+ Math.random()></script> 
-	<script>
-		window.onpageshow = function(event) { 
-		　　if (event.persisted) { 
-					 alert("1")
-		　　　　window.location.reload() 
-		　　}  
-		};
-	</script>
+		<script type="text/html" id="riheke">
+			<div class="layui-form-item" >  
+				<div class="layui-input-block" style="margin-left: 0px;">
+					日合：<input type="radio" name="riheke" value="0" title="日合"><br>
+					日克：<input type="radio" name="riheke" value="1" title="日克"> 
+				</div>
+			</div>
+		</script>  
+ 
+	<script type="text/javascript">   
+		document.write("<script type='text/javascript' src='./set.js?random="+Math.random()+"'></s"+"cript>");
+ </script>
+  
 </body>
 </html>
