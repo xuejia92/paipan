@@ -379,13 +379,13 @@
           return sr;
       }
       this.wuXing=function(gan){  //五行
-        var wux="";
+          var wux="";
           if(gan=="甲"||gan=="乙" || gan=="寅" || gan=="卯") wux="木";
           if(gan=="丙"||gan=="丁"|| gan=="巳" || gan=="午") wux="火";
-          if(gan=="戊"||gan=="己"|| gan=="辰"  || gan=="未") wux="土";
+          if(gan=="戊"||gan=="己"|| gan=="辰" || gan=="未" || gan=="戌" || gan=="丑") wux="土";
           if(gan=="庚"||gan=="辛"|| gan=="申" || gan=="酉") wux="金";
           if(gan=="壬"||gan=="癸"|| gan=="子" || gan=="亥") wux="水";
-          return wux;
+          return wux; 
       }
       this.wuXingColor=function(ganzhi){ //五行颜色 
         var wuXing=this.wuXing(ganzhi);   

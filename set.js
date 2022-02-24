@@ -2239,6 +2239,7 @@ var curShenSha ={
     dongBianAndYongShen=function(jihe){
       jihe["动变分析"] = [];
       jihe["动变分析"]["无用动爻"] = [];
+      jihe["世爻分析"]["结果"] =[];
       for(var key in jihe["变爻"]){ 
           var dongyao = jihe["变爻"][key][0];
           var bianyao = jihe["变爻"][key][1];
@@ -2248,11 +2249,18 @@ var curShenSha ={
           var dongyaoDizhi = dongyao.substr(-2,1);
           var bianyaoWuxin = bianyao.substr(-1,1);
           var bianyaoDizhi = bianyao.substr(-2,1); 
+          var shiyao = jihe["主世"][0];
+          var shiyaoWuxin = shiyao.substr(-1,1);
+          var shiyaoDizhi = shiyao.substr(-2,1);
 
           //动爻生用神 
           if(dongyaoWuxin+"生"+yongshenWuxin==shengKe(yongshenWuxin,dongyaoWuxin)){
             jihe["动变分析"].push([dongyao,"吉","动爻"+dongyao+"生用神"+yongshen]);  //动变组合对用神的影响
           }  
+          if(dongyaoWuxin+"生"+shiyaoWuxin==shengKe(shiyaoWuxin,dongyaoWuxin)){
+            jihe["世爻分析"]["结果"].push([dongyao,"吉","动爻"+dongyao+"生世爻"+shiyao]);  //动变组合对用神的影响
+          } 
+
           //动变爻生产三合局生用神
           var bianyaoDizhi = [];
           for(var key in jihe["变爻"]){
@@ -2264,11 +2272,15 @@ var curShenSha ={
             if(sanhe[0]+"生"+yongshenWuxin==shengKe(yongshenWuxin,sanhe[0])){
               jihe["动变分析"].push([sanhe[1],"吉",sanhe[1]+"三合局生用神"+yongshen]);  //动变组合对用神的影响
             } 
-          } 
+            if(sanhe[0]+"生"+shiyaoWuxin==shengKe(shiyaoWuxin,sanhe[0])){
+              jihe["世爻分析"]["结果"].push([sanhe[1],"吉",sanhe[1]+"三合局生世爻"+shiyao]);  //动变组合对用神的影响
+            } 
+          }  
+
           //爻动变回头相生 
           if(bianyaoWuxin+"生"+dongyaoWuxin==shengKe(dongyaoWuxin,bianyaoWuxin)){
             jihe["动变分析"].push([bianyao,"吉","变爻"+bianyao+"回头生"+dongyao]);  //动变组合对用神的影响
-          }  
+          }   
 
           //爻动而化进神 
           if(bianyaoWuxin==dongyaoWuxin && bianyaoDizhi.indexOf(tg)>dongyaoDizhi.indexOf(tg)){
@@ -2307,11 +2319,17 @@ var curShenSha ={
             if(dongyaoWuxin+"克"+yongshenWuxin==shengKe(yongshenWuxin,dongyaoWuxin)){
               jihe["动变分析"].push([dongyao,"凶","动爻"+dongyao+"克用神"+yongshen]);  //动变组合对用神的影响
             }  
+            if(dongyaoWuxin+"克"+shiyaoWuxin==shengKe(shiyaoWuxin,dongyaoWuxin)){
+              jihe["世爻分析"]["结果"].push([dongyao,"凶","动爻"+dongyao+"克世爻"+shiyao]);  //动变组合对用神的影响
+            }  
 
             //爻被动变组合形成三合局来克
             if(sanhe=sanHeJu(bianyaoDizhi)){
               if(sanhe[0]+"克"+yongshenWuxin==shengKe(yongshenWuxin,sanhe[0])){
                 jihe["动变分析"].push([sanhe[1],"凶",sanhe[1]+"三合局克用神"+yongshen]);  //动变组合对用神的影响
+              } 
+              if(sanhe[0]+"克"+shiyaoWuxin==shengKe(shiyaoWuxin,sanhe[0])){
+                jihe["世爻分析"]["结果"].push([sanhe[1],"凶",sanhe[1]+"三合局克世爻"+shiyao]);  //动变组合对用神的影响
               } 
             } 
 
@@ -2327,7 +2345,7 @@ var curShenSha ={
 
             //爻动而化绝，且不存在回头生  
             if(bianyaoWuxin+"生"+dongyaoWuxin!=shengKe(dongyaoWuxin,bianyaoWuxin) ){
-              if("绝"!=shierGong(dongyaoWuxin,bianyaoDizhi)){
+              if("绝"==shierGong(dongyaoWuxin,bianyaoDizhi)){
                 jihe["动变分析"].push([dongyao,"凶","变爻"+bianyao+"动而化绝"]);  //动变组合对用神的影响
               } 
             }   
@@ -2394,8 +2412,8 @@ var curShenSha ={
             if(yueriLs.indexOf("逢日破")!=-1){
               jihe["动变分析"]["无用动爻"].push([dongyao,"凶","变爻"+bianyao+"动而化破(日破)，为无用动爻，无能力生克他爻"]);  
             }
-            if("绝"!=shierGong(dongyaoWuxin,bianyaoDizhi) && bianyaoWuxin+"生"+dongyaoWuxin!=shengKe(dongyaoWuxin,bianyaoWuxin) && "冲"==diZhiXiangChongHe(dongyao,bianyao)){
-              jihe["动变分析"]["无用动爻"].push([dongyao,"凶","动爻"+dongyao+"被冲，无能力生克他爻"]);   
+            if("绝"==shierGong(dongyaoWuxin,bianyaoDizhi) && bianyaoWuxin+"生"+dongyaoWuxin!=shengKe(dongyaoWuxin,bianyaoWuxin) && "冲"!=diZhiXiangChongHe(dongyao,bianyao)){
+              jihe["动变分析"]["无用动爻"].push([dongyao,"凶","动爻"+dongyao+"动而化绝，无能力生克他爻"]);   
             } 
       } 
 
@@ -2413,8 +2431,170 @@ var curShenSha ={
       } 
       return jihe;
     }
+    
 
-    //组织数据
+    //andong
+    var xunkong = this.xunKong();
+    andong=function(){
+      jihe["暗动"] = {};
+      var jinyao = ["爻1","爻2","爻3","爻4","爻5","爻6"];
+      var bianyao = jihe["变爻"]; 
+      for(key in bianyao){
+        index =jinyao.indexOf(key)
+        if(index!=-1){
+          jinyao.splice(index,1);
+        }
+        var bk = bianyao[key][0];
+        //明动之爻受日冲，不论旺衰，皆属冲起有用
+        var yueri = yueAndRiYao(bk);
+        for(var i=0;i<yueri["日令"].length;i++){
+          if(yueri["日令"][i][1]=="日冲"){
+            jihe["暗动"].push(bk+"动爻受日冲，不论旺衰，皆属冲起有用");
+          }
+        }
+      }
+      for(var key=0;key<jinyao.length;key++){ 
+          var jin = jihe[jinyao[key]]["主爻"];
+          var yueri = yueAndRiYao(jin); 
+          for(var i=0;i<yueri["日令"].length;i++){
+            if(yueri["日令"][i][1]=="日冲"){
+              var yueCount = 0;
+              for(var i=0;i<yueri["月令"].length;i++){
+                yueCount = yueCount+yueri["月令"][i][0];
+              }
+              if(yueCount>=0){
+                jihe["暗动"].push(jin+"静爻得月令趋旺或得月令之气而受日冲，为冲起暗动");
+              } 
+              if(jin.substr(-2,1).indexOf(xunkong)!=-1){
+                jihe["暗动"].push(jin+"静爻正处于旬空状态下受日冲，为冲起暗动");
+              } 
+              for(bk in bianyao){
+                if(bianyao[bk][0].substr(-1,1)+"生"+jin.substr(-1,1)==shengKe(jin.substr(-1,1),bianyao[bk][0].substr(-1,1)) && yueCount<=0){
+                  jihe["暗动"].push(jin+"静爻虽在月令休囚，但在受日冲的同时又得动爻来生旺，为冲起暗动，谓之动爻趋旺");
+                }
+              } 
+            }  
+          } 
+      }
+      //问事若用神得旺相，同时世爻若受日令冲动，谓之用趋世兴。意为用神得旺而令世爻受冲兴起暗动。
+      if(bianyao.length==0){
+        if(jihe["用神分析"]["日月组合"]=="旺"){
+          for(var i=0;i<jihe["世爻分析"]["日月组合"]["日令"].length;i++){
+            if(jihe["世爻分析"]["日月组合"]["日令"][i][1]=="日冲"){
+              jihe["暗动"].push(jihe["主世"][0]+"用神得旺相，同时世爻若受日令冲动，谓之用趋世兴。意为用神得旺而令世爻受冲兴起暗动。");
+            }
+          } 
+        }
+      }
+      
+      return jihe
+    }
+
+    //静卦分析
+    jinggua = function(jihe){
+      jihe["静卦分析"] = {};
+      var jinyao = ["爻1","爻2","爻3","爻4","爻5","爻6"];
+      if(jihe["变爻"].length==0){
+        var shiyao = jihe["主世"][0];
+        var yongshen = jihe["用神"]["主"];
+        if(shiyao == yongshen){
+          var count=0;
+          for(var i=0;i<jinyao.length;i++){
+            var zhuyao = jihe[jinyao[i]]["主爻"].substr(-1,1);
+            if(shengKe(shiyao.substr(-1,1),zhuyao)){
+              count++;
+              break; 
+            }  
+          }
+          if(count==0){
+            jihe["静卦分析"].push("用神持世，不管世用旺衰与否，即属吉兆");
+          }else{
+            jihe["静卦分析"].push("用神持世,却无根，没有元神，短期内暂时无虞，但却不利于长久，长远坐实为凶兆");
+          }
+
+          for(var i=0;i<jihe["世爻分析"]["日令"].length;i++){
+            if(jihe["世爻分析"]["日令"][i][1]=="逢日破"){
+              jihe["静卦分析"].push("世爻受日冲，见逢破者，凶兆却是即时生效");
+            }
+          }
+          for(var i=0;i<jihe["世爻分析"]["月令"].length;i++){
+            if(jihe["世爻分析"]["月令"][i][1]=="逢月破"){
+              jihe["静卦分析"].push("世爻受月冲，见逢破者，凶兆却是即时生效");
+            }
+          } 
+        }else{
+          jihe["静卦分析"].push("问仕途得静卦忌神子孙持世、求财禄得静卦忌神兄弟持世、占考学得静卦忌神妻财持世、    占忧患得静卦忧神官鬼持世、男问婚姻得静卦忌神兄弟持世、女问感情得静卦忌神子孙持世等等");
+          jihe["静卦分析"].push("判断是否为忌神持世");
+          for(var i=0;i<jihe["世爻分析"]["日令"].length;i++){
+            if(jihe["世爻分析"]["日令"][i][1]=="逢日破"){
+              if(yongshen.substr(-1,1)+"克"+shiyao.substr(-1,1),shengKe(shiyao.substr(-1,1),yongshen.substr(-1,1))){
+                jihe["静卦分析"].push("忌神世爻受日冲，见逢破者，用神克世爻，反为吉兆");
+              }else{
+                jihe["静卦分析"].push("忌神世爻受日冲，凶的兆头");
+              } 
+            }
+          }
+          for(var i=0;i<jihe["世爻分析"]["月令"].length;i++){
+            if(jihe["世爻分析"]["月令"][i][1]=="逢月破"){
+              if(yongshen.substr(-1,1)+"克"+shiyao.substr(-1,1),shengKe(shiyao.substr(-1,1),yongshen.substr(-1,1))){
+                jihe["静卦分析"].push("忌神世爻受月冲，见逢破者，用神克世爻，反为吉兆");
+              }else{
+                jihe["静卦分析"].push("忌神世爻受月冲，凶的兆头");
+              }  
+            }
+          }
+        }
+
+        if(yongshen.substr(-1,1)+"生"+shiyao.substr(-1,1),shengKe(shiyao.substr(-1,1),yongshen.substr(-1,1))){
+           if(jihe["用神分析"]["日月组合"]=="旺"){
+            jihe["静卦分析"].push("用神在日月旺，吉的兆头");
+           }
+           if(jihe["用神分析"]["日月组合"]=="平"){
+            for(var i=0;i<jihe["用神分析"]["日令"].length;i++){
+              if(jihe["用神分析"]["日令"][i][1]=="日扶" || jihe["用神分析"]["日令"][i][1]=="日生"){
+                jihe["静卦分析"].push("用神在日月平，日扶生，吉的兆头");
+              }
+            }
+            for(var i=0;i<jihe["用神分析"]["月令"].length;i++){
+              if(jihe["用神分析"]["月令"][i][1]=="逢月破"){
+                if(jihe["用神分析"]["月令"][i][1]=="月扶" || jihe["用神分析"]["月令"][i][1]=="月生"){
+                  jihe["静卦分析"].push("用神在日月平，月扶，吉的兆头");
+                } 
+              }
+            }
+           } 
+           if(jihe["用神分析"]["日月组合"]=="衰"){
+            jihe["静卦分析"].push("用神在日月衰，凶的兆头");
+           }
+        } 
+
+        if(yongshen.substr(-1,1)+"克"+shiyao.substr(-1,1),shengKe(shiyao.substr(-1,1),yongshen.substr(-1,1))){
+          jihe["静卦分析"].push("用神克世爻，凶的兆头"); 
+          if(jihe["世爻分析"]['日月组合']="吉"){
+            for(var i=0;i<jihe["用神分析"]["日令"].length;i++){
+              if(jihe["用神分析"]["日令"][i][1]=="日扶" || jihe["用神分析"]["日令"][i][1]=="日生"){
+                if(jihe["用神分析"]["日月组合"]=="平" && yongshen.indexOf("妻财")!=-1){
+                  jihe["静卦分析"].push("用神起码是受日月之一生扶的平相，另外受克的世爻也不能衰弱，求财得静卦用神财爻克世反为得财之兆");
+                } 
+              }
+            }
+            for(var i=0;i<jihe["用神分析"]["月令"].length;i++){
+              if(jihe["用神分析"]["月令"][i][1]=="逢月破"){
+                if(jihe["用神分析"]["月令"][i][1]=="月扶" || jihe["用神分析"]["月令"][i][1]=="月生"){
+                  if(jihe["用神分析"]["日月组合"]=="平" && yongshen.indexOf("妻财")!=-1){
+                    jihe["静卦分析"].push("用神起码是受日月之一生扶的平相，另外受克的世爻也不能衰弱，求财得静卦用神财爻克世反为得财之兆");
+                  } 
+                } 
+              }
+            }
+          }  
+        }
+
+      }
+      return jihe;
+    }
+
+    //组织数据 
     zuzhi =function(){
       if(leibie==1){ //事态挂
         var ysText = $("#yongshen").text();
@@ -2422,6 +2602,7 @@ var curShenSha ={
           layer.msg("请先选择一个用神");
           return;
         } 
+        jihe["旬空"] = xunkong;
         jihe["用神"] = {"主":ysText,"六亲":ysText.length<=5?ysText.substr(0,2):ysText.substr(4,2),"爻支":ysText.substr(-2,1),"五行":ysText.substr(-1,1),"位置":yongshen_wei};  
         
         //月令对用神的旺衰影响
@@ -2430,14 +2611,36 @@ var curShenSha ={
         jihe = riAndYongShen(jihe); 
         //用神在日月组合上的旺衰
         jihe = yueAndRiYongShen(jihe); 
+        //世爻分析
+        jihe["世爻分析"] = {};
+        jihe["世爻分析"]["日月结果"] = ""; 
+        var zhushifenxi = yueAndRiYao(jihe["主世"][0]);
+        jihe["世爻分析"]["日月组合"] = zhushifenxi; 
 
-      
+        if(zhushifenxi["日月组合"]=="旺"){
+          jihe["世爻分析"]["日月结果"] = "吉";
+        }else{
+          for(key in zhushifenxi){
+            if(zhushifenxi["日令"][1]=="日生" || zhushifenxi["日令"][1]=="日扶" || zhushifenxi["月令"][1]=="月生" || zhushifenxi["月令"][1]=="月扶"){
+              jihe["世爻分析"]["日月结果"] = "吉";
+            } else{
+              jihe["世爻分析"]["日月结果"] = "凶";
+            }
+          }
+        } 
         //单一判断爻的日月组合旺衰 有需要就用
         // console.log(yueAndRiYao("父母壬申金"))
 
         //动变组合对用神的影响
         jihe = dongBianAndYongShen(jihe);
 
+        //暗动 
+        jihe = andong(jihe);
+        //静卦分析
+        jihe = jinggua(jihe);
+        //旬空分析
+        jihe = xunkonggua(jihe)
+ 
       }else{//心态卦
         var yongshen = $("#yongshen").text();
         layer.msg("心态卦没写");
