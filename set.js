@@ -2568,8 +2568,7 @@ var curShenSha ={
            }
         } 
 
-        if(yongshen.substr(-1,1)+"克"+shiyao.substr(-1,1),shengKe(shiyao.substr(-1,1),yongshen.substr(-1,1))){
-          jihe["静卦分析"].push("用神克世爻，凶的兆头"); 
+        if(yongshen.substr(-1,1)+"克"+shiyao.substr(-1,1),shengKe(shiyao.substr(-1,1),yongshen.substr(-1,1))){ 
           if(jihe["世爻分析"]['日月组合']="吉"){
             for(var i=0;i<jihe["用神分析"]["日令"].length;i++){
               if(jihe["用神分析"]["日令"][i][1]=="日扶" || jihe["用神分析"]["日令"][i][1]=="日生"){
@@ -2587,11 +2586,82 @@ var curShenSha ={
                 } 
               }
             }
-          }  
+          }else{
+            jihe["静卦分析"].push("用神克世爻，凶的兆头"); 
+          }
         }
 
       }
       return jihe;
+    }
+
+    getLiuhe =function(zhi){
+      if(zhi=="子") return "丑";if(zhi=="丑") return "子";
+      if(zhi=="寅") return "亥";if(zhi=="亥") return "寅";
+      if(zhi=="卯") return "戌";if(zhi=="戌") return "卯";
+      if(zhi=="辰") return "酉";if(zhi=="酉") return "辰";
+      if(zhi=="巳") return "申";if(zhi=="申") return "巳";
+      if(zhi=="午") return "未";if(zhi=="未") return "午";
+    }
+
+    getLiuchong =function(zhi){
+      if(zhi=="子") return "午";if(zhi=="午") return "子";
+      if(zhi=="寅") return "申";if(zhi=="申") return "寅";
+      if(zhi=="卯") return "酉";if(zhi=="酉") return "卯";
+      if(zhi=="辰") return "戌";if(zhi=="戌") return "辰";
+      if(zhi=="巳") return "亥";if(zhi=="亥") return "巳";
+      if(zhi=="丑") return "未";if(zhi=="未") return "丑";
+    }
+
+    yingqi = function(){
+      jihe["应期细节"] = [];
+      //爻静，逢值逢冲之期应事
+      if(jihe["变爻"].length==0){
+        if(jihe["用神分析"]["日月组合"]=="平" || jihe["用神分析"]["日月组合"]=="旺"){
+          jihe["应期细节"].push("主事爻静旺者，多会应在逢冲之期；"+getLiuchong(jihe["用神"]["爻支"])); 
+        }else{
+          jihe["应期细节"].push("而主事爻为衰弱者，较多会应在逢值之期"+jihe["用神"]["爻支"]+"或者"+getLiuhe(jihe["用神"]["爻支"]));
+        }
+      }
+      //爻动，逢合逢值之期应事
+      jihe["应期细节"].push("爻动，逢合逢值之期应事");
+      //爻月破，逢填实、补破或出月破之期应事。
+      for(var i=0;i<jihe["用神分析"]["月令"].length;i++){
+        if(jihe["用神分析"]["月令"][i][1]=="逢月破"){
+          jihe["应期细节"].push("爻月破，逢填实、补破或出月破之期应事"+jihe["用神"]["爻支"]);
+        }
+        if(jihe["用神分析"]["月令"][i][1]=="月合"){
+          jihe["应期细节"].push("爻遇合，逢两冲之期应事"+getLiuchong(jihe["用神"]["爻支"]));
+        }
+        if(jihe["用神分析"]["月令"][i][1]=="月合"){
+          jihe["应期细节"].push("爻遇冲，逢两合之时应事"+getLiuhe(jihe["用神"]["爻支"]));
+        }
+      } 
+      //日冲者，在应期层面也视为破，一般逢填实、或补破之时应事，当然最快者，也会在当日（期）或次日（期）应事。
+      for(var i=0;i<jihe["用神分析"]["日令"].length;i++){
+        if(jihe["用神分析"]["日令"][i][1]=="逢日破"){
+          jihe["应期细节"].push("爻日破，逢填实、补破或出日破之期应事，也会在当日（期）或次日（期）应事"+jihe["用神"]["爻支"]);
+        }
+        if(jihe["用神分析"]["日令"][i][1]=="日合"){
+          jihe["应期细节"].push("爻遇合，逢两冲之期应事"+getLiuchong(jihe["用神"]["爻支"]));
+        }
+        if(jihe["用神分析"]["日令"][i][1]=="日合"){
+          jihe["应期细节"].push("爻遇冲，逢两合之时应事"+getLiuhe(jihe["用神"]["爻支"]));
+        }
+      } 
+      //旬空者，逢填实、逢冲实、或出空期之时应事。
+      if(xunkong.indexOf(jihe["用神"]["爻支"])!=-1){
+        jihe["应期细节"].push("旬空者，逢填实、逢冲实、或出空期之时应事。"+jihe["用神"]["爻支"]);
+      }
+      //动逢月合，一般数后三个月内应事
+      jihe["应期细节"].push("动逢月合，一般数后三个月内应事");
+      jihe["应期细节"].push("变爻者，若非回头生克，逢值逢冲之期应事之吉凶；若存在回头生克，逢值逢合之期应事。");
+      jihe["应期细节"].push("化进神，于逢值、逢合或逢化进之期应事。");
+      jihe["应期细节"].push("化退神，逢两冲或逢化退之时应事。");
+      jihe["应期细节"].push("遇三合局，局内凶者破局之期应事。吉断者不管局内局外，喜局宜成忌局宜破.三合缺一者，可在补缺成局之时应事");
+      jihe["应期细节"].push("定性不吉利之占，也可在世爻（自占自事）或用神逢冲之期应凶");
+      return jihe;
+
     }
 
     //组织数据 
@@ -2639,7 +2709,16 @@ var curShenSha ={
         //静卦分析
         jihe = jinggua(jihe);
         //旬空分析
-        jihe = xunkonggua(jihe)
+        jihe["旬空分析"] = [];
+        jihe["旬空分析"].push("占病吉凶的卦中出现用神旬空，则是病况能短期痊愈或暂见好转的卦兆") 
+        jihe["旬空分析"].push("求财占得兄弟持世空亡，是短期暂时得财的预兆，但这个喜庆的背后却隐藏着巨大的隐忧，用一句词语概括就是“先盈后亏”，先喜而后悲") 
+        jihe["旬空分析"].push("问行人往归，卦得世爻空亡或用神旬空，都是行人即将归来的预兆") 
+        jihe["旬空分析"].push("占仕途而得子孙持世旬空，占问短期数日内结果的，或有功名及身之象，但这不能说是好事，因这功名最终却有不继之忧") 
+        jihe["旬空分析"].push("忧患心态之占，若占得喜神子孙爻逢空，反是忧患短期内无法了结或事主将长期忧心忡忡的征兆") 
+
+        //应期细节
+        
+        jihe = yingqi(jihe);
  
       }else{//心态卦
         var yongshen = $("#yongshen").text();
@@ -2651,8 +2730,38 @@ var curShenSha ={
 
     //分析数据
     fenxi = function(){
-      // $("#jixiong").text("");
-      // $("#jixiong").append("用神：")
+      console.log(jihe)
+      $("#jixiong").text("");
+      $("#jixiong").append("用神分析：");
+      for(var i=0;i<jihe["用神分析"]["月令"].length;i++){
+        $("#jixiong").append(jihe["用神分析"]["月令"][i][1]+",");
+      }
+      for(var i=0;i<jihe["用神分析"]["日令"].length;i++){
+        $("#jixiong").append(jihe["用神分析"]["日令"][i][1]+",");
+      }
+      $("#jixiong").append("总体："+jihe["用神分析"]["日月组合"]+"<br>");
+ 
+      $("#jixiong").append("<br>无用动爻：");
+      for(var i=0;i<jihe["动变分析"]["无用动爻"].length;i++){
+        $("#jixiong").append(jihe["动变分析"]["无用动爻"][i][2]+","+jihe["动变分析"]["无用动爻"][i][1]+"<br>");
+      }
+      $("#jixiong").append("<br>动变分析结果：");
+      for(var i=0;i<jihe["动变分析"]["结果"].length;i++){
+        $("#jixiong").append(jihe["动变分析"]["结果"][i][2]+","+jihe["动变分析"]["结果"][i][1]+"<br>");
+      }
+      $("#jixiong").append("<br>暗动：");
+      for(var i=0;i<jihe["暗动"].length;i++){
+        $("#jixiong").append(jihe["暗动"][i]+"<br>");
+      }
+      $("#jixiong").append("<br>旬空分析：");
+      for(var i=0;i<jihe["旬空分析"].length;i++){
+        $("#jixiong").append(jihe["旬空分析"][i]+"<br>");
+      }
+      $("#yingqi").append("应期细节：");
+      for(var i=0;i<jihe["应期细节"].length;i++){
+        $("#yingqi").append(jihe["应期细节"][i]+"<br>");
+      }
+     
       console.log(jihe)
     }
 
