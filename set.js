@@ -1,4 +1,3 @@
- 
 layui.use(['form', 'laydate','layer'], function(){
   var form = layui.form
   ,layer = layui.layer 
@@ -45,22 +44,51 @@ layui.use(['form', 'laydate','layer'], function(){
           ,content: $("#window") 
         });
         layer.full(index);
-      } 
+      },  
   };
 
   this.active = active;
   active.notice();
+  $("#record").click(function(){ 
+     location.href = "record.html";
+  }); 
   
   $('#layerDemo .layui-btn').on('click', function(){
     var othis = $(this), method = othis.data('method');
     active[method] ? active[method].call(this, othis) : '';
-  });
+  });   
 
-
-
+  function GetRequest() {
+      var url = location.search; //获取url中"?"符后的字串
+      var theRequest = new Object();
+      if (url.indexOf("?") != -1) {
+          var str = url.substr(1);
+          strs = str.split("&");
+          for(var i = 0; i < strs.length; i ++) {
+              theRequest[strs[i].split("=")[0]]=decodeURI(strs[i].split("=")[1]);
+          }
+      }
+      return theRequest;
+  } 
+  var Request = new Object();
+  Request = GetRequest();  
+  if(typeof(Request["title"])!="undefined" && typeof(Request["datetime"])!="undefined" && typeof(Request["leibie"])!="undefined" && typeof(Request["yao6"])!="undefined"  && typeof(Request["yao5"])!="undefined" && typeof(Request["yao4"])!="undefined" && typeof(Request["yao3"])!="undefined" && typeof(Request["yao2"])!="undefined" && typeof(Request["yao1"])!="undefined"){
+   
+    $("input[name='title'").val(Request["title"]);
+    $("input[name='datetime']").val(Request["datetime"]);
+    $("input[name='leibie']").val(Request["leibie"]);
+    $("#yao6_sl").val(Request["yao6"]); 
+    $("#yao5_sl").val(Request["yao5"]); 
+    $("#yao4_sl").val(Request["yao4"]); 
+    $("#yao3_sl").val(Request["yao3"]); 
+    $("#yao2_sl").val(Request["yao2"]); 
+    $("#yao1_sl").val(Request["yao1"]); 
+  } 
+ 
+   
 
   //监听提交
-  form.on('submit(demo1)', function(data){
+  form.on('submit(demo1)', function(data){ 
     var title = data.field.title;
     var datetime = data.field.datetime;
     var leibie = data.field.leibie;
@@ -71,18 +99,57 @@ layui.use(['form', 'laydate','layer'], function(){
     var yao5 = data.field.yao5;
     var yao6 = data.field.yao6; 
 
-    // if(yao1=='-1' || yao2=='-1' || yao3=='-1' || yao4=='-1' || yao5=='-1' || yao6=='-1'){
-    //   layer.msg('请输入完整的六码！', {icon: 5});
-    //   return false;
-    // }
+    if(title.replace(/(^\s*)|(\s*$)/g, "")==""){
+      layer.msg('请输入占问内容！', {icon: 5});
+      return false;
+    }
+
+    if(yao1=='-1' || yao2=='-1' || yao3=='-1' || yao4=='-1' || yao5=='-1' || yao6=='-1'){
+      layer.msg('请输入完整的六码！', {icon: 5});
+      return false;
+    }
+
+
+    $("#baocun").click(function(){
+      var title = data.field.title;
+      var datetime = data.field.datetime;
+      var leibie = data.field.leibie;
+      var yao1 = data.field.yao1;
+      var yao2 = data.field.yao2;
+      var yao3 = data.field.yao3;
+      var yao4 = data.field.yao4;
+      var yao5 = data.field.yao5;
+      var yao6 = data.field.yao6; 
+
+      arrayObj = []
+      var jsonData = localStorage.getItem("data")
+      if(typeof(jsonData)!="undefined"){ 
+        arrayObj = JSON.parse(jsonData)
+      }
+      var obj ={
+        "title": title,
+        "datetime": datetime,
+        "leibie": leibie,
+        "yao1": yao1,
+        "yao2": yao2,
+        "yao3": yao3,
+        "yao4": yao4,
+        "yao5": yao5,
+        "yao6": yao6 
+      }
+      arrayObj.unshift(obj)
+      jsonData=JSON.stringify(arrayObj) 
+      localStorage.setItem("data", jsonData);  
+      layer.msg("保存成功")
+    }); 
 
      //测试
-     yao1=1
-     yao2=0
-     yao3=2
-     yao4=0
-     yao5=2
-     yao6=3
+    //  yao1=1
+    //  yao2=0
+    //  yao3=2
+    //  yao4=0
+    //  yao5=2
+    //  yao6=3
      //测试结束 
 
     $("#yaowei").append()
@@ -844,16 +911,7 @@ layui.use(['form', 'laydate','layer'], function(){
           if(gong=="巳") return "绝";
         }
         return ""
-    }
-
-    
-
-
-      
-      
-        
-      
-    
+    } 
     
       
     //神煞 
@@ -2760,9 +2818,7 @@ var curShenSha ={
       $("#yingqi").append("应期细节：");
       for(var i=0;i<jihe["应期细节"].length;i++){
         $("#yingqi").append(jihe["应期细节"][i]+"<br>");
-      }
-     
-      console.log(jihe)
+      } 
     }
 
     $("#zuzhi").click( function(){

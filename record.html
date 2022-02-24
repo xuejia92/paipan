@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-control" content="no-cache,must-revalidate">
+	<meta http-equiv="Cache" content="no-cache">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="./layui/css/layui.css"> 
+	<script src="./jquery.js"></script> 
+	<script src="./layui/layui.js"></script>  
+	<title>六爻排盘</title>
+</head>
+<body class="no-cache">
+	<h1 align="center" style="padding-left: 10%;">六爻排盘记录 
+	</h1> 
+  <div >
+    <button type="button" id="fanhui" class="layui-btn layui-btn-fluid">返回排盘</button>
+  </div>
+  <br>
+<table  border="1" style="    width: 100%; text-align: center;" id="hjhj">
+  <th>占卜标题</th><th>时间</th> <th>爻位</th> <th>操作</th>
+</table> 
+<script> 
+var form = layui.form
+  ,layer = layui.layer 
+  ,laydate = layui.laydate; 
+  localData = localStorage.getItem("data")
+  localData = JSON.parse(localData) 
+  for(var i=0;i<localData.length;i++){
+    yao = localData[i]["yao1"]+localData[i]["yao2"]+localData[i]["yao3"]+localData[i]["yao4"]+localData[i]["yao5"]+localData[i]["yao6"]
+    $("#hjhj").append("<tr><td>"+localData[i]["title"]+"</td><td>"+localData[i]['datetime']+"</td><td>"+yao+"</td><td><a href='javascript:void(0);' attr="+i+" class='see'>查看</a>&nbsp;<a class='del' href='javascript:void(0);' attr="+i+">删除</a></td></tr>");
+  }   
+
+  $('.see').click(function(){
+    var index = $(this).attr('attr');
+    localData = localStorage.getItem("data")
+    localData = JSON.parse(localData)
+    console.log(localData[index],index)
+    data = localData[index]
+    location.href = "index.html?leibie=1&title="+data['title']+"&datetime="+data['datetime']+"&yao1="+data['yao1']+"&yao2="+data['yao2']+"&yao3="+data['yao3']+"&yao4="+data['yao4']+"&yao5="+data['yao5']+"&yao6="+data['yao6'];
+  });
+
+  $('.del').click(function(){
+    var index = $(this).attr('attr');
+    localData = localStorage.getItem("data")
+    localData = JSON.parse(localData)
+    if(layer.confirm('确定删除吗？', {
+      btn: ['确定','取消'] //按钮
+    }, function(){ 
+      var linshi = []
+      for(var i=0;i<localData.length;i++){
+        if(i!=index){
+          linshi.push(localData[i])
+        }
+      }  
+      localStorage.setItem("data",JSON.stringify(linshi))
+      layer.msg('删除成功', {icon: 1});
+      location.href="./record.html"
+      return false;
+    }, function(){
+      layer.msg('取消删除', {icon: 5});
+    }));
+  });
+    
+
+  $("#fanhui").click(function(){
+    location.href="index.html";
+  });
+</script>
+</body>
+</html>
