@@ -30,10 +30,13 @@ var form = layui.form
   ,laydate = layui.laydate; 
   localData = localStorage.getItem("data")
   localData = JSON.parse(localData) 
-  for(var i=0;i<localData.length;i++){
-    yao = localData[i]["yao1"]+localData[i]["yao2"]+localData[i]["yao3"]+localData[i]["yao4"]+localData[i]["yao5"]+localData[i]["yao6"]
-    $("#hjhj").append("<tr><td>"+localData[i]["title"]+"</td><td>"+localData[i]['datetime']+"</td><td>"+yao+"</td><td><a href='javascript:void(0);' attr="+i+" class='see'>查看</a>&nbsp;<a class='del' href='javascript:void(0);' attr="+i+">删除</a></td></tr>");
-  }   
+  if(localData!=null){
+    for(var i=0;i<localData.length;i++){
+      yao = localData[i]["yao1"]+localData[i]["yao2"]+localData[i]["yao3"]+localData[i]["yao4"]+localData[i]["yao5"]+localData[i]["yao6"]
+      $("#hjhj").append("<tr><td>"+localData[i]["title"]+"</td><td>"+localData[i]['datetime']+"</td><td>"+yao+"</td><td><a href='javascript:void(0);' attr="+i+" class='see'>查看</a>&nbsp;<a class='del' href='javascript:void(0);' attr="+i+">删除</a></td></tr>");
+    }  
+  }
+   
 
   $('.see').click(function(){
     var index = $(this).attr('attr');
@@ -68,7 +71,7 @@ var form = layui.form
     
 
   $("#fanhui").click(function(){
-    location.href="index.html";
+    location.href="./index.html";
   });
 </script>
 </body>

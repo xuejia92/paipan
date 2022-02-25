@@ -74,15 +74,27 @@ layui.use(['form', 'laydate','layer'], function(){
   Request = GetRequest();  
   if(typeof(Request["title"])!="undefined" && typeof(Request["datetime"])!="undefined" && typeof(Request["leibie"])!="undefined" && typeof(Request["yao6"])!="undefined"  && typeof(Request["yao5"])!="undefined" && typeof(Request["yao4"])!="undefined" && typeof(Request["yao3"])!="undefined" && typeof(Request["yao2"])!="undefined" && typeof(Request["yao1"])!="undefined"){
    
-    $("input[name='title'").val(Request["title"]);
-    $("input[name='datetime']").val(Request["datetime"]);
-    $("input[name='leibie']").val(Request["leibie"]);
-    $("#yao6_sl").val(Request["yao6"]); 
-    $("#yao5_sl").val(Request["yao5"]); 
-    $("#yao4_sl").val(Request["yao4"]); 
-    $("#yao3_sl").val(Request["yao3"]); 
-    $("#yao2_sl").val(Request["yao2"]); 
-    $("#yao1_sl").val(Request["yao1"]); 
+    // $("input[name='title'").val(Request["title"]);
+    // $("input[name='datetime']").val(Request["datetime"]);
+    // $("input[name='leibie']").val(Request["leibie"]);
+    // $("#yao6_sl").val(Request["yao6"]); 
+    // $("#yao5_sl").val(Request["yao5"]); 
+    // $("#yao4_sl").val(Request["yao4"]); 
+    // $("#yao3_sl").val(Request["yao3"]); 
+    // $("#yao2_sl").val(Request["yao2"]); 
+    // $("#yao1_sl").val(Request["yao1"]); 
+
+    form.val('example', {
+      "title": Request["title"]  
+      ,"datetime": Request["datetime"]
+      ,"leibie": Request["leibie"]
+      ,"yao6": Request["yao6"]  
+      ,"yao5": Request["yao5"]  
+      ,"yao4": Request["yao4"]  
+      ,"yao3": Request["yao3"]  
+      ,"yao2": Request["yao2"]  
+      ,"yao1": Request["yao1"]  
+    });
   } 
  
    
@@ -122,8 +134,8 @@ layui.use(['form', 'laydate','layer'], function(){
       var yao6 = data.field.yao6; 
 
       arrayObj = []
-      var jsonData = localStorage.getItem("data")
-      if(typeof(jsonData)!="undefined"){ 
+      var jsonData = localStorage.getItem("data") 
+      if(jsonData!=null){ 
         arrayObj = JSON.parse(jsonData)
       }
       var obj ={
@@ -137,6 +149,7 @@ layui.use(['form', 'laydate','layer'], function(){
         "yao5": yao5,
         "yao6": yao6 
       }
+      console.log(arrayObj)
       arrayObj.unshift(obj)
       jsonData=JSON.stringify(arrayObj) 
       localStorage.setItem("data", jsonData);  
