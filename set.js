@@ -152,8 +152,10 @@ layui.use(['form', 'laydate','layer'], function(){
       console.log(arrayObj)
       arrayObj.unshift(obj)
       jsonData=JSON.stringify(arrayObj) 
-      localStorage.setItem("data", jsonData);  
-      layer.msg("保存成功")
+      localStorage.setItem("data", jsonData); 
+      layer.msg("保存成功", {icon: 1,time:1000},function(){
+        location.href="./record.html"
+     });   
     }); 
 
      //测试
