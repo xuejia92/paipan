@@ -2301,10 +2301,10 @@ var curShenSha ={
 
     //三合局判断
     function sanHeJu(dizhiZu){
-      if("申".indexOf(dizhiZu)!=-1 && "子".indexOf(dizhiZu) && "辰".indexOf(dizhiZu)!=-1) return ["水","申子辰合水局","子"];
-      if("寅".indexOf(dizhiZu)!=-1 && "午".indexOf(dizhiZu) && "戌".indexOf(dizhiZu)!=-1) return ["火","寅午戌合火局","午"];
-      if("亥".indexOf(dizhiZu)!=-1 && "卯".indexOf(dizhiZu) && "未".indexOf(dizhiZu)!=-1) return ["木","亥卯未合木局","卯"];
-      if("丑".indexOf(dizhiZu)!=-1 && "酉".indexOf(dizhiZu) && "巳".indexOf(dizhiZu)!=-1) return ["金","巳酉丑合金局","酉"];
+      if(dizhiZu.indexOf("申")!=-1 && dizhiZu.indexOf("子") && dizhiZu.indexOf("辰")!=-1) return ["水","申子辰合水局","子"];
+      if(dizhiZu.indexOf("寅")!=-1 && dizhiZu.indexOf("午") && dizhiZu.indexOf("戌")!=-1) return ["火","寅午戌合火局","午"];
+      if(dizhiZu.indexOf("亥")!=-1 && dizhiZu.indexOf("卯") && dizhiZu.indexOf("未")!=-1) return ["木","亥卯未合木局","卯"];
+      if(dizhiZu.indexOf("丑")!=-1 && dizhiZu.indexOf("酉") && dizhiZu.indexOf("巳")!=-1) return ["金","巳酉丑合金局","酉"];
       return false;
     }
 
@@ -2355,8 +2355,8 @@ var curShenSha ={
             jihe["动变分析"].push([bianyao,"吉","变爻"+bianyao+"回头生"+dongyao]);  //动变组合对用神的影响
           }   
 
-          //爻动而化进神 
-          if(bianyaoWuxin==dongyaoWuxin && bianyaoDizhi.indexOf(tg)>dongyaoDizhi.indexOf(tg)){
+          //爻动而化进神  
+          if(bianyaoWuxin==dongyaoWuxin && dz.indexOf(bianyaoDizhi)>dz.indexOf(dongyaoDizhi)){
             jihe["动变分析"].push([bianyao,"吉","变爻"+bianyao+"化进神"+dongyao]);  //动变组合对用神的影响
           }  
 
@@ -2411,8 +2411,8 @@ var curShenSha ={
               jihe["动变分析"].push([dongyao,"凶","变爻"+bianyao+"回头克动爻"+dongyao]);  //动变组合对用神的影响
             }  
 
-            //爻动而化退神
-            if(bianyaoWuxin==dongyaoWuxin && bianyaoDizhi.indexOf(tg)<dongyaoDizhi.indexOf(tg)){
+            //爻动而化退神 
+            if(bianyaoWuxin==dongyaoWuxin && dz.indexOf(bianyaoDizhi)<dz.indexOf(dongyaoDizhi)){
               jihe["动变分析"].push([dongyao,"凶","变爻"+bianyao+"化退神"]);  //动变组合对用神的影响
             } 
 
@@ -2476,7 +2476,7 @@ var curShenSha ={
             if(bianyaoWuxin+"克"+dongyaoWuxin==shengKe(dongyaoWuxin,bianyaoWuxin)){  
                 jihe["动变分析"]["无用动爻"].push([dongyao,"凶","动爻"+dongyao+"被克，为无用动爻，无能力生克他爻"]);  
             }   
-            if(bianyaoWuxin==dongyaoWuxin && bianyaoDizhi.indexOf(tg)<dongyaoDizhi.indexOf(tg)){
+            if(bianyaoWuxin==dongyaoWuxin && dz.indexOf(bianyaoDizhi)<dz.indexOf(dongyaoDizhi)){
               jihe["动变分析"]["无用动爻"].push([dongyao,"凶","动爻"+dongyao+"化退神，为无用动爻，无能力生克他爻"]);  
             }   
             if(yueriLs.indexOf("逢月破")!=-1 ){
@@ -2538,7 +2538,7 @@ var curShenSha ={
               if(yueCount>=0){
                 jihe["暗动"].push(jin+"静爻得月令趋旺或得月令之气而受日冲，为冲起暗动");
               } 
-              if(jin.substr(-2,1).indexOf(xunkong)!=-1){
+              if(xunkong.indexOf(jin.substr(-2,1))!=-1){
                 jihe["暗动"].push(jin+"静爻正处于旬空状态下受日冲，为冲起暗动");
               } 
               for(bk in bianyao){
@@ -2813,6 +2813,16 @@ var curShenSha ={
         $("#jixiong").append(jihe["用神分析"]["日令"][i][1]+",");
       }
       $("#jixiong").append("总体："+jihe["用神分析"]["日月组合"]+"<br>");
+
+      $("#jixiong").append("<br>世爻分析：");
+      for(var i=0;i<jihe["世爻分析"]["日月组合"]["月令"].length;i++){
+        $("#jixiong").append(jihe["世爻分析"]["日月组合"]["月令"][i][1]+",");
+      }
+      for(var i=0;i<jihe["世爻分析"]["日月组合"]["日令"].length;i++){
+        $("#jixiong").append(jihe["世爻分析"]["日月组合"]["日令"][i][1]+",");
+      }
+      $("#jixiong").append("总体："+jihe["世爻分析"]["日月组合"]["日月组合"]+" ");
+      $("#jixiong").append("结果："+jihe["世爻分析"]["日月结果"]+"<br>");
  
       $("#jixiong").append("<br>无用动爻：");
       for(var i=0;i<jihe["动变分析"]["无用动爻"].length;i++){
