@@ -12,16 +12,22 @@
 	<link rel="stylesheet" href="./layui/css/layui.css"> 
 	<script src="./jquery.js"></script> 
 	<script src="./layui/layui.js"></script>  
+  <script src="./FileSaver.js"></script>
 	<title>六爻排盘</title>
 </head>
 <body class="no-cache">
 	<h1 align="center" style="padding-left: 10%;">六爻排盘记录 
 	</h1> 
-  <div >
-    <button type="button" id="fanhui" class="layui-btn layui-btn-fluid">返回排盘</button>
+  
+  <br>
+  <div  class="layui-btn-group">
+      <button style="width: 50%;" type="button" id="fanhui" class="layui-btn layui-btn-fluid">返回排盘</button>
+      <input style="width: 50%;float: left;" type="file" id="input" class="layui-btn layui-btn-warm">         
+      <input style="width: 100%;" type="button" value="导出数据" id="output" class="layui-btn layui-btn-danger"/>
   </div>
   <br>
-<table  border="1" style="    width: 100%; text-align: center;" id="hjhj">
+  <br>
+<table  border="1" style="    width: 100%; text-align: center;line-height: 170%;" id="hjhj">
   <th>占卜标题</th><th>时间</th> <th>爻位</th> <th>操作</th>
 </table> 
 <script> 
@@ -33,7 +39,7 @@ var form = layui.form
   if(localData!=null){
     for(var i=0;i<localData.length;i++){
       yao = localData[i]["yao1"]+localData[i]["yao2"]+localData[i]["yao3"]+localData[i]["yao4"]+localData[i]["yao5"]+localData[i]["yao6"]
-      $("#hjhj").append("<tr><td>"+localData[i]["title"]+"</td><td>"+localData[i]['datetime']+"</td><td>"+yao+"</td><td><a href='javascript:void(0);' attr="+i+" class='see'>查看</a>&nbsp;<a class='del' href='javascript:void(0);' attr="+i+">删除</a></td></tr>");
+      $("#hjhj").append("<tr><td><a style='color:blue;' href='javascript:void(0);' attr="+i+" class='see'>"+localData[i]["title"]+"</a></td><td>"+localData[i]['datetime']+"</td><td>"+yao+"</td><td><a class='del layui-btn layui-btn-danger layui-btn-xs' href='javascript:void(0);' attr="+i+">删除</a></td></tr>");
     }  
   }
    
@@ -73,6 +79,58 @@ var form = layui.form
   $("#fanhui").click(function(){
     location.href="./index.html";
   });
+
+  function isJSON(str) {
+      if (typeof str == 'string') {
+          try {
+              var obj=JSON.parse(str);
+              if(typeof obj == 'object' && obj ){
+                  return true;
+              }else{
+                  return false;
+              }
+
+          } catch(e) {
+              console.log('error：'+str+'!!!'+e);
+              return false;
+          }
+      }
+      return false;
+  }
+
+  // 导入
+ $("#input").change(function(e){
+     var file=e.target.files[0];
+     var reader = new FileReader();
+     reader.onload = function(e){ 
+       if(!isJSON(e.target.result)){
+        layer.msg('导入失败，请检查文件内容是否为json数据', {icon: 5});
+           return false; 
+       }
+       var jsonData = JSON.parse(e.target.result)
+       for(var i=0;i<jsonData.length;i++){ 
+         if(jsonData[i]["title"]==undefined || jsonData[i]["datetime"]==undefined || jsonData[i]["yao1"]==undefined || jsonData[i]["yao2"]==undefined || jsonData[i]["yao3"]==undefined || jsonData[i]["yao4"]==undefined || jsonData[i]["yao5"]==undefined || jsonData[i]["yao6"]==undefined){
+           layer.msg('导入失败，请检查文件内容格式', {icon: 5});
+           return false;
+         } 
+       }
+       localStorage.setItem("data",e.target.result);    
+       layer.msg("更新数据成功", {icon: 1,time:1000},function(){
+          location.href="./record.html"
+       }); 
+     };
+     reader.readAsText(file);
+ });
+ //导出
+ $("#output").click(function(){
+     var content =localStorage.getItem("data");    
+     if(content==null) {
+        layer.msg("没有数据", {icon: 5});
+        return;
+     } 
+     var blob = new Blob([content], {type: "text/plain;charset=utf-8"});
+     saveAs(blob, "save.txt");
+ });
 </script>
 </body>
 </html>
