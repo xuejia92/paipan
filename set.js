@@ -211,11 +211,11 @@ layui.use(['form', 'laydate','layer'], function(){
         "坎":['坎为水','水泽节' ,'水雷屯' ,'水火既济' ,'泽火革' ,'雷火丰' ,'地火明夷' ,'地水师'], 
         "离":['离为火','火山旅' ,'火风鼎' ,'火水未济' ,'山水蒙' ,'风水涣' ,'天水讼' ,'天火同人'],
         "艮":['艮为山','山火贲' ,'山天大畜' ,'山泽损' ,'火泽睽' ,'天泽履' ,'风泽中孚' ,'风山渐'],
-        "兑":['泽水困','泽水困' ,'泽地萃' ,'泽山咸' ,'水山蹇' ,'地山谦' ,'雷山小过' ,'雷泽归妹'],
+        "兑":['兑为泽','泽水困' ,'泽地萃' ,'泽山咸' ,'水山蹇' ,'地山谦' ,'雷山小过' ,'雷泽归妹'],
       }
-      var yaoming = shabagua[0]+xiabagua[0];
-      var res; 
-      for(var key in bagong){ 
+      var yaoming = shabagua[0]+xiabagua[0];  
+      var res;  
+      for(var key in bagong){  
         if(shabagua[0]!=xiabagua[0]){ 
           bagong[key].forEach(function(item,index){ 
             if(item.indexOf(yaoming)!=-1){   
@@ -223,7 +223,12 @@ layui.use(['form', 'laydate','layer'], function(){
             }
           }) 
         }else{
-          res= [key,bagong[key][0]];
+          bagong[key].forEach(function(item,index){ 
+            if(item.indexOf("为"+shabagua[0])!=-1){   
+              res= [key,item]; 
+            }
+          }) 
+          // res= [key,bagong[key][0]];
         }
       }  
       return res;
@@ -2245,13 +2250,15 @@ var curShenSha ={
 
       //日令、、/////////////////////////////////
       if(yao["爻支"]==jihe["日令"][1]) result["日令"].push([2,"临日建"]);
-      if(jihe["变爻"].length==0 && "合"==diZhiXiangChongHe(yao["爻支"],jihe["日令"][1])) result["日令"].push([2,"日合"]);
+      if("合"==diZhiXiangChongHe(yao["爻支"],jihe["日令"][1])) result["日令"].push([2,"日合"]);
       if(jihe["日令"][2]+"生"+yao["五行"]==shengKe(yao["五行"],jihe["日令"][2])) result["日令"].push([1,"日生"]);
       if(yao["爻支"]!=jihe["日令"][1] && yao["五行"]==jihe["日令"][2]) result["日令"].push([1,"日扶"]);
       if(yao["爻支"]!=jihe["日令"][1] && (shierGong(yao["五行"],jihe["日令"][1])=="长生" || shierGong(yao["五行"],jihe["日令"][1])=="帝旺")) result["日令"].push([1,"日"+shierGong(yao["五行"],jihe["日令"][1])]);
 
       if(jihe["日令"][2]+"克"+yao["五行"]==shengKe(yao["五行"],jihe["日令"][2])) result["日令"].push([-1,"日克"]);
       if(yao["爻支"]!=jihe["日令"][1] && shierGong(yao["五行"],jihe["日令"][1])=="绝") result["日令"].push([-1,"日令"+shierGong(yao["五行"],jihe["日令"][1])]);
+
+      if("冲"==diZhiXiangChongHe(yao["爻支"],jihe["日令"][1])) result["日令"].push([0,"日冲"]);
       
       if(yao["五行"]+"生"+jihe["日令"][2]==shengKe(yao["五行"],jihe["日令"][2])) result["日令"].push([0,"日平相"]);
       if(yao["五行"]+"克"+jihe["日令"][2]==shengKe(yao["五行"],jihe["日令"][2])) result["日令"].push([0,"日平相"]);   
@@ -2509,7 +2516,7 @@ var curShenSha ={
     //andong
     var xunkong = this.xunKong();
     andong=function(){
-      jihe["暗动"] = {};
+      jihe["暗动"] = [];
       var jinyao = ["爻1","爻2","爻3","爻4","爻5","爻6"];
       var bianyao = jihe["变爻"]; 
       for(key in bianyao){
@@ -2520,6 +2527,7 @@ var curShenSha ={
         var bk = bianyao[key][0];
         //明动之爻受日冲，不论旺衰，皆属冲起有用
         var yueri = yueAndRiYao(bk);
+        
         for(var i=0;i<yueri["日令"].length;i++){
           if(yueri["日令"][i][1]=="日冲"){
             jihe["暗动"].push(bk+"动爻受日冲，不论旺衰，皆属冲起有用");
@@ -2528,7 +2536,7 @@ var curShenSha ={
       }
       for(var key=0;key<jinyao.length;key++){ 
           var jin = jihe[jinyao[key]]["主爻"];
-          var yueri = yueAndRiYao(jin); 
+          var yueri = yueAndRiYao(jin);  
           for(var i=0;i<yueri["日令"].length;i++){
             if(yueri["日令"][i][1]=="日冲"){
               var yueCount = 0;
@@ -2537,7 +2545,7 @@ var curShenSha ={
               }
               if(yueCount>=0){
                 jihe["暗动"].push(jin+"静爻得月令趋旺或得月令之气而受日冲，为冲起暗动");
-              } 
+              }  
               if(xunkong.indexOf(jin.substr(-2,1))!=-1){
                 jihe["暗动"].push(jin+"静爻正处于旬空状态下受日冲，为冲起暗动");
               } 
