@@ -121,11 +121,12 @@ layui.use(['form', 'laydate','layer'], function(){
       return false;
     }
 
-
+    yuerizhi = data.field.yuerizhi;
     $("#baocun").click(function(){
       var title = data.field.title;
       var datetime = data.field.datetime;
       var leibie = data.field.leibie;
+      yuerizhi = data.field.yuerizhi;
       var yao1 = data.field.yao1;
       var yao2 = data.field.yao2;
       var yao3 = data.field.yao3;
@@ -147,9 +148,9 @@ layui.use(['form', 'laydate','layer'], function(){
         "yao3": yao3,
         "yao4": yao4,
         "yao5": yao5,
-        "yao6": yao6 
-      }
-      console.log(arrayObj)
+        "yao6": yao6,
+        "yuerizhi": yuerizhi,
+      } 
       arrayObj.unshift(obj)
       jsonData=JSON.stringify(arrayObj) 
       localStorage.setItem("data", jsonData); 
@@ -169,7 +170,7 @@ layui.use(['form', 'laydate','layer'], function(){
 
     $("#yaowei").append()
     $("#title").text(title);
-    $("#theTime").text(datetime);
+    $("#theTime").text(datetime); 
     $("#beimian").text(yao1+","+yao2+","+yao3+","+yao4+","+yao5+","+yao6); 
     $("#leibie").text(leibie==1?"事态卦":"心态卦");
 
@@ -851,6 +852,12 @@ layui.use(['form', 'laydate','layer'], function(){
     this.rz=this.dZhi();
     this.sz=this.hZhi();
     this.xk=this.xunKong();
+
+    //手动月日支
+    if(yuerizhi!=""){ 
+      this.yz=yuerizhi[0];
+      this.rz=yuerizhi[1]; 
+    }
 
     //装六神
     var liushen = ['青龙','朱雀','勾陈','螣蛇','白虎','玄武','青龙','朱雀','勾陈','螣蛇','白虎','玄武']
