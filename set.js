@@ -853,17 +853,17 @@ layui.use(['form', 'laydate','layer'], function(){
     this.xunKong=function(){  //旬空
       var xtg=tg.indexOf(this.rg);
           var xdz=dz.indexOf(this.rz);
-          var xunk;
+          var xunk; 
           if((xtg-xdz)==0) xunk=dz[10]+dz[11];
           if((xtg-xdz)==-10||(xtg-xdz)==2) xunk=dz[8]+dz[9];
           if((xtg-xdz)==-8||(xtg-xdz)==4) xunk=dz[6]+dz[7];
           if((xtg-xdz)==-6||(xtg-xdz)==6)	xunk=dz[4]+dz[5];
           if((xtg-xdz)==-4||(xtg-xdz)==8)	xunk=dz[2]+dz[3];
-          if((xtg-xdz)==-2)	xunk=dz[0]+dz[1];
+          if((xtg-xdz)==-2)	xunk=dz[0]+dz[1]; 
           return xunk;
     }
 
-    this.xk=this.xunKong();
+    this.xk=this.xunKong(); 
 
     //装六神
     var liushen = ['青龙','朱雀','勾陈','螣蛇','白虎','玄武','青龙','朱雀','勾陈','螣蛇','白虎','玄武']
