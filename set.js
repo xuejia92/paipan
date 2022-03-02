@@ -94,6 +94,7 @@ layui.use(['form', 'laydate','layer'], function(){
       ,"yao3": Request["yao3"]  
       ,"yao2": Request["yao2"]  
       ,"yao1": Request["yao1"]  
+      ,"yuerizhi":  typeof(Request["yuerizhi"])!="undefined"?Request["yuerizhi"]:""  
     });
   } 
  
@@ -110,6 +111,7 @@ layui.use(['form', 'laydate','layer'], function(){
     var yao4 = data.field.yao4;
     var yao5 = data.field.yao5;
     var yao6 = data.field.yao6; 
+    var yuerizhi = data.field.yuerizhi; 
 
     if(title.replace(/(^\s*)|(\s*$)/g, "")==""){
       layer.msg('请输入占问内容！', {icon: 5});
@@ -829,10 +831,28 @@ layui.use(['form', 'laydate','layer'], function(){
     }
     this.hZhu=function(){  //时柱
       return this.hGan()+this.hZhi();
+    } 
+
+    this.ng=this.yGan();
+    this.yg=this.mGan();
+    this.rg=this.dGan();
+    this.sg=this.hGan();
+    this.nz=this.yZhi();
+    this.yz=this.mZhi();
+    this.rz=this.dZhi();
+    this.sz=this.hZhi();
+    
+
+    //手动月日支
+    if(yuerizhi!=""){ 
+      this.yz=yuerizhi[0];
+      this.rg=yuerizhi[1];
+      this.rz=yuerizhi[2]; 
     }
+
     this.xunKong=function(){  //旬空
-      var xtg=tg.indexOf(this.dGan());
-          var xdz=dz.indexOf(this.dZhi());
+      var xtg=tg.indexOf(this.rg);
+          var xdz=dz.indexOf(this.rz);
           var xunk;
           if((xtg-xdz)==0) xunk=dz[10]+dz[11];
           if((xtg-xdz)==-10||(xtg-xdz)==2) xunk=dz[8]+dz[9];
@@ -843,21 +863,7 @@ layui.use(['form', 'laydate','layer'], function(){
           return xunk;
     }
 
-    this.ng=this.yGan();
-    this.yg=this.mGan();
-    this.rg=this.dGan();
-    this.sg=this.hGan();
-    this.nz=this.yZhi();
-    this.yz=this.mZhi();
-    this.rz=this.dZhi();
-    this.sz=this.hZhi();
     this.xk=this.xunKong();
-
-    //手动月日支
-    if(yuerizhi!=""){ 
-      this.yz=yuerizhi[0];
-      this.rz=yuerizhi[1]; 
-    }
 
     //装六神
     var liushen = ['青龙','朱雀','勾陈','螣蛇','白虎','玄武','青龙','朱雀','勾陈','螣蛇','白虎','玄武']

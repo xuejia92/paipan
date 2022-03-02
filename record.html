@@ -51,7 +51,8 @@ var form = layui.form
     localData = JSON.parse(localData)
     console.log(localData[index],index)
     data = localData[index]
-    location.href = "index.html?leibie=1&title="+data['title']+"&datetime="+data['datetime']+"&yao1="+data['yao1']+"&yao2="+data['yao2']+"&yao3="+data['yao3']+"&yao4="+data['yao4']+"&yao5="+data['yao5']+"&yao6="+data['yao6'];
+    data['yuerizhi']=data['yuerizhi']==undefined?"":data['yuerizhi']
+    location.href = "index.html?leibie=1&title="+data['title']+"&datetime="+data['datetime']+"&yao1="+data['yao1']+"&yao2="+data['yao2']+"&yao3="+data['yao3']+"&yao4="+data['yao4']+"&yao5="+data['yao5']+"&yao6="+data['yao6']+"&yuerizhi="+data['yuerizhi'];
   });
 
   $(".mod").click(function(){
