@@ -590,7 +590,7 @@ layui.use(['form', 'laydate','layer'], function(){
       if(zj=="申" && yj=="寅") return "冲";
       if(zj=="卯" && yj=="酉") return "冲";
       if(zj=="酉" && yj=="卯") return "冲";
-      if(zj=="辰" && yj=="戌") return "冲";
+      if(zj=="戌" && yj=="辰") return "冲";
       if(zj=="辰" && yj=="戌") return "冲";
       if(zj=="巳" && yj=="亥") return "冲";
       if(zj=="亥" && yj=="巳") return "冲"; 
@@ -2081,7 +2081,7 @@ var curShenSha ={
        var yuchong = linshiYueLin.indexOf("月冲"); 
        var yufu = linshiYueLin.indexOf("月扶"); 
 
-       if(linshiYueLin.indexOf("月合")!=-1 && linshiYueLin.indexOf("月克")!=-1){
+       if(linshiYueLin.indexOf("月合")!=-1 && linshiYueLin.indexOf("月克")!=-1){ 
           var ll = layer.open({ 
             title: "请选择留下的月合克" 
             ,type:0
@@ -2290,7 +2290,7 @@ var curShenSha ={
            ,type:0
            ,closeBtn:0
            ,id: 'LAY_layuipro112' //设定一个id，防止重复弹出  
-           ,content: $("#yuechongfu").html()
+           ,content: $("#riheke").html()
            ,yes: function(layero, index){
              var value = $("input[name=yuechongfu]:checked").val()
              if(typeof(value)=="undefined"){
@@ -2549,7 +2549,7 @@ var curShenSha ={
       }
       for(var key=0;key<jinyao.length;key++){ 
           var jin = jihe[jinyao[key]]["主爻"];
-          var yueri = yueAndRiYao(jin);  
+          var yueri = yueAndRiYao(jin);   
           for(var i=0;i<yueri["日令"].length;i++){
             if(yueri["日令"][i][1]=="日冲"){
               var yueCount = 0;
