@@ -31,7 +31,7 @@ layui.use(['form', 'laydate','layer'], function(){
   var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
   var active = {
       notice: function(){
-        //示范一个公告层
+        //示范一个公告层 
         var index=layer.open({
           type: 1
           ,title: false //不显示标题栏
@@ -53,7 +53,7 @@ layui.use(['form', 'laydate','layer'], function(){
      location.href = "record.html";
   }); 
   
-  $('#layerDemo .layui-btn').on('click', function(){
+  $('#layerDemo .layui-btn').on('click', function(){ 
     var othis = $(this), method = othis.data('method');
     active[method] ? active[method].call(this, othis) : '';
   });   
@@ -72,6 +72,7 @@ layui.use(['form', 'laydate','layer'], function(){
   } 
   var Request = new Object();
   Request = GetRequest();  
+   
   if(typeof(Request["title"])!="undefined" && typeof(Request["datetime"])!="undefined" && typeof(Request["leibie"])!="undefined" && typeof(Request["yao6"])!="undefined"  && typeof(Request["yao5"])!="undefined" && typeof(Request["yao4"])!="undefined" && typeof(Request["yao3"])!="undefined" && typeof(Request["yao2"])!="undefined" && typeof(Request["yao1"])!="undefined"){
    
     // $("input[name='title'").val(Request["title"]);
@@ -101,7 +102,7 @@ layui.use(['form', 'laydate','layer'], function(){
    
 
   //监听提交
-  form.on('submit(demo1)', function(data){ 
+  form.on('submit(demo1)', function(data){   
     var title = data.field.title;
     var datetime = data.field.datetime;
     var leibie = data.field.leibie;
@@ -2508,6 +2509,9 @@ var curShenSha ={
             if("绝"==shierGong(dongyaoWuxin,bianyaoDizhi) && bianyaoWuxin+"生"+dongyaoWuxin!=shengKe(dongyaoWuxin,bianyaoWuxin) && "冲"!=diZhiXiangChongHe(dongyao,bianyao)){
               jihe["动变分析"]["无用动爻"].push([dongyao,"凶","动爻"+dongyao+"动而化绝，无能力生克他爻"]);   
             } 
+
+            //三绊分析
+
       } 
 
       jihe["动变分析"]["结果"] = [];

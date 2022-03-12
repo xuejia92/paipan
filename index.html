@@ -19,7 +19,7 @@
 	<h1 align="center" style="padding-left: 10%;">六爻排盘
 			<div id="layerDemo" style="margin-bottom: 0;float: right;margin-right: 3px;"> 
 				<button data-method="notice" class="layui-btn" style="height: 30px;line-height: 30px;">排盘</button> 
-			</div>
+			</div> 
 	</h1>
 	<div id="window" style="display: none;margin-top: 15px;margin-right: 15px; margin-left: -15px;">
 		<form class="layui-form" action="javascript:void(0);" lay-filter="example">  
@@ -54,69 +54,71 @@
 				<div class="layui-input-block">
 					<select name="yao6" id="yao6_sl" lay-filter="aihao">
 						<option value="-1"></option>
-						<option value="0">老阴─  ─ x (0背)</option>
-						<option value="1">少阳────   (1背)</option>
-						<option value="2">少阴─　─   (2背)</option>
-						<option value="3">老阳──── o (3背)</option> 
+						<option value="0">x老阴─  ─ (0背)</option>
+						<option value="1"> 少阳──── (1背)</option>
+						<option value="2"> 少阴─　─ (2背)</option>
+						<option value="3">o老阳──── (3背)</option> 
 					</select>
 				</div>
 				<label class="layui-form-label">五爻</label>
 				<div class="layui-input-block">
 					<select name="yao5" id="yao5_sl" lay-filter="aihao">
 						<option value="-1"></option>
-						<option value="0">老阴─  ─ x (0背)</option>
-						<option value="1">少阳────   (1背)</option>
-						<option value="2">少阴─　─   (2背)</option>
-						<option value="3">老阳──── o (3背)</option> 
+						<option value="0">x老阴─  ─ (0背)</option>
+						<option value="1"> 少阳──── (1背)</option>
+						<option value="2"> 少阴─　─ (2背)</option>
+						<option value="3">o老阳──── (3背)</option> 
 					</select>
 				</div>
 				<label class="layui-form-label">四爻</label>
 				<div class="layui-input-block">
 					<select name="yao4" id="yao4_sl" lay-filter="aihao">
 						<option value="-1"></option>
-						<option value="0">老阴─  ─ x (0背)</option>
-						<option value="1">少阳────   (1背)</option>
-						<option value="2">少阴─　─   (2背)</option>
-						<option value="3">老阳──── o (3背)</option> 
+						<option value="0">x老阴─  ─ (0背)</option>
+						<option value="1"> 少阳──── (1背)</option>
+						<option value="2"> 少阴─　─ (2背)</option>
+						<option value="3">o老阳──── (3背)</option> 
 					</select>
 				</div>
 				<label class="layui-form-label">三爻</label>
 				<div class="layui-input-block">
 					<select name="yao3" id="yao3_sl" lay-filter="aihao">
 						<option value="-1"></option>
-						<option value="0">老阴─  ─ x (0背)</option>
-						<option value="1">少阳────   (1背)</option>
-						<option value="2">少阴─　─   (2背)</option>
-						<option value="3">老阳──── o (3背)</option> 
+						<option value="0">x老阴─  ─ (0背)</option>
+						<option value="1"> 少阳──── (1背)</option>
+						<option value="2"> 少阴─　─ (2背)</option>
+						<option value="3">o老阳──── (3背)</option>  
 					</select>
 				</div>
 				<label class="layui-form-label">二爻</label>
 				<div class="layui-input-block">
 					<select name="yao2" id="yao2_sl" lay-filter="aihao">
 						<option value="-1"></option>
-						<option value="0">老阴─  ─ x (0背)</option>
-						<option value="1">少阳────   (1背)</option>
-						<option value="2">少阴─　─   (2背)</option>
-						<option value="3">老阳──── o (3背)</option> 
+						<option value="0">x老阴─  ─ (0背)</option>
+						<option value="1"> 少阳──── (1背)</option>
+						<option value="2"> 少阴─　─ (2背)</option>
+						<option value="3">o老阳──── (3背)</option> 
 					</select>
 				</div>
 				<label class="layui-form-label">一爻</label>
 				<div class="layui-input-block">
 					<select name="yao1" id="yao1_sl" lay-filter="aihao">
 						<option value="-1"></option>
-						<option value="0">老阴─  ─ x (0背)</option>
-						<option value="1">少阳────   (1背)</option>
-						<option value="2">少阴─　─   (2背)</option>
-						<option value="3">老阳──── o (3背)</option> 
+						<option value="0">x老阴─  ─ (0背)</option>
+						<option value="1"> 少阳──── (1背)</option>
+						<option value="2"> 少阴─　─ (2背)</option>
+						<option value="3">o老阳──── (3背)</option> 
 					</select>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<div class="layui-input-block" style="margin-left: 60px;">
+					<button style="margin-left: -12px;" onclick="window.location.href=window.location.href" class="layui-btn layui-btn-normal layui-btn-fluid">数据清空后重排</button><br><br>
 					<button type="submit" class="layui-btn"  lay-submit="" lay-filter="demo1">排盘</button>
 					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 					<button id="record" class="layui-btn layui-btn-warm">记录</button>
 					<button class="layui-btn layui-btn-danger" id="close">关闭</button>
+					
 				</div>
 			</div>
 		</form>
