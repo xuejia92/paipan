@@ -73,7 +73,7 @@ layui.use(['form', 'laydate','layer'], function(){
   var Request = new Object();
   Request = GetRequest();  
    
-  if(typeof(Request["title"])!="undefined" && typeof(Request["datetime"])!="undefined" && typeof(Request["leibie"])!="undefined" && typeof(Request["yao6"])!="undefined"  && typeof(Request["yao5"])!="undefined" && typeof(Request["yao4"])!="undefined" && typeof(Request["yao3"])!="undefined" && typeof(Request["yao2"])!="undefined" && typeof(Request["yao1"])!="undefined"){
+  if(typeof(Request["title"])!="undefined" && typeof(Request["datetime"])!="undefined" && typeof(Request["leibie"])!="undefined" && typeof(Request["yao6"])!="undefined"  && typeof(Request["yao5"])!="undefined" && typeof(Request["yao4"])!="undefined" && typeof(Request["yao3"])!="undefined" && typeof(Request["yao2"])!="undefined" && typeof(Request["yao1"])!="undefined" && typeof(Request["group"])!="undefined"){
    
     // $("input[name='title'").val(Request["title"]);
     // $("input[name='datetime']").val(Request["datetime"]);
@@ -95,7 +95,9 @@ layui.use(['form', 'laydate','layer'], function(){
       ,"yao3": Request["yao3"]  
       ,"yao2": Request["yao2"]  
       ,"yao1": Request["yao1"]  
+      ,"group": Request["group"]  
       ,"yuerizhi":  typeof(Request["yuerizhi"])!="undefined"?Request["yuerizhi"]:""  
+      ,"remark":  typeof(Request["remark"])!="undefined"?Request["remark"]:""  
     });
   } 
  
@@ -112,7 +114,8 @@ layui.use(['form', 'laydate','layer'], function(){
     var yao4 = data.field.yao4;
     var yao5 = data.field.yao5;
     var yao6 = data.field.yao6; 
-    var yuerizhi = data.field.yuerizhi; 
+    var group = data.field.group; 
+    var yuerizhi = data.field.yuerizhi;   
 
     if(title.replace(/(^\s*)|(\s*$)/g, "")==""){
       layer.msg('请输入占问内容！', {icon: 5});
@@ -124,18 +127,26 @@ layui.use(['form', 'laydate','layer'], function(){
       return false;
     }
 
+    if(group==""){
+      layer.msg('请输入分组！', {icon: 5});
+      return false;
+    }
+
     yuerizhi = data.field.yuerizhi;
+    remark = data.field.remark;
     $("#baocun").click(function(){
       var title = data.field.title;
       var datetime = data.field.datetime;
       var leibie = data.field.leibie;
-      yuerizhi = data.field.yuerizhi;
+      // yuerizhi = data.field.yuerizhi;
       var yao1 = data.field.yao1;
       var yao2 = data.field.yao2;
       var yao3 = data.field.yao3;
       var yao4 = data.field.yao4;
       var yao5 = data.field.yao5;
       var yao6 = data.field.yao6; 
+      var group = data.field.group; 
+      // remark = data.field.remark; 
 
       arrayObj = []
       var jsonData = localStorage.getItem("data") 
@@ -153,6 +164,8 @@ layui.use(['form', 'laydate','layer'], function(){
         "yao5": yao5,
         "yao6": yao6,
         "yuerizhi": yuerizhi,
+        "group": group,
+        "remark": remark,
       } 
       arrayObj.unshift(obj)
       jsonData=JSON.stringify(arrayObj) 
@@ -174,8 +187,10 @@ layui.use(['form', 'laydate','layer'], function(){
     $("#yaowei").append()
     $("#title").text(title);
     $("#theTime").text(datetime); 
+    $("#fenzu").text(group); 
     $("#beimian").text(yao1+","+yao2+","+yao3+","+yao4+","+yao5+","+yao6); 
     $("#leibie").text(leibie==1?"事态卦":"心态卦");
+    $("#pizhu").html(typeof(Request["remark"])!="undefined"?Request["remark"]:"");
 
     //八卦判断 321 654 传的是阴阳1,0
     this.bagua = function(yao){   
@@ -2508,9 +2523,7 @@ var curShenSha ={
             }
             if("绝"==shierGong(dongyaoWuxin,bianyaoDizhi) && bianyaoWuxin+"生"+dongyaoWuxin!=shengKe(dongyaoWuxin,bianyaoWuxin) && "冲"!=diZhiXiangChongHe(dongyao,bianyao)){
               jihe["动变分析"]["无用动爻"].push([dongyao,"凶","动爻"+dongyao+"动而化绝，无能力生克他爻"]);   
-            } 
-
-            //三绊分析
+            }  
 
       } 
 
@@ -2583,6 +2596,58 @@ var curShenSha ={
             }
           } 
         }
+      }
+      
+      return jihe
+    }
+
+
+    //三绊理论
+    sanban=function(){
+      jihe["三绊"] = [];
+      for(var key in jihe["变爻"]){ 
+        var dongyao = jihe["变爻"][key][0];
+        var bianyao = jihe["变爻"][key][1];
+        var yongshen = jihe["用神"]["主"];
+        var yongshenWuxin = jihe["用神"]["五行"];
+        var dongyaoWuxin = dongyao.substr(-1,1);
+        var dongyaoDizhi = dongyao.substr(-2,1);
+        var bianyaoWuxin = bianyao.substr(-1,1);
+        var bianyaoDizhi = bianyao.substr(-2,1); 
+        var shiyao = jihe["主世"][0];
+        var shiyaoWuxin = shiyao.substr(-1,1);
+        var shiyaoDizhi = shiyao.substr(-2,1);
+
+         
+ 
+        if("合"==diZhiXiangChongHe(dongyaoDizhi,jihe["日令"][1])){ 
+            jihe["三绊"].push(["动爻"+dongyao+"与日建相合,绊住"]);  //日建与卦中动爻或变爻相合
+        }  
+        if( "合"==diZhiXiangChongHe(bianyaoDizhi,jihe["日令"][1])){ 
+          jihe["三绊"].push(["变爻"+bianyao+"与日建相合,绊住"]);  //日建与卦中动爻或变爻相合
+        }  
+
+        for(var key1 in jihe["变爻"]){ 
+          var dongyao1 = jihe["变爻"][key1][0];
+          var bianyao1 = jihe["变爻"][key1][1];
+          var yongshen1 = jihe["用神"]["主"];
+          var yongshenWuxin1 = jihe["用神"]["五行"];
+          var dongyaoWuxin1 = dongyao1.substr(-1,1);
+          var dongyaoDizhi1 = dongyao1.substr(-2,1);
+          var bianyaoWuxin1 = bianyao1.substr(-1,1);
+          var bianyaoDizhi1 = bianyao1.substr(-2,1); 
+          var shiyao1 = jihe["主世"][0];
+          var shiyaoWuxin1 = shiyao1.substr(-1,1);
+          var shiyaoDizhi1 = shiyao1.substr(-2,1);
+          if( "合"==diZhiXiangChongHe(dongyaoDizhi,dongyaoDizhi1)){ 
+            jihe["三绊"].push([bianyao,"吉",dongyao+"和"+dongyao1+"动爻与另一动爻相合,绊住"]);  //卦中一动爻与另一动爻相合
+          }
+        }
+
+        if( "合"==diZhiXiangChongHe(bianyaoDizhi,dongyaoDizhi)){ 
+          jihe["三绊"].push([bianyao,"吉",dongyao+"和"+bianyao+"动爻与变爻相合,绊住"]);  //动爻与变爻相合
+        }
+
       }
       
       return jihe
@@ -2814,6 +2879,9 @@ var curShenSha ={
         jihe["旬空分析"].push("占仕途而得子孙持世旬空，占问短期数日内结果的，或有功名及身之象，但这不能说是好事，因这功名最终却有不继之忧") 
         jihe["旬空分析"].push("忧患心态之占，若占得喜神子孙爻逢空，反是忧患短期内无法了结或事主将长期忧心忡忡的征兆") 
 
+        //三绊
+        jihe = sanban(jihe);
+
         //应期细节
         
         jihe = yingqi(jihe);
@@ -2860,6 +2928,10 @@ var curShenSha ={
       $("#jixiong").append("<br>暗动：");
       for(var i=0;i<jihe["暗动"].length;i++){
         $("#jixiong").append(jihe["暗动"][i]+"<br>");
+      }
+      $("#jixiong").append("<br>三绊理论：");
+      for(var i=0;i<jihe["三绊"].length;i++){
+        $("#jixiong").append(jihe["三绊"][i]+"<br>");
       }
       $("#jixiong").append("<br>旬空分析：");
       for(var i=0;i<jihe["旬空分析"].length;i++){

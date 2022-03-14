@@ -30,7 +30,7 @@
 					<!-- <input type="text" name="title" lay-verify="required" lay-reqtext="占事标题为必填" placeholder="请输入" autocomplete="off" class="layui-input"> -->
 				</div>
 			</div> 
-			<div class="layui-form-item">
+			<div class="layui-form-item" style="display: none;">
 				<label class="layui-form-label">占事类别</label>
 				<div class="layui-input-block">
 					<input type="radio" name="leibie" value="1" title="事态卦" checked="">
@@ -44,11 +44,22 @@
 				</div>
 			</div> 
 			<div class="layui-form-item">
+				<label class="layui-form-label">分组</label>
+				<div class="layui-input-block">
+					<select name="group" id="group" lay-filter="group"> 
+						<option value="自占">自占</option>
+						<option value="他占">他占</option>
+						<option value="案例">案例</option> 
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">月日干支</label>
 				<div class="layui-input-block">
 					<input type="text" name="yuerizhi" placeholder="请输入" autocomplete="off" class="layui-input">
 				</div>
 			</div> 
+			<input type="hidden" name="remark" value="">
 			<div class="layui-form-item">
 				<label class="layui-form-label">六爻</label>
 				<div class="layui-input-block">
@@ -112,13 +123,12 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<div class="layui-input-block" style="margin-left: 60px;">
-					<button style="margin-left: -12px;" onclick="window.location.href=window.location.href" class="layui-btn layui-btn-normal layui-btn-fluid">数据清空后重排</button><br><br>
+				<div class="layui-input-block" style="margin-left: 60px;"> 
 					<button type="submit" class="layui-btn"  lay-submit="" lay-filter="demo1">排盘</button>
 					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 					<button id="record" class="layui-btn layui-btn-warm">记录</button>
-					<button class="layui-btn layui-btn-danger" id="close">关闭</button>
-					
+					<button class="layui-btn layui-btn-danger" id="close">关闭</button><br><br>
+					<button style="margin-left: -12px;" onclick="window.location.href=window.location.href" class="layui-btn layui-btn-normal layui-btn-fluid">数据清空后重排</button> 
 				</div>
 			</div>
 		</form>
@@ -132,6 +142,9 @@
 				<b>占类：</b>
 				 <span id="leibie"></span>
 				<br>  
+				<b>分组：</b>
+				 <span id="fenzu"></span>
+				<br>
 				<b>时间：</b>
 				<span style="display:inline-block;"  id="theTime"></span> 
 				<br>
@@ -367,6 +380,11 @@
 			<tr>
 				<td>应期:</td>
 				<td id="yingqi">  
+				</td>
+			</tr> 
+			<tr>
+				<td>批注:</td>
+				<td id="pizhu">  
 				</td>
 			</tr> 
 	</table> 
