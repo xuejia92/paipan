@@ -134,26 +134,52 @@ var form = layui.form
     location.href = "index.html?leibie=1&title="+data['title']+"&datetime="+data['datetime']+"&yao1="+data['yao1']+"&yao2="+data['yao2']+"&yao3="+data['yao3']+"&yao4="+data['yao4']+"&yao5="+data['yao5']+"&yao6="+data['yao6']+"&yuerizhi="+data['yuerizhi']+"&remark="+data['remark']+"&group="+data['group'];
   });
 
+  
+ 
   $(".mod").click(function(){
     var index = $(this).attr('attr');
     localData = localStorage.getItem("data")
     localData = JSON.parse(localData)
     console.log(localData[index],index)
-    data = localData[index] 
+    data = localData[index]  
+ 
+    // var sss = layer.prompt({
+    //   formType: 2, 
+    //   maxlength: 2000,
+    //   value: localData[index]["remark"],
+    //   title: '请输入批注',
+    //   area: ['600px', '300px'],
+    //   btn: ['确定', '取消']
+    // }, function(value, index, elem) {
+    //   // 处理输入的内容  
+    //   if(value!=""){    
+    //       localData[index]["remark"] = value; 
+    //       localStorage.setItem("data",JSON.stringify(localData))  
+    //       layer.msg("更新成功", {icon: 1,time:1000},function(){ 
+    //           location.href="./record.html"
+    //       });  
+    //       layer.close(index);
+    //   } 
+    // });  
+     
+
     if(localData[index]["remark"]==undefined){
       var name = prompt("请输入批注", "");
     }else{
       var name = prompt("请输入批注", localData[index]["remark"]);
-    }
-    
-    if(name){
-      localData[index]["remark"] = name;
-      localStorage.setItem("data",JSON.stringify(localData)) 
-      layer.msg("更新成功", {icon: 1,time:1000},function(){
-          location.href="./record.html"
+    } 
+ 
+    if(name!=""){
+        localData[index]["remark"] = name;
+        localStorage.setItem("data",JSON.stringify(localData)) 
+        layer.msg("更新成功", {icon: 1,time:1000},function(){
+            location.href="./record.html"
       });
     }
+    
   });
+
+  
 
   $('.del').click(function(){
     var index = $(this).attr('attr');
@@ -184,7 +210,7 @@ var form = layui.form
     localData = JSON.parse(localData)
     if(localData[index]["remark"]==undefined){
       layer.msg("暂无批注");
-    } else{
+    } else{ 
       layer.msg(localData[index]["remark"], {icon: 1,time:2000});
     } 
   });

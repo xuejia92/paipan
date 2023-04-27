@@ -2871,13 +2871,14 @@ var curShenSha ={
         jihe = andong(jihe);
         //静卦分析
         jihe = jinggua(jihe);
+
         //旬空分析
         jihe["旬空分析"] = [];
-        jihe["旬空分析"].push("占病吉凶的卦中出现用神旬空，则是病况能短期痊愈或暂见好转的卦兆") 
-        jihe["旬空分析"].push("求财占得兄弟持世空亡，是短期暂时得财的预兆，但这个喜庆的背后却隐藏着巨大的隐忧，用一句词语概括就是“先盈后亏”，先喜而后悲") 
-        jihe["旬空分析"].push("问行人往归，卦得世爻空亡或用神旬空，都是行人即将归来的预兆") 
-        jihe["旬空分析"].push("占仕途而得子孙持世旬空，占问短期数日内结果的，或有功名及身之象，但这不能说是好事，因这功名最终却有不继之忧") 
-        jihe["旬空分析"].push("忧患心态之占，若占得喜神子孙爻逢空，反是忧患短期内无法了结或事主将长期忧心忡忡的征兆") 
+        // jihe["旬空分析"].push("占病吉凶的卦中出现用神旬空，则是病况能短期痊愈或暂见好转的卦兆") 
+        // jihe["旬空分析"].push("求财占得兄弟持世空亡，是短期暂时得财的预兆，但这个喜庆的背后却隐藏着巨大的隐忧，用一句词语概括就是“先盈后亏”，先喜而后悲") 
+        // jihe["旬空分析"].push("问行人往归，卦得世爻空亡或用神旬空，都是行人即将归来的预兆") 
+        // jihe["旬空分析"].push("占仕途而得子孙持世旬空，占问短期数日内结果的，或有功名及身之象，但这不能说是好事，因这功名最终却有不继之忧") 
+        // jihe["旬空分析"].push("忧患心态之占，若占得喜神子孙爻逢空，反是忧患短期内无法了结或事主将长期忧心忡忡的征兆") 
 
         //三绊
         jihe = sanban(jihe);
@@ -2898,6 +2899,7 @@ var curShenSha ={
     fenxi = function(){
       console.log(jihe)
       $("#jixiong").text("");
+      $("#yingqi").text("");
       $("#jixiong").append("用神分析：");
       for(var i=0;i<jihe["用神分析"]["月令"].length;i++){
         $("#jixiong").append(jihe["用神分析"]["月令"][i][1]+",");
@@ -2917,30 +2919,48 @@ var curShenSha ={
       $("#jixiong").append("总体："+jihe["世爻分析"]["日月组合"]["日月组合"]+" ");
       $("#jixiong").append("结果："+jihe["世爻分析"]["日月结果"]+"<br>");
  
-      $("#jixiong").append("<br>无用动爻：");
-      for(var i=0;i<jihe["动变分析"]["无用动爻"].length;i++){
-        $("#jixiong").append(jihe["动变分析"]["无用动爻"][i][2]+","+jihe["动变分析"]["无用动爻"][i][1]+"<br>");
+      if(jihe["动变分析"]["无用动爻"].length>0){
+        $("#jixiong").append("<br>无用动爻：");
+          for(var i=0;i<jihe["动变分析"]["无用动爻"].length;i++){
+            $("#jixiong").append(jihe["动变分析"]["无用动爻"][i][2]+","+jihe["动变分析"]["无用动爻"][i][1]+"<br>");
+          }
       }
-      $("#jixiong").append("<br>动变分析结果：");
-      for(var i=0;i<jihe["动变分析"]["结果"].length;i++){
-        $("#jixiong").append(jihe["动变分析"]["结果"][i][2]+","+jihe["动变分析"]["结果"][i][1]+"<br>");
+      
+
+      if(jihe["动变分析"]["结果"].length>0){
+        $("#jixiong").append("<br>动变分析结果：");
+        for(var i=0;i<jihe["动变分析"]["结果"].length;i++){
+          $("#jixiong").append(jihe["动变分析"]["结果"][i][2]+","+jihe["动变分析"]["结果"][i][1]+"<br>");
+        }
+     }
+
+
+     if(jihe["暗动"].length>0){
+        $("#jixiong").append("<br>暗动：");
+        for(var i=0;i<jihe["暗动"].length;i++){
+          $("#jixiong").append(jihe["暗动"][i]+"<br>");
+        }
       }
-      $("#jixiong").append("<br>暗动：");
-      for(var i=0;i<jihe["暗动"].length;i++){
-        $("#jixiong").append(jihe["暗动"][i]+"<br>");
+
+      if(jihe["三绊"].length>0){
+        $("#jixiong").append("<br>三绊理论：");
+        for(var i=0;i<jihe["三绊"].length;i++){
+          $("#jixiong").append(jihe["三绊"][i]+"<br>");
+        }
       }
-      $("#jixiong").append("<br>三绊理论：");
-      for(var i=0;i<jihe["三绊"].length;i++){
-        $("#jixiong").append(jihe["三绊"][i]+"<br>");
+
+      if(jihe["旬空分析"].length>0){
+        $("#jixiong").append("<br>旬空分析：");
+        for(var i=0;i<jihe["旬空分析"].length;i++){
+          $("#jixiong").append(jihe["旬空分析"][i]+"<br>");
+        }
       }
-      $("#jixiong").append("<br>旬空分析：");
-      for(var i=0;i<jihe["旬空分析"].length;i++){
-        $("#jixiong").append(jihe["旬空分析"][i]+"<br>");
-      }
+
       $("#yingqi").append("应期细节：");
       for(var i=0;i<jihe["应期细节"].length;i++){
         $("#yingqi").append(jihe["应期细节"][i]+"<br>");
       } 
+
     }
 
     $("#zuzhi").click( function(){
