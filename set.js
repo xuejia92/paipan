@@ -2099,7 +2099,7 @@ var curShenSha ={
 
        if(linshiYueLin.indexOf("月合")!=-1 && linshiYueLin.indexOf("月克")!=-1){ 
           var ll = layer.open({ 
-            title: "请选择留下的月合克" 
+            title: jihe["用神"]["主"]+"：请选择留下的月合克" 
             ,type:0
             ,closeBtn:0
             ,id: 'LAY_layuipro122' //设定一个id，防止重复弹出  
@@ -2119,7 +2119,7 @@ var curShenSha ={
        }
        if(linshiYueLin.indexOf("月冲")!=-1 && linshiYueLin.indexOf("逢月破")!=-1){ 
           var ll =  layer.open({ 
-            title: "请选择留下的月扶冲" 
+            title: jihe["用神"]["主"]+"：请选择留下的月扶冲" 
             ,type:0
             ,closeBtn:0
             ,id: 'LAY_layuipro112' //设定一个id，防止重复弹出  
@@ -2143,7 +2143,7 @@ var curShenSha ={
     riAndYongShen = function(jihe){ 
       jihe["用神分析"]["日令"]=[];
       if(jihe["用神"]["爻支"]==jihe["日令"][1]) jihe["用神分析"]["日令"].push([2,"临日建"]);
-      if(jihe["变爻"].length==0 && "合"==diZhiXiangChongHe(jihe["用神"]["爻支"],jihe["日令"][1])) jihe["用神分析"]["日令"].push([2,"日合"]);
+      if("合"==diZhiXiangChongHe(jihe["用神"]["爻支"],jihe["日令"][1])) jihe["用神分析"]["日令"].push([2,"日合"]);
       if(jihe["日令"][2]+"生"+jihe["用神"]["五行"]==shengKe(jihe["用神"]["五行"],jihe["日令"][2])) jihe["用神分析"]["日令"].push([1,"日生"]);
       if(jihe["用神"]["爻支"]!=jihe["日令"][1] && jihe["用神"]["五行"]==jihe["日令"][2]) jihe["用神分析"]["日令"].push([1,"日扶"]);
       if(jihe["用神"]["爻支"]!=jihe["日令"][1] && (shierGong(jihe["用神"]["五行"],jihe["日令"][1])=="长生" || shierGong(jihe["用神"]["五行"],jihe["日令"][1])=="帝旺")) jihe["用神分析"]["日令"].push([1,"日"+shierGong(jihe["用神"]["五行"],jihe["日令"][1])]);
@@ -2157,32 +2157,31 @@ var curShenSha ={
       var linshiYueLin = [] 
        for(var i =0;i<jihe["用神分析"]["日令"].length;i++){
           linshiYueLin.push(jihe["用神分析"]["日令"][i][1]) 
-       }
+       } 
        var yuhe = linshiYueLin.indexOf("日合");
        var yuke = linshiYueLin.indexOf("日克");   
-      //碰上爻与日令相合又相克，如卯与戌；或爻与日令相冲又相扶，如丑与未；两种方向相反的卦理相撞，论旺还是论衰？
-      
+      //碰上爻与日令相合又相克，如卯与戌；或爻与日令相冲又相扶，如丑与未；两种方向相反的卦理相撞，论旺还是论衰？ 
+
       if(linshiYueLin.indexOf("日合")!=-1 && linshiYueLin.indexOf("日克")!=-1){ 
          var ll =  layer.open({ 
-           title: "请选择留下的日扶冲" 
+           title: jihe["用神"]["主"]+"：请选择留下的日合克" 
            ,type:0
            ,closeBtn:0
            ,id: 'LAY_layuipro112' //设定一个id，防止重复弹出  
-           ,content: $("#yuechongfu").html()
+           ,content: $("#riheke").html()
            ,yes: function(layero, index){
-             var value = $("input[name=yuechongfu]:checked").val()
+             var value = $("input[name=riheke]:checked").val()
              if(typeof(value)=="undefined"){
                alert("请选择");
                return false;
-             }
-             if(value==0) jihe["用神分析"]["月令"]=jihe["用神分析"]["月令"].splice(yuhe,1);
-             if(value==1) jihe["用神分析"]["月令"]=jihe["用神分析"]["月令"].splice(yuke,1);  
+             } 
+             if(value==0) jihe["用神分析"]["日令"]=jihe["用神分析"]["日令"].splice(yuhe,1);
+             if(value==1) jihe["用神分析"]["日令"]=jihe["用神分析"]["日令"].splice(yuke,1);  
              layer.close(ll) 
            }
          }); 
       } 
- 
-      
+  
       return jihe;
    }
 
@@ -2196,7 +2195,7 @@ var curShenSha ={
       }
       for(var i=0;i<jihe["用神分析"]["日令"].length;i++){
         riLinFen = riLinFen + jihe["用神分析"]["日令"][i][0];
-      }
+      } 
       if(yueLinFen+riLinFen==0) jihe["用神分析"]["日月组合"] = "平";
       if(yueLinFen+riLinFen>0) jihe["用神分析"]["日月组合"] = "旺";
       if(yueLinFen+riLinFen<0) jihe["用神分析"]["日月组合"] = "衰";
@@ -2204,7 +2203,7 @@ var curShenSha ={
    }
 
     //某一个爻在日月组合下的影响
-    yueAndRiYao = function(yaoname){ 
+    yueAndRiYao = function(yaoname){  
        result=[];
        yao = {};
        yao["五行"] = yaoname.substr(-1,1)
@@ -2239,7 +2238,7 @@ var curShenSha ={
 
        if(linshiYueLin.indexOf("月合")!=-1 && linshiYueLin.indexOf("月克")!=-1){
           var ll = layer.open({ 
-            title: "请选择留下的月合克" 
+            title: yaoname+":请选择留下的月合克" 
             ,type:0
             ,closeBtn:0
             ,id: 'LAY_layuipro122' //设定一个id，防止重复弹出  
@@ -2259,7 +2258,7 @@ var curShenSha ={
        }
        if(linshiYueLin.indexOf("月冲")!=-1 && linshiYueLin.indexOf("逢月破")!=-1){ 
           var ll =  layer.open({ 
-            title: "请选择留下的月扶冲" 
+            title: yaoname+":请选择留下的月扶冲" 
             ,type:0
             ,closeBtn:0
             ,id: 'LAY_layuipro112' //设定一个id，防止重复弹出  
@@ -2292,34 +2291,47 @@ var curShenSha ={
       if(yao["五行"]+"生"+jihe["日令"][2]==shengKe(yao["五行"],jihe["日令"][2])) result["日令"].push([0,"日平相"]);
       if(yao["五行"]+"克"+jihe["日令"][2]==shengKe(yao["五行"],jihe["日令"][2])) result["日令"].push([0,"日平相"]);   
 
-      var linshiYueLin = [] 
+      var linshiriLin = [] 
        for(var i =0;i<result["日令"].length;i++){
-          linshiYueLin.push(result["日令"][i][1]) 
+        linshiriLin.push(result["日令"][i][1]) 
        }
-       var yuhe = linshiYueLin.indexOf("日合");
-       var yuke = linshiYueLin.indexOf("日克");   
-      //碰上爻与日令相合又相克，如卯与戌；或爻与日令相冲又相扶，如丑与未；两种方向相反的卦理相撞，论旺还是论衰？
+       var yuhe = linshiriLin.indexOf("日合");
+       var yuke = linshiriLin.indexOf("日克");   
+      //碰上爻与日令相合又相克，如卯与戌；或爻与日令相冲又相扶，如丑与未；两种方向相反的卦理相撞，论旺还是论衰？  
       
-      if(linshiYueLin.indexOf("日合")!=-1 && linshiYueLin.indexOf("日克")!=-1){ 
+      if(linshiriLin.indexOf("日合")!=-1 && linshiriLin.indexOf("日克")!=-1){ 
+        
+        // var value = prompt(yaoname+":请输入留下的日合克（0/1）", "");
+        // if(typeof(value)=="undefined"){
+        //   alert("请选择");
+        //   return false;
+        // }    
+        // console.log(result["日令"])
+        // if(value==0) result["日令"]=result["日令"].splice(yuke,1); 
+        // if(value==1) result["日令"]=result["日令"].splice(yuhe,1); 
+
          var ll =  layer.open({ 
-           title: "请选择留下的日扶冲" 
+           title: yaoname+":请选择留下的日合克" 
            ,type:0
+           ,async:true
            ,closeBtn:0
            ,id: 'LAY_layuipro112' //设定一个id，防止重复弹出  
            ,content: $("#riheke").html()
            ,yes: function(layero, index){
-             var value = $("input[name=yuechongfu]:checked").val()
+             var value = $("input[name=riheke]:checked").val()
              if(typeof(value)=="undefined"){
                alert("请选择");
                return false;
-             }
-             if(value==0) result["日令"]=result["日令"].splice(yuhe,1);
-             if(value==1) result["日令"]=result["日令"].splice(yuke,1);  
+             }    
+             if(value==0) result["日令"]=result["日令"].splice(yuhe,1); 
+             if(value==1) result["日令"]=result["日令"].splice(yuke,1); 
+              
              layer.close(ll) 
            }
          }); 
-      }
+      } 
       result["爻名"]=yaoname;
+
       //日月组合的旺衰
       var yueLinFen = 0;
       var riLinFen = 0;
@@ -2842,8 +2854,7 @@ var curShenSha ={
         jihe = yueAndYongShen(jihe);   
         //日令对用神的旺衰影响 
         jihe = riAndYongShen(jihe); 
-        //用神在日月组合上的旺衰
-        jihe = yueAndRiYongShen(jihe); 
+        
         //世爻分析
         jihe["世爻分析"] = {};
         jihe["世爻分析"]["日月结果"] = ""; 
@@ -2897,6 +2908,9 @@ var curShenSha ={
 
     //分析数据
     fenxi = function(){
+      //用神在日月组合上的旺衰 
+      jihe = yueAndRiYongShen(jihe); 
+      
       console.log(jihe)
       $("#jixiong").text("");
       $("#yingqi").text("");
