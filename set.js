@@ -132,9 +132,9 @@ layui.use(['form', 'laydate','layer'], function(){
       return false;
     }
 
-    yuerizhi = data.field.yuerizhi;
-    remark = data.field.remark;
-    $("#baocun").click(function(){
+    yuerizhi = data.field.yuerizhi; 
+    remark = $('#pizhu').val(); 
+    $("#baocun").click(function(){ 
       var title = data.field.title;
       var datetime = data.field.datetime;
       var leibie = data.field.leibie;
@@ -146,13 +146,13 @@ layui.use(['form', 'laydate','layer'], function(){
       var yao5 = data.field.yao5;
       var yao6 = data.field.yao6; 
       var group = data.field.group; 
-      // remark = data.field.remark; 
+      var remark = $('#pizhu').val();  
 
       arrayObj = []
       var jsonData = localStorage.getItem("data") 
       if(jsonData!=null){ 
         arrayObj = JSON.parse(jsonData)
-      }
+      } 
       var obj ={
         "title": title,
         "datetime": datetime,
@@ -166,12 +166,24 @@ layui.use(['form', 'laydate','layer'], function(){
         "yuerizhi": yuerizhi,
         "group": group,
         "remark": remark,
+      }  
+      var isExist = -1; 
+      for(var i=0;i<arrayObj.length;i++){  
+          if(arrayObj[i].title==obj.title && arrayObj[i].datetime==obj.datetime && arrayObj[i].yuerizhi==obj.yuerizhi){
+            isExist = i;
+            break;
+          } 
       } 
-      arrayObj.unshift(obj)
+      if(isExist==-1){
+        arrayObj.unshift(obj)
+      }else{
+        arrayObj[isExist]=obj;
+      }
+      
       jsonData=JSON.stringify(arrayObj) 
       localStorage.setItem("data", jsonData); 
       layer.msg("保存成功", {icon: 1,time:1000},function(){
-        location.href="./record.html"
+        // location.href="./record.html?fenzu="+group
      });   
     }); 
 
@@ -489,78 +501,78 @@ layui.use(['form', 'laydate','layer'], function(){
     
     //装六亲  挂的地支 世应
     this.guaDizhiShiyin = function(yao){
-      if(yao=='乾为天') return ['父母壬戌土','兄弟壬申金','官鬼壬午火','父母甲辰土','妻财甲寅木','子孙甲子水',6,3] 
-      if(yao=='天风姤') return ['父母壬戌土','兄弟壬申金','官鬼壬午火','兄弟辛酉金','子孙辛亥水','父母辛丑土',1,4]  
-      if(yao=='天山遁') return ['父母壬戌土','兄弟壬申金','官鬼壬午火','兄弟丙申金','官鬼丙午火','父母丙辰土',2,5]
-      if(yao=='天地否') return ['父母壬戌土','兄弟壬申金','官鬼壬午火','妻财乙卯木','官鬼乙巳火','父母乙未土',3,6]
-      if(yao=='风地观') return ['妻财辛卯木','官鬼辛巳火','父母辛未土','妻财乙卯木','官鬼乙巳火','父母乙未土',4,1] 
-      if(yao=='山地剥') return ['妻财丙寅木','子孙丙子水','父母丙戌土','妻财乙卯木','官鬼乙巳火','父母乙未土',5,2] 
-      if(yao=='火地晋') return ['官鬼己巳火','父母己未土','兄弟己酉金','妻财乙卯木','官鬼乙巳火','父母乙未土',4,1]
-      if(yao=='火天大有') return ['官鬼己巳火','父母己未土','兄弟己酉金','父母甲辰土','妻财甲寅木','子孙甲子水',3,6]
+      if(yao=='乾为天') return ['父母戌土','兄弟申金','官鬼午火','父母辰土','妻财寅木','子孙子水',6,3] 
+      if(yao=='天风姤') return ['父母戌土','兄弟申金','官鬼午火','兄弟酉金','子孙亥水','父母丑土',1,4]  
+      if(yao=='天山遁') return ['父母戌土','兄弟申金','官鬼午火','兄弟申金','官鬼午火','父母辰土',2,5]
+      if(yao=='天地否') return ['父母戌土','兄弟申金','官鬼午火','妻财卯木','官鬼巳火','父母未土',3,6]
+      if(yao=='风地观') return ['妻财卯木','官鬼巳火','父母未土','妻财卯木','官鬼巳火','父母未土',4,1] 
+      if(yao=='山地剥') return ['妻财寅木','子孙子水','父母戌土','妻财卯木','官鬼巳火','父母未土',5,2] 
+      if(yao=='火地晋') return ['官鬼巳火','父母未土','兄弟酉金','妻财卯木','官鬼巳火','父母未土',4,1]
+      if(yao=='火天大有') return ['官鬼巳火','父母未土','兄弟酉金','父母辰土','妻财寅木','子孙子水',3,6]
     
-      if(yao=='兑为泽') return ['父母丁未土','兄弟丁酉金','子孙丁亥水','父母丁丑土','妻财丁卯木','官鬼丁巳火',6,3] 
-      if(yao=='泽水困') return ['父母丁未土','兄弟丁酉金','子孙丁亥水','官鬼戊午火','父母戊辰土','妻财戊寅木',1,4] 
-      if(yao=='泽地萃') return ['父母丁未土','兄弟丁酉金','子孙丁亥水','妻财乙卯木','官鬼乙巳火','父母乙未土',2,5] 
-      if(yao=='泽山咸') return ['父母丁未土','兄弟丁酉金','子孙丁亥水','兄弟丙申金','官鬼丙午火','父母丙辰土',3,6] 
-      if(yao=='水山蹇') return ['子孙戊子水','父母戊戌土','兄弟戊申金','兄弟丙申金','官鬼丙午火','父母丙辰土',4,1] 
-      if(yao=='地山谦') return ['兄弟癸酉金','子孙癸亥水','父母癸丑土','兄弟丙申金','官鬼丙午火','父母丙辰土',5,2] 
-      if(yao=='雷山小过') return ['父母庚戌土','兄弟庚申金','官鬼庚午火','兄弟丙申金','官鬼丙午火','父母丙辰土',4,1] 
-      if(yao=='雷泽归妹') return ['父母庚戌土','兄弟庚申金','官鬼庚午火','父母丁丑土','妻财丁卯木','官鬼丁巳火',3,6] 
+      if(yao=='兑为泽') return ['父母未土','兄弟酉金','子孙亥水','父母丑土','妻财卯木','官鬼巳火',6,3] 
+      if(yao=='泽水困') return ['父母未土','兄弟酉金','子孙亥水','官鬼午火','父母辰土','妻财寅木',1,4] 
+      if(yao=='泽地萃') return ['父母未土','兄弟酉金','子孙亥水','妻财卯木','官鬼巳火','父母未土',2,5] 
+      if(yao=='泽山咸') return ['父母未土','兄弟酉金','子孙亥水','兄弟申金','官鬼午火','父母辰土',3,6] 
+      if(yao=='水山蹇') return ['子孙子水','父母戌土','兄弟申金','兄弟申金','官鬼午火','父母辰土',4,1] 
+      if(yao=='地山谦') return ['兄弟酉金','子孙亥水','父母丑土','兄弟申金','官鬼午火','父母辰土',5,2] 
+      if(yao=='雷山小过') return ['父母戌土','兄弟申金','官鬼午火','兄弟申金','官鬼午火','父母辰土',4,1] 
+      if(yao=='雷泽归妹') return ['父母戌土','兄弟申金','官鬼午火','父母丑土','妻财卯木','官鬼巳火',3,6] 
       
-      if(yao=='离为火') return ['兄弟己巳火','子孙己未土','妻财己酉金','官鬼己亥水','子孙己丑土','父母己卯木',6,3]
-      if(yao=='火山旅') return ['兄弟己巳火','子孙己未土','妻财己酉金','妻财丙申金','兄弟丙午火','子孙丙辰土',1,4]
-      if(yao=='火风鼎') return ['兄弟己巳火','子孙己未土','妻财己酉金','妻财辛酉金','官鬼辛亥水','子孙辛丑土',2,5]
-      if(yao=='火水未济') return ['兄弟己巳火','子孙己未土','妻财己酉金','兄弟戊午火','子孙戊辰土','父母戊寅木',3,6]
-      if(yao=='山水蒙') return ['父母丙寅木','官鬼丙子水','子孙丙戌土','兄弟戊午火','子孙戊辰土','父母戊寅木',4,1]
-      if(yao=='风水涣') return ['父母辛卯木','兄弟辛巳火','子孙辛未土','兄弟戊午火','子孙戊辰土','父母戊寅木',5,2]
-      if(yao=='天水讼') return ['子孙壬戌土','妻财壬申金','兄弟壬午火','兄弟戊午火','子孙戊辰土','父母戊寅木',4,1]
-      if(yao=='天火同人') return ['子孙壬戌土','妻财壬申金','兄弟壬午火','官鬼己亥水','子孙己丑土','父母己卯木',3,6]
+      if(yao=='离为火') return ['兄弟巳火','子孙未土','妻财酉金','官鬼亥水','子孙丑土','父母卯木',6,3]
+      if(yao=='火山旅') return ['兄弟巳火','子孙未土','妻财酉金','妻财申金','兄弟午火','子孙辰土',1,4]
+      if(yao=='火风鼎') return ['兄弟巳火','子孙未土','妻财酉金','妻财酉金','官鬼亥水','子孙丑土',2,5]
+      if(yao=='火水未济') return ['兄弟巳火','子孙未土','妻财酉金','兄弟午火','子孙辰土','父母寅木',3,6]
+      if(yao=='山水蒙') return ['父母寅木','官鬼子水','子孙戌土','兄弟午火','子孙辰土','父母寅木',4,1]
+      if(yao=='风水涣') return ['父母卯木','兄弟巳火','子孙未土','兄弟午火','子孙辰土','父母寅木',5,2]
+      if(yao=='天水讼') return ['子孙戌土','妻财申金','兄弟午火','兄弟午火','子孙辰土','父母寅木',4,1]
+      if(yao=='天火同人') return ['子孙戌土','妻财申金','兄弟午火','官鬼亥水','子孙丑土','父母卯木',3,6]
       
-      if(yao=='震为雷') return ['妻财庚戌土','官鬼庚申金','子孙庚午火','妻财庚辰土','兄弟庚寅木','父母庚子水',6,3]
-      if(yao=='雷地豫') return ['妻财庚戌土','官鬼庚申金','子孙庚午火','兄弟乙卯木','子孙乙巳火','妻财乙未土',1,4]
-      if(yao=='雷水解') return ['妻财庚戌土','官鬼庚申金','子孙庚午火','子孙戊午火','妻财戊辰土','兄弟戊寅木',2,5]
-      if(yao=='雷风恒') return ['妻财庚戌土','官鬼庚申金','子孙庚午火','官鬼辛酉金','父母辛亥水','妻财辛丑土',3,6]
-      if(yao=='地风升') return ['官鬼癸酉金','父母癸亥水','妻财癸丑土','官鬼辛酉金','父母辛亥水','妻财辛丑土',4,1]
-      if(yao=='水风井') return ['父母戊子水','妻财戊戌土','官鬼戊申金','官鬼辛酉金','父母辛亥水','妻财辛丑土',5,2]
-      if(yao=='泽风大过') return ['妻财丁未土','官鬼丁酉金','父母丁亥水','官鬼辛酉金','父母辛亥水','妻财辛丑土',4,1]
-      if(yao=='泽雷随') return ['妻财丁未土','官鬼丁酉金','父母丁亥水','妻财庚辰土','兄弟庚寅木','父母庚子水',3,6]
+      if(yao=='震为雷') return ['妻财戌土','官鬼申金','子孙午火','妻财辰土','兄弟寅木','父母子水',6,3]
+      if(yao=='雷地豫') return ['妻财戌土','官鬼申金','子孙午火','兄弟卯木','子孙巳火','妻财未土',1,4]
+      if(yao=='雷水解') return ['妻财戌土','官鬼申金','子孙午火','子孙午火','妻财辰土','兄弟寅木',2,5]
+      if(yao=='雷风恒') return ['妻财戌土','官鬼申金','子孙午火','官鬼酉金','父母亥水','妻财丑土',3,6]
+      if(yao=='地风升') return ['官鬼酉金','父母亥水','妻财丑土','官鬼酉金','父母亥水','妻财丑土',4,1]
+      if(yao=='水风井') return ['父母子水','妻财戌土','官鬼申金','官鬼酉金','父母亥水','妻财丑土',5,2]
+      if(yao=='泽风大过') return ['妻财未土','官鬼酉金','父母亥水','官鬼酉金','父母亥水','妻财丑土',4,1]
+      if(yao=='泽雷随') return ['妻财未土','官鬼酉金','父母亥水','妻财辰土','兄弟寅木','父母子水',3,6]
 
       
-      if(yao=='巽为风') return ['兄弟辛卯木','子孙辛巳火','妻财辛未土','官鬼辛酉金','父母辛亥水','妻财辛丑土',6,3]
-      if(yao=='风天小畜') return ['兄弟辛卯木','子孙辛巳火','妻财辛未土','妻财甲辰土','兄弟甲寅木','父母甲子水',1,4]
-      if(yao=='风火家人') return ['兄弟辛卯木','子孙辛巳火','妻财辛未土','父母己亥水','妻财己丑土','兄弟己卯木',2,5]
-      if(yao=='风雷益') return ['兄弟辛卯木','子孙辛巳火','妻财辛未土','妻财庚辰土','兄弟庚寅木','父母庚子水',3,6]
-      if(yao=='天雷无妄') return ['妻财壬戌土','官鬼壬申金','子孙壬午火','妻财庚辰土','兄弟庚寅木','父母庚子水',4,1]
-      if(yao=='火雷噬嗑') return ['子孙己巳火','妻财己未土','官鬼己酉金','妻财庚辰土','兄弟庚寅木','父母庚子水',5,2]
-      if(yao=='山雷颐') return ['兄弟丙寅木','父母丙子水','妻财丙戌土','妻财庚辰土','兄弟庚寅木','父母庚子水',4,1]
-      if(yao=='山风蛊') return ['兄弟丙寅木','父母丙子水','妻财丙戌土','官鬼辛酉金','父母辛亥水','妻财辛丑土',3,6]
+      if(yao=='巽为风') return ['兄弟卯木','子孙巳火','妻财未土','官鬼酉金','父母亥水','妻财丑土',6,3]
+      if(yao=='风天小畜') return ['兄弟卯木','子孙巳火','妻财未土','妻财辰土','兄弟寅木','父母子水',1,4]
+      if(yao=='风火家人') return ['兄弟卯木','子孙巳火','妻财未土','父母亥水','妻财丑土','兄弟卯木',2,5]
+      if(yao=='风雷益') return ['兄弟卯木','子孙巳火','妻财未土','妻财辰土','兄弟寅木','父母子水',3,6]
+      if(yao=='天雷无妄') return ['妻财戌土','官鬼申金','子孙午火','妻财辰土','兄弟寅木','父母子水',4,1]
+      if(yao=='火雷噬嗑') return ['子孙巳火','妻财未土','官鬼酉金','妻财辰土','兄弟寅木','父母子水',5,2]
+      if(yao=='山雷颐') return ['兄弟寅木','父母子水','妻财戌土','妻财辰土','兄弟寅木','父母子水',4,1]
+      if(yao=='山风蛊') return ['兄弟寅木','父母子水','妻财戌土','官鬼酉金','父母亥水','妻财丑土',3,6]
 
-      if(yao=='坎为水') return ['兄弟戊子水','官鬼戊戌土','父母戊申金','妻财戊午火','官鬼戊辰土','子孙戊寅木',6,3]
-      if(yao=='水泽节') return ['兄弟戊子水','官鬼戊戌土','父母戊申金','官鬼丁丑土','子孙丁卯木','妻财丁巳火',1,4]
-      if(yao=='水雷屯') return ['兄弟戊子水','官鬼戊戌土','父母戊申金','官鬼庚辰土','子孙庚寅木','兄弟庚子水',2,5]
-      if(yao=='水火既济') return ['兄弟戊子水','官鬼戊戌土','父母戊申金','兄弟己亥水','官鬼己丑土','子孙己卯木',3,6]
-      if(yao=='泽火革') return ['官鬼丁未土','父母丁酉金','兄弟丁亥水','兄弟己亥水','官鬼己丑土','子孙己卯木',4,1]
-      if(yao=='雷火丰') return ['官鬼庚戌土','父母庚申金','妻财庚午火','兄弟己亥水','官鬼己丑土','子孙己卯木',5,2]
-      if(yao=='地火明夷') return ['父母癸酉金','兄弟癸亥水','官鬼癸丑土','兄弟己亥水','官鬼己丑土','子孙己卯木',4,1]
-      if(yao=='地水师') return ['父母癸酉金','兄弟癸亥水','官鬼癸丑土','妻财戊午火','官鬼戊辰土','子孙戊寅木',3,6]
+      if(yao=='坎为水') return ['兄弟子水','官鬼戌土','父母申金','妻财午火','官鬼辰土','子孙寅木',6,3]
+      if(yao=='水泽节') return ['兄弟子水','官鬼戌土','父母申金','官鬼丑土','子孙卯木','妻财巳火',1,4]
+      if(yao=='水雷屯') return ['兄弟子水','官鬼戌土','父母申金','官鬼辰土','子孙寅木','兄弟子水',2,5]
+      if(yao=='水火既济') return ['兄弟子水','官鬼戌土','父母申金','兄弟亥水','官鬼丑土','子孙卯木',3,6]
+      if(yao=='泽火革') return ['官鬼未土','父母酉金','兄弟亥水','兄弟亥水','官鬼丑土','子孙卯木',4,1]
+      if(yao=='雷火丰') return ['官鬼戌土','父母申金','妻财午火','兄弟亥水','官鬼丑土','子孙卯木',5,2]
+      if(yao=='地火明夷') return ['父母酉金','兄弟亥水','官鬼丑土','兄弟亥水','官鬼丑土','子孙卯木',4,1]
+      if(yao=='地水师') return ['父母酉金','兄弟亥水','官鬼丑土','妻财午火','官鬼辰土','子孙寅木',3,6]
       
-      if(yao=='艮为山') return ['官鬼丙寅木','妻财丙子水','兄弟丙戌土','子孙丙申金','父母丙午火','兄弟丙辰土',6,3]
-      if(yao=='山火贲') return ['官鬼丙寅木','妻财丙子水','兄弟丙戌土','妻财己亥水','兄弟己丑土','官鬼己卯木',1,4]
-      if(yao=='山天大畜') return ['官鬼丙寅木','妻财丙子水','兄弟丙戌土','兄弟甲辰土','官鬼甲寅木','妻财甲子水',2,5]
-      if(yao=='山泽损') return ['官鬼丙寅木','妻财丙子水','兄弟丙戌土','兄弟丁丑土','官鬼丁卯木','父母丁巳火',3,6]
-      if(yao=='火泽睽') return ['父母己巳火','兄弟己未土','子孙己酉金','兄弟丁丑土','官鬼丁卯木','父母丁巳火',4,1]
-      if(yao=='天泽履') return ['兄弟壬戌土','子孙壬申金','父母壬午火','兄弟丁丑土','官鬼丁卯木','父母丁巳火',5,2]
-      if(yao=='风泽中孚') return ['官鬼辛卯木','父母辛巳火','兄弟辛未土','兄弟丁丑土','官鬼丁卯木','父母丁巳火',4,1]
-      if(yao=='风山渐') return ['官鬼辛卯木','父母辛巳火','兄弟辛未土','子孙丙申金','父母丙午火','兄弟丙辰土',3,6]
+      if(yao=='艮为山') return ['官鬼寅木','妻财子水','兄弟戌土','子孙申金','父母午火','兄弟辰土',6,3]
+      if(yao=='山火贲') return ['官鬼寅木','妻财子水','兄弟戌土','妻财亥水','兄弟丑土','官鬼卯木',1,4]
+      if(yao=='山天大畜') return ['官鬼寅木','妻财子水','兄弟戌土','兄弟辰土','官鬼寅木','妻财子水',2,5]
+      if(yao=='山泽损') return ['官鬼寅木','妻财子水','兄弟戌土','兄弟丑土','官鬼卯木','父母巳火',3,6]
+      if(yao=='火泽睽') return ['父母巳火','兄弟未土','子孙酉金','兄弟丑土','官鬼卯木','父母巳火',4,1]
+      if(yao=='天泽履') return ['兄弟戌土','子孙申金','父母午火','兄弟丑土','官鬼卯木','父母巳火',5,2]
+      if(yao=='风泽中孚') return ['官辛卯木','父母巳火','兄弟未土','兄弟丑土','官鬼卯木','父母巳火',4,1]
+      if(yao=='风山渐') return ['官鬼卯木','父母巳火','兄弟未土','子孙申金','父母午火','兄弟辰土',3,6]
       
-      if(yao=='坤为地') return ['子孙癸酉金','妻财癸亥水','兄弟癸丑土','官鬼乙卯木','父母乙巳火','兄弟乙未土',6,3]
-      if(yao=='地雷复') return ['子孙癸酉金','妻财癸亥水','兄弟癸丑土','兄弟庚辰土','官鬼庚寅木','妻财庚子水',1,4]
-      if(yao=='地泽临') return ['子孙癸酉金','妻财癸亥水','兄弟癸丑土','兄弟丁丑土','官鬼丁卯木','父母丁巳火',2,5]
-      if(yao=='地天泰') return ['子孙癸酉金','妻财癸亥水','兄弟癸丑土','兄弟甲辰土','官鬼甲寅木','妻财甲子水',3,6]
-      if(yao=='雷天大壮') return ['兄弟庚戌土','子孙庚申金','父母庚午火','兄弟甲辰土','官鬼甲寅木','妻财甲子水',4,1]
-      if(yao=='泽天夬') return ['兄弟丁未土','子孙丁酉金','妻财丁亥水','兄弟甲辰土','官鬼甲寅木','妻财甲子水',5,2]
-      if(yao=='水天需') return ['妻财戊子水','兄弟戊戌土','子孙戊申金','兄弟甲辰土','官鬼甲寅木','妻财甲子水',4,1]
-      if(yao=='水地比') return ['妻财戊子水','兄弟戊戌土','子孙戊申金','官鬼乙卯木','父母乙巳火','兄弟乙未土',3,6] 
+      if(yao=='坤为地') return ['子孙酉金','妻财亥水','兄弟丑土','官鬼卯木','父母巳火','兄弟未土',6,3]
+      if(yao=='地雷复') return ['子孙酉金','妻财亥水','兄弟丑土','兄弟辰土','官鬼寅木','妻财子水',1,4]
+      if(yao=='地泽临') return ['子孙酉金','妻财亥水','兄弟丑土','兄弟丑土','官鬼卯木','父母巳火',2,5]
+      if(yao=='地天泰') return ['子孙酉金','妻财亥水','兄弟丑土','兄弟辰土','官鬼寅木','妻财子水',3,6]
+      if(yao=='雷天大壮') return ['兄弟戌土','子孙申金','父母午火','兄弟辰土','官鬼寅木','妻财子水',4,1]
+      if(yao=='泽天夬') return ['兄弟未土','子孙酉金','妻财亥水','兄弟辰土','官鬼寅木','妻财子水',5,2]
+      if(yao=='水天需') return ['妻财子水','兄弟戌土','子孙申金','兄弟辰土','官鬼寅木','妻财子水',4,1]
+      if(yao=='水地比') return ['妻财子水','兄弟戌土','子孙申金','官鬼卯木','父母巳火','兄弟未土',3,6] 
     }
 
     //自己 土   别人 火  (生自己，克自己，自己生别人，自己克别人)  获取六爻的六亲
@@ -959,7 +971,7 @@ layui.use(['form', 'laydate','layer'], function(){
     $("#nianzhu").html(this.ng+this.nz);
     $("#yuerizhu").html(this.yg+this.yz+"(<a id='yuelin' href='javascript:void(0);'></a>) "+this.rg+this.rz+"(<a id='rilin' href='javascript:void(0);'></a>) ");
     $("#shizhu").html(this.sg+this.sz);
-    $("#xunkong").html("(旬空 "+this.xk+")");
+    $("#xunkong").html("[旬空 "+this.xk+"]");
     layer.closeAll();
     $('#yaowei').show();
 
@@ -1000,7 +1012,7 @@ var curShenSha ={
   };
   if(this.rg=="甲"){
   for(var i=0;i<zhuLiuYao.length;i++){ 
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='丑' || zhuLiuYaoDizhi=='未'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1017,7 +1029,7 @@ var curShenSha ={
   }
   if(this.rg=="乙"){  
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='子' || zhuLiuYaoDizhi=='申'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1034,7 +1046,7 @@ var curShenSha ={
   }
   if(this.rg=="丙"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='亥' || zhuLiuYaoDizhi=='酉'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1051,7 +1063,7 @@ var curShenSha ={
   }
   if(this.rg=="丁"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='亥' || zhuLiuYaoDizhi=='酉'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1068,7 +1080,7 @@ var curShenSha ={
   }
   if(this.rg=="戊"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='丑' || zhuLiuYaoDizhi=='未'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1085,7 +1097,7 @@ var curShenSha ={
   }
   if(this.rg=="己"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='子' || zhuLiuYaoDizhi=='申'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1102,7 +1114,7 @@ var curShenSha ={
   }
   if(this.rg=="庚"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='午' || zhuLiuYaoDizhi=='寅'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1119,7 +1131,7 @@ var curShenSha ={
   }
   if(this.rg=="辛"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='午' || zhuLiuYaoDizhi=='寅'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1136,7 +1148,7 @@ var curShenSha ={
   }
   if(this.rg=="壬"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='卯' || zhuLiuYaoDizhi=='巳'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1153,7 +1165,7 @@ var curShenSha ={
   }
   if(this.rg=="癸"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";
     if(zhuLiuYaoDizhi=='卯' || zhuLiuYaoDizhi=='巳'){
       curShenSha["贵人"] = curShenSha["贵人"]+zhuLiuYaoDizhi; 
     }
@@ -1172,7 +1184,7 @@ var curShenSha ={
   
   if(this.rz=="申" || this.rz=="子" || this.rz=="辰"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):"";  
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):"";  
     if(zhuLiuYaoDizhi=='寅'){
       curShenSha["驿马"] = curShenSha["驿马"]+zhuLiuYaoDizhi; 
     } 
@@ -1198,7 +1210,7 @@ var curShenSha ={
   }
   if(this.rz=="巳" || this.rz=="酉" || this.rz=="丑"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):""; 
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):""; 
     if(zhuLiuYaoDizhi=='亥'){
       curShenSha["驿马"] = curShenSha["驿马"]+zhuLiuYaoDizhi; 
     } 
@@ -1224,7 +1236,7 @@ var curShenSha ={
   }
   if(this.rz=="寅" || this.rz=="午" || this.rz=="戌"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):""; 
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):""; 
     if(zhuLiuYaoDizhi=='申'){
       curShenSha["驿马"] = curShenSha["驿马"]+zhuLiuYaoDizhi; 
     } 
@@ -1250,7 +1262,7 @@ var curShenSha ={
   }
   if(this.rz=="亥" || this.rz=="卯" || this.rz=="未"){
   for(var i=0;i<zhuLiuYao.length;i++){
-    var zhuLiuYaoDizhi = zhuLiuYao[i].length>4?zhuLiuYao[i].substring(3,4):""; 
+    var zhuLiuYaoDizhi = zhuLiuYao[i].length>3?zhuLiuYao[i].substring(2,3):""; 
     if(zhuLiuYaoDizhi=='巳'){
       curShenSha["驿马"] = curShenSha["驿马"]+zhuLiuYaoDizhi; 
     } 
@@ -1279,7 +1291,7 @@ var curShenSha ={
   var dizhi = ["寅","卯","辰","巳","午","未","申","酉","戌","亥","子","丑"];
   
   for(var j=0;j<zhuLiuYao.length;j++){
-    var zhuLiuYaoDizhi = zhuLiuYao[j].length>4?zhuLiuYao[j].substring(3,4):""; 
+    var zhuLiuYaoDizhi = zhuLiuYao[j].length>3?zhuLiuYao[j].substring(2,3):""; 
     if(this.yz=="寅" ){ 
         if(zhuLiuYaoDizhi=='丑'){
           curShenSha["天医"] = curShenSha["天医"]+zhuLiuYaoDizhi; 
@@ -1293,7 +1305,7 @@ var curShenSha ={
   
   if(this.yz=="寅" || this.yz=="卯" || this.yz=="辰"){
     for(var j=0;j<zhuLiuYao.length;j++){
-      var zhuLiuYaoDizhi = zhuLiuYao[j].length>4?zhuLiuYao[j].substring(3,4):""; 
+      var zhuLiuYaoDizhi = zhuLiuYao[j].length>3?zhuLiuYao[j].substring(2,3):""; 
       if(zhuLiuYaoDizhi=='戌'){
         curShenSha["天喜"] = curShenSha["天喜"]+zhuLiuYaoDizhi; 
       }  
@@ -1301,7 +1313,7 @@ var curShenSha ={
   }
   if(this.yz=="巳" || this.yz=="午" || this.yz=="未"){
     for(var j=0;j<zhuLiuYao.length;j++){
-      var zhuLiuYaoDizhi = zhuLiuYao[j].length>4?zhuLiuYao[j].substring(3,4):""; 
+      var zhuLiuYaoDizhi = zhuLiuYao[j].length>3?zhuLiuYao[j].substring(2,3):""; 
       if(zhuLiuYaoDizhi=='丑'){
         curShenSha["天喜"] = curShenSha["天喜"]+zhuLiuYaoDizhi; 
       }  
@@ -1309,7 +1321,7 @@ var curShenSha ={
   }
   if(this.yz=="申" || this.yz=="酉" || this.yz=="戌"){
     for(var j=0;j<zhuLiuYao.length;j++){
-      var zhuLiuYaoDizhi = zhuLiuYao[j].length>4?zhuLiuYao[j].substring(3,4):""; 
+      var zhuLiuYaoDizhi = zhuLiuYao[j].length>3?zhuLiuYao[j].substring(2,3):""; 
       if(zhuLiuYaoDizhi=='辰'){
         curShenSha["天喜"] = curShenSha["天喜"]+zhuLiuYaoDizhi; 
       }  
@@ -1317,7 +1329,7 @@ var curShenSha ={
   }
   if(this.yz=="亥" || this.yz=="子" || this.yz=="丑"){
     for(var j=0;j<zhuLiuYao.length;j++){
-      var zhuLiuYaoDizhi = zhuLiuYao[j].length>4?zhuLiuYao[j].substring(3,4):""; 
+      var zhuLiuYaoDizhi = zhuLiuYao[j].length>3?zhuLiuYao[j].substring(2,3):""; 
       if(zhuLiuYaoDizhi=='未'){
         curShenSha["天喜"] = curShenSha["天喜"]+zhuLiuYaoDizhi; 
       }  
@@ -1330,7 +1342,7 @@ var curShenSha ={
   
   if(this.rg=="甲"){
   for(var i=0;i<fuLiuYao.length;i++){ 
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='丑' || fuLiuYaoDizhi=='未'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1347,7 +1359,7 @@ var curShenSha ={
   }
   if(this.rg=="乙"){  
   for(var i=0;i<fuLiuYao.length;i++){
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='子' || fuLiuYaoDizhi=='申'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1364,7 +1376,7 @@ var curShenSha ={
   }
   if(this.rg=="丙"){
   for(var i=0;i<fuLiuYao.length;i++){
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='亥' || fuLiuYaoDizhi=='酉'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1381,7 +1393,7 @@ var curShenSha ={
   }
   if(this.rg=="丁"){
   for(var i=0;i<fuLiuYao.length;i++){
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='亥' || fuLiuYaoDizhi=='酉'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1398,7 +1410,7 @@ var curShenSha ={
   }
   if(this.rg=="戊"){
   for(var i=0;i<fuLiuYao.length;i++){
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='丑' || fuLiuYaoDizhi=='未'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1415,7 +1427,7 @@ var curShenSha ={
   }
   if(this.rg=="己"){
   for(var i=0;i<fuLiuYao.length;i++){
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='子' || fuLiuYaoDizhi=='申'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1432,7 +1444,7 @@ var curShenSha ={
   }
   if(this.rg=="庚"){
   for(var i=0;i<fuLiuYao.length;i++){
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='午' || fuLiuYaoDizhi=='寅'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1449,7 +1461,7 @@ var curShenSha ={
   }
   if(this.rg=="辛"){
   for(var i=0;i<fuLiuYao.length;i++){
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='午' || fuLiuYaoDizhi=='寅'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1466,7 +1478,7 @@ var curShenSha ={
   }
   if(this.rg=="壬"){
   for(var i=0;i<fuLiuYao.length;i++){
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='卯' || fuLiuYaoDizhi=='巳'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1483,7 +1495,7 @@ var curShenSha ={
   }
   if(this.rg=="癸"){
   for(var i=0;i<fuLiuYao.length;i++){
-    var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):"";
+    var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):"";
     if(fuLiuYaoDizhi=='卯' || fuLiuYaoDizhi=='巳'){
       curShenSha["贵人"] = curShenSha["贵人"]+fuLiuYaoDizhi; 
     }
@@ -1501,7 +1513,7 @@ var curShenSha ={
   
   if(this.rz=="申" || this.rz=="子" || this.rz=="辰"){
     for(var i=0;i<fuLiuYao.length;i++){
-      var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):""; 
+      var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):""; 
       if(fuLiuYaoDizhi=='寅'){
         curShenSha["驿马"] = curShenSha["驿马"]+fuLiuYaoDizhi; 
       } 
@@ -1527,7 +1539,7 @@ var curShenSha ={
   }
   if(this.rz=="巳" || this.rz=="酉" || this.rz=="丑"){
     for(var i=0;i<fuLiuYao.length;i++){
-      var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):""; 
+      var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):""; 
       if(fuLiuYaoDizhi=='亥'){
         curShenSha["驿马"] = curShenSha["驿马"]+fuLiuYaoDizhi; 
       } 
@@ -1553,7 +1565,7 @@ var curShenSha ={
   }
   if(this.rz=="寅" || this.rz=="午" || this.rz=="戌"){
     for(var i=0;i<fuLiuYao.length;i++){
-      var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):""; 
+      var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):""; 
       if(fuLiuYaoDizhi=='申'){
         curShenSha["驿马"] = curShenSha["驿马"]+fuLiuYaoDizhi; 
       } 
@@ -1579,7 +1591,7 @@ var curShenSha ={
   }
   if(this.rz=="亥" || this.rz=="卯" || this.rz=="未"){
     for(var i=0;i<fuLiuYao.length;i++){
-      var fuLiuYaoDizhi = fuLiuYao[i].length>4?fuLiuYao[i].substring(3,4):""; 
+      var fuLiuYaoDizhi = fuLiuYao[i].length>3?fuLiuYao[i].substring(2,3):""; 
       if(fuLiuYaoDizhi=='巳'){
         curShenSha["驿马"] = curShenSha["驿马"]+fuLiuYaoDizhi; 
       } 
@@ -1606,7 +1618,7 @@ var curShenSha ={
    
 
   for(var j=0;j<fuLiuYao.length;j++){
-    var zhuLiuYaoDizhi = fuLiuYao[j].length>4?fuLiuYao[j].substring(3,4):""; 
+    var zhuLiuYaoDizhi = fuLiuYao[j].length>3?fuLiuYao[j].substring(2,3):""; 
     if(this.yz=="寅" ){ 
         if(zhuLiuYaoDizhi=='丑'){
           curShenSha["天医"] = curShenSha["天医"]+zhuLiuYaoDizhi; 
@@ -1621,7 +1633,7 @@ var curShenSha ={
   
   if(this.yz=="寅" || this.yz=="卯" || this.yz=="辰"){
     for(var j=0;j<fuLiuYao.length;j++){
-      var fuLiuYaoDizhi = fuLiuYao[j].length>4?fuLiuYao[j].substring(3,4):""; 
+      var fuLiuYaoDizhi = fuLiuYao[j].length>3?fuLiuYao[j].substring(2,3):""; 
       if(fuLiuYaoDizhi=='戌'){
         curShenSha["天喜"] = curShenSha["天喜"]+fuLiuYaoDizhi; 
       }  
@@ -1629,7 +1641,7 @@ var curShenSha ={
   }
   if(this.yz=="巳" || this.yz=="午" || this.yz=="未"){
     for(var j=0;j<fuLiuYao.length;j++){
-      var fuLiuYaoDizhi = fuLiuYao[j].length>4?fuLiuYao[j].substring(3,4):""; 
+      var fuLiuYaoDizhi = fuLiuYao[j].length>3?fuLiuYao[j].substring(2,3):""; 
       if(fuLiuYaoDizhi=='丑'){
         curShenSha["天喜"] = curShenSha["天喜"]+fuLiuYaoDizhi; 
       }  
@@ -1637,7 +1649,7 @@ var curShenSha ={
   }
   if(this.yz=="申" || this.yz=="酉" || this.yz=="戌"){
     for(var j=0;j<fuLiuYao.length;j++){
-      var fuLiuYaoDizhi = fuLiuYao[j].length>4?fuLiuYao[j].substring(3,4):""; 
+      var fuLiuYaoDizhi = fuLiuYao[j].length>3?fuLiuYao[j].substring(2,3):""; 
       if(fuLiuYaoDizhi=='辰'){
         curShenSha["天喜"] = curShenSha["天喜"]+fuLiuYaoDizhi; 
       }  
@@ -1645,7 +1657,7 @@ var curShenSha ={
   }
   if(this.yz=="亥" || this.yz=="子" || this.yz=="丑"){
     for(var j=0;j<fuLiuYao.length;j++){
-      var fuLiuYaoDizhi = fuLiuYao[j].length>4?fuLiuYao[j].substring(3,4):""; 
+      var fuLiuYaoDizhi = fuLiuYao[j].length>3?fuLiuYao[j].substring(2,3):""; 
       if(fuLiuYaoDizhi=='未'){
         curShenSha["天喜"] = curShenSha["天喜"]+fuLiuYaoDizhi; 
       }  
@@ -1654,7 +1666,7 @@ var curShenSha ={
    
   if(this.rg=="甲"){
     for(var i in fuyaowei){  
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='丑' || fuyaoweiDizhi=='未'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1671,7 +1683,7 @@ var curShenSha ={
   }
   if(this.rg=="乙"){  
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='子' || fuyaoweiDizhi=='申'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1688,7 +1700,7 @@ var curShenSha ={
   }
   if(this.rg=="丙"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='亥' || fuyaoweiDizhi=='酉'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1705,7 +1717,7 @@ var curShenSha ={
   }
   if(this.rg=="丁"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='亥' || fuyaoweiDizhi=='酉'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1722,7 +1734,7 @@ var curShenSha ={
   }
   if(this.rg=="戊"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='丑' || fuyaoweiDizhi=='未'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1739,7 +1751,7 @@ var curShenSha ={
   }
   if(this.rg=="己"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='子' || fuyaoweiDizhi=='申'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1756,7 +1768,7 @@ var curShenSha ={
   }
   if(this.rg=="庚"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='午' || fuyaoweiDizhi=='寅'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1773,7 +1785,7 @@ var curShenSha ={
   }
   if(this.rg=="辛"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='午' || fuyaoweiDizhi=='寅'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1790,7 +1802,7 @@ var curShenSha ={
   }
   if(this.rg=="壬"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='卯' || fuyaoweiDizhi=='巳'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1807,7 +1819,7 @@ var curShenSha ={
   }
   if(this.rg=="癸"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):"";
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):"";
       if(fuyaoweiDizhi=='卯' || fuyaoweiDizhi=='巳'){
         curShenSha["贵人"] = curShenSha["贵人"]+fuyaoweiDizhi; 
       }
@@ -1825,7 +1837,7 @@ var curShenSha ={
    
   if(this.rz=="申" || this.rz=="子" || this.rz=="辰"){ 
     for(var i in fuyaowei){  
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):""; 
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):""; 
       if(fuyaoweiDizhi=='寅'){
         curShenSha["驿马"] = curShenSha["驿马"]+fuyaoweiDizhi; 
       } 
@@ -1851,7 +1863,7 @@ var curShenSha ={
   }
   if(this.rz=="巳" || this.rz=="酉" || this.rz=="丑"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):""; 
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):""; 
       if(fuyaoweiDizhi=='亥'){
         curShenSha["驿马"] = curShenSha["驿马"]+fuyaoweiDizhi; 
       } 
@@ -1877,7 +1889,7 @@ var curShenSha ={
   }
   if(this.rz=="寅" || this.rz=="午" || this.rz=="戌"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):""; 
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):""; 
       if(fuyaoweiDizhi=='申'){
         curShenSha["驿马"] = curShenSha["驿马"]+fuyaoweiDizhi; 
       } 
@@ -1903,7 +1915,7 @@ var curShenSha ={
   }
   if(this.rz=="亥" || this.rz=="卯" || this.rz=="未"){
     for(var i in fuyaowei){
-      var fuyaoweiDizhi = fuyaowei[i][1].length>4?fuyaowei[i][1].substring(3,4):""; 
+      var fuyaoweiDizhi = fuyaowei[i][1].length>3?fuyaowei[i][1].substring(2,3):""; 
       if(fuyaoweiDizhi=='巳'){
         curShenSha["驿马"] = curShenSha["驿马"]+fuyaoweiDizhi; 
       } 
@@ -1930,7 +1942,7 @@ var curShenSha ={
   
 
     for(var p in fuyaowei){
-      var zhuLiuYaoDizhi = fuyaowei[p][1].length>4?fuyaowei[p][1].substring(3,4):""; 
+      var zhuLiuYaoDizhi = fuyaowei[p][1].length>3?fuyaowei[p][1].substring(2,3):""; 
       if(this.yz=="寅" ){ 
           if(zhuLiuYaoDizhi=='丑'){
             curShenSha["天医"] = curShenSha["天医"]+zhuLiuYaoDizhi; 
@@ -1946,7 +1958,7 @@ var curShenSha ={
   
     if(this.yz=="寅" || this.yz=="卯" || this.yz=="辰"){
       for(var j=0;j<fuyaowei.length;j++){
-        var fuyaoweiDizhi = fuyaowei[j].length>4?fuyaowei[j].substring(3,4):""; 
+        var fuyaoweiDizhi = fuyaowei[j].length>3?fuyaowei[j].substring(2,3):""; 
         if(fuyaoweiDizhi=='戌'){
           curShenSha["天喜"] = curShenSha["天喜"]+fuyaoweiDizhi; 
         }  
@@ -1954,7 +1966,7 @@ var curShenSha ={
     }
     if(this.yz=="巳" || this.yz=="午" || this.yz=="未"){
       for(var j=0;j<fuyaowei.length;j++){
-        var fuyaoweiDizhi = fuyaowei[j].length>4?fuyaowei[j].substring(3,4):""; 
+        var fuyaoweiDizhi = fuyaowei[j].length>3?fuyaowei[j].substring(2,3):""; 
         if(fuyaoweiDizhi=='丑'){
           curShenSha["天喜"] = curShenSha["天喜"]+fuyaoweiDizhi; 
         }  
@@ -1962,7 +1974,7 @@ var curShenSha ={
     }
     if(this.yz=="申" || this.yz=="酉" || this.yz=="戌"){
       for(var j=0;j<fuyaowei.length;j++){
-        var fuyaoweiDizhi = fuyaowei[j].length>4?fuyaowei[j].substring(3,4):""; 
+        var fuyaoweiDizhi = fuyaowei[j].length>3?fuyaowei[j].substring(2,3):""; 
         if(fuyaoweiDizhi=='辰'){
           curShenSha["天喜"] = curShenSha["天喜"]+fuyaoweiDizhi; 
         }  
@@ -1970,7 +1982,7 @@ var curShenSha ={
     }
     if(this.yz=="亥" || this.yz=="子" || this.yz=="丑"){
       for(var j=0;j<fuyaowei.length;j++){
-        var fuyaoweiDizhi = fuyaowei[j].length>4?fuyaowei[j].substring(3,4):""; 
+        var fuyaoweiDizhi = fuyaowei[j].length>3?fuyaowei[j].substring(2,3):""; 
         if(fuyaoweiDizhi=='未'){
           curShenSha["天喜"] = curShenSha["天喜"]+fuyaoweiDizhi; 
         }  
@@ -2055,6 +2067,34 @@ var curShenSha ={
       $("#yongshen").html("(直接定位子孙爻或官鬼爻)");
       $("#zuzhi").show();
     }  
+
+    //静卦没有变爻 
+    if($('#zhuyao').text()==$('#fuyao').text()){
+      $('#fuyao').css('visibility','hidden');
+      $('#liuyao_yaowei_bian').css('visibility','hidden');
+      $('#liuyao_yaotu_bian').css('visibility','hidden');
+      $('#liuyao_shiyin_bian').css('visibility','hidden');
+
+      $('#wuyao_yaowei_bian').css('visibility','hidden');
+      $('#wuyao_yaotu_bian').css('visibility','hidden');
+      $('#wuyao_shiyin_bian').css('visibility','hidden');
+
+      $('#siyao_yaowei_bian').css('visibility','hidden');
+      $('#siyao_yaotu_bian').css('visibility','hidden');
+      $('#siyao_shiyin_bian').css('visibility','hidden');
+
+      $('#sanyao_yaowei_bian').css('visibility','hidden');
+      $('#sanyao_yaotu_bian').css('visibility','hidden');
+      $('#sanyao_shiyin_bian').css('visibility','hidden');
+
+      $('#eryao_yaowei_bian').css('visibility','hidden');
+      $('#eryao_yaotu_bian').css('visibility','hidden');
+      $('#eryao_shiyin_bian').css('visibility','hidden');
+
+      $('#yiyao_yaowei_bian').css('visibility','hidden');
+      $('#yiyao_yaotu_bian').css('visibility','hidden');
+      $('#yiyao_shiyin_bian').css('visibility','hidden');
+    } 
     
     //////////////数据分析//////////////////////////
     //////////////数据分析//////////////////////////

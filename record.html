@@ -67,8 +67,9 @@ var form = layui.form
       yao = localData[i]["yao1"]+localData[i]["yao2"]+localData[i]["yao3"]+localData[i]["yao4"]+localData[i]["yao5"]+localData[i]["yao6"]
       if(localData[i]['remark']==undefined) localData[i]['remark']="";
       if(localData[i]['group']==undefined) localData[i]['group']="未分组";
+      // <a class='mod layui-btn layui-btn-normal layui-btn-xs' href='javascript:void(0);' attr="+i+">批注</a>
       if(localData[i]['group']==fenzu){
-        $("#hjhj").append("<tr><td><a style='color:blue;' href='javascript:void(0);' attr="+i+" class='see'>"+localData[i]["title"]+"</a></td><td>"+localData[i]['datetime']+"</td><td>"+localData[i]['group']+"</td><td><a class='remark layui-btn layui-btn-warm layui-btn-xs' href='javascript:void(0);' attr="+i+">查看</a></td><td><a class='mod layui-btn layui-btn-normal layui-btn-xs' href='javascript:void(0);' attr="+i+">批注</a><a class='del layui-btn layui-btn-danger layui-btn-xs' href='javascript:void(0);' attr="+i+">删除</a></td></tr>");
+        $("#hjhj").append("<tr><td><a style='color:blue;' href='javascript:void(0);' attr="+i+" class='see'>"+localData[i]["title"]+"</a></td><td>"+localData[i]['datetime']+"</td><td>"+localData[i]['group']+"</td><td><a class='remark layui-btn layui-btn-warm layui-btn-xs' href='javascript:void(0);' attr="+i+">查看</a></td><td><a class='del layui-btn layui-btn-danger layui-btn-xs' href='javascript:void(0);' attr="+i+">删除</a></td></tr>");
       }  
     }  
   }  
@@ -288,11 +289,11 @@ var form = layui.form
       var name = prompt("请输入批注", localData[index]["remark"]);
     } 
  
-    if(name!=""){
+    if(name!==""){
         localData[index]["remark"] = name;
         localStorage.setItem("data",JSON.stringify(localData)) 
         layer.msg("更新成功", {icon: 1,time:1000},function(){
-            location.href="./record.html"
+            location.href="./record.html?fenzu="+localData[index]["group"]
       });
     }
     
@@ -308,6 +309,7 @@ var form = layui.form
       btn: ['确定','取消'] //按钮
     }, function(){ 
       var linshi = []
+      var group = localData[index]["group"] 
       for(var i=0;i<localData.length;i++){
         if(i!=index){
           linshi.push(localData[i])
@@ -315,7 +317,7 @@ var form = layui.form
       }  
       localStorage.setItem("data",JSON.stringify(linshi)) 
       layer.msg("删除成功", {icon: 1,time:1000},function(){
-          location.href="./record.html"
+         location.href="./record.html?fenzu="+group
        });  
       return false;
     }, function(){

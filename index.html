@@ -151,15 +151,7 @@
 				<br>
 				<b>时间：</b>
 				<span style="display:inline-block;"  id="theTime"></span> 
-				<br>
-				<span>
-					<b>干支：</b>
-					<span id="nianzhu">壬寅 </span>
-					<span id="yuerizhu" style="color:red;font-weight:700">壬寅 癸卯</span>
-					<span id="shizhu">癸丑 </span>
-					<span id="xunkong">(旬空 辰巳)</span>
-				</span>
-				<br>
+				<br> 
 				<span>
 					<b>背面：</b>
 					<span id="beimian"></span> 
@@ -186,14 +178,24 @@
 				   
 				<div style="border-bottom: 1px solid #e8e8e8;text-align:center;margin-top:3px;margin-bottom: 5px"></div>
 
-				<table border="0" style="width: 100%;text-align: left;font-size: 17px;display: none;line-height: 105%;" id="yaowei"> 
+				<span>
+					<b>干支：</b>
+					<!-- <span id="nianzhu">壬寅 </span> -->
+					<span id="yuerizhu" style="color:red;font-weight:700">壬寅 癸卯</span>
+					<!-- <span id="shizhu">癸丑 </span> -->
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="xunkong" style="color:rgb(116, 73, 233);font-weight:700">(旬空 辰巳)</span>
+				</span>
+				<br><br><hr/>
+
+				<table border="0" style="width: 100%;text-align: left;font-size: 17px;display: none;line-height: 105%;" id="yaowei">  
 					<div > 
 						<th>六神</th><th>&nbsp;&nbsp;</th>
 						<th id="zhuyao"></th>
 						<th></th><th></th>
 						<th id="fuyao"></th>
 						<th></th>
-					</div>
+					</div> 
 					<div>
 						<tr>
 							<td id="liuyao_liushen">白虎</td>
@@ -205,14 +207,14 @@
 									</span>  
 							</td>
 							<td id="liuyao_shiyin">&nbsp;世&nbsp;</td>
-							<td id="liuyao_bianyao">&nbsp;&nbsp;</td>
+							<td id="liuyao_bianyao">&nbsp;&nbsp;</td> 
 							<td>
-							  <span id="liuyao_yaowei_bian">官鬼壬申金</span>	
+								<span id="liuyao_yaowei_bian">官鬼壬申金</span>	
 								<span style="font-family: '宋体';font-size:18px;" id="liuyao_yaotu_bian">
 									<img style="height:10px;width:40px;" src="./yinyao.png">
 								</span>
 							</td>
-							<td id="liuyao_shiyin_bian">&nbsp;应&nbsp;</td>
+							<td id="liuyao_shiyin_bian">&nbsp;应&nbsp;</td> 
 						</tr>
 						<tr>
 							<td></td>
@@ -388,7 +390,8 @@
 			</tr> 
 			<tr>
 				<td>批注:</td>
-				<td id="pizhu">  
+				<td>  
+					<textarea id="pizhu" class="comments" rows=25  cols=25 name="pizhu"  onpropertychange= "this.style.posHeight=this.scrollHeight "></textarea> 
 				</td>
 			</tr> 
 	</table> 
@@ -428,6 +431,13 @@
 	<script type="text/javascript">   
 		document.write("<script type='text/javascript' src='./set.js?random="+Math.random()+"'></s"+"cript>");
  </script>
-  
+  <style type="text/css">
+		.comments{
+			width:98%;
+			height: 100%;
+			overflow: auto;
+			word-break:break-all;
+		}
+		</style>
 </body>
 </html>
