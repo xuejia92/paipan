@@ -3048,10 +3048,10 @@ var curShenSha ={
         }
       }
 
-      $("#yingqi").append("应期细节：");
-      for(var i=0;i<jihe["应期细节"].length;i++){
-        $("#yingqi").append(jihe["应期细节"][i]+"<br>");
-      } 
+      // $("#yingqi").append("应期细节：");
+      // for(var i=0;i<jihe["应期细节"].length;i++){
+      //   $("#yingqi").append(jihe["应期细节"][i]+"<br>");
+      // } 
 
     }
 
