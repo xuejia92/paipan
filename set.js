@@ -3001,7 +3001,7 @@ var curShenSha ={
       }
       $("#jixiong").append("总体："+jihe["用神分析"]["日月组合"]+"<br>");
 
-      $("#jixiong").append("<br>世爻分析：");
+      $("#jixiong").append("世爻分析：");
       for(var i=0;i<jihe["世爻分析"]["日月组合"]["月令"].length;i++){
         $("#jixiong").append(jihe["世爻分析"]["日月组合"]["月令"][i][1]+",");
       }
@@ -3012,46 +3012,52 @@ var curShenSha ={
       $("#jixiong").append("结果："+jihe["世爻分析"]["日月结果"]+"<br>");
  
       if(jihe["动变分析"]["无用动爻"].length>0){
-        $("#jixiong").append("<br>无用动爻：");
+        $("#jixiong").append("<br>无用动爻：<ul>"); 
           for(var i=0;i<jihe["动变分析"]["无用动爻"].length;i++){
-            $("#jixiong").append(jihe["动变分析"]["无用动爻"][i][2]+","+jihe["动变分析"]["无用动爻"][i][1]+"<br>");
+            $("#jixiong").append("<li  style='list-style-type:disc;'>"+jihe["动变分析"]["无用动爻"][i][2]+","+jihe["动变分析"]["无用动爻"][i][1]+"<li>");
           }
+          $("#jixiong").append("</ul>");
       }
       
 
       if(jihe["动变分析"]["结果"].length>0){
-        $("#jixiong").append("<br>动变分析结果：");
+        $("#jixiong").append("<br>动变分析结果：<ul>"); 
         for(var i=0;i<jihe["动变分析"]["结果"].length;i++){
-          $("#jixiong").append(jihe["动变分析"]["结果"][i][2]+","+jihe["动变分析"]["结果"][i][1]+"<br>");
+          $("#jixiong").append("<li  style='list-style-type:disc;'>"+jihe["动变分析"]["结果"][i][2]+","+jihe["动变分析"]["结果"][i][1]+"</li>");
         }
+        $("#jixiong").append("</ul>");
      }
 
 
      if(jihe["暗动"].length>0){
-        $("#jixiong").append("<br>暗动：");
+        $("#jixiong").append("<br>暗动：<ul>");
         for(var i=0;i<jihe["暗动"].length;i++){
-          $("#jixiong").append(jihe["暗动"][i]+"<br>");
+          $("#jixiong").append("<li  style='list-style-type:disc;'>"+jihe["暗动"][i]+"</li>");
         }
+        $("#jixiong").append("</ul>");
       }
 
       if(jihe["三绊"].length>0){
-        $("#jixiong").append("<br>三绊理论：");
+        $("#jixiong").append("<br>三绊理论：<ul>");
         for(var i=0;i<jihe["三绊"].length;i++){
-          $("#jixiong").append(jihe["三绊"][i]+"<br>");
+          $("#jixiong").append("<li  style='list-style-type:disc;'>"+jihe["三绊"][i]+"</li>");
         }
+        $("#jixiong").append("</ul>");
       }
 
       if(jihe["旬空分析"].length>0){
-        $("#jixiong").append("<br>旬空分析：");
+        $("#jixiong").append("<br>旬空分析：<ul>");
         for(var i=0;i<jihe["旬空分析"].length;i++){
-          $("#jixiong").append(jihe["旬空分析"][i]+"<br>");
+          $("#jixiong").append("<li  style='list-style-type:disc;'>"+jihe["旬空分析"][i]+"</li>");
         }
+        $("#jixiong").append("</ul>");
       }
 
-      // $("#yingqi").append("应期细节：");
-      // for(var i=0;i<jihe["应期细节"].length;i++){
-      //   $("#yingqi").append(jihe["应期细节"][i]+"<br>");
-      // } 
+      $("#yingqi").append("应期细节：<ul>");
+      for(var i=0;i<jihe["应期细节"].length;i++){
+        $("#yingqi").append("<li  style='list-style-type:disc;'>"+jihe["应期细节"][i]+"</li>");
+      } 
+      $("#yingqi").append("</ul>");
 
     }
 
