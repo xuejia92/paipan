@@ -2649,19 +2649,26 @@ var curShenSha ={
       }
       for(var key=0;key<jinyao.length;key++){ 
           var jin = jihe[jinyao[key]]["主爻"];
-          var yueri = yueAndRiYao(jin);   
+          var yueri = yueAndRiYao(jin);  
           for(var i=0;i<yueri["日令"].length;i++){
             if(yueri["日令"][i][1]=="日冲"){
-              var yueCount = 0;
-              for(var i=0;i<yueri["月令"].length;i++){
-                yueCount = yueCount+yueri["月令"][i][0];
-              }
-              if(yueCount>=0){
-                jihe["暗动"].push(jin+"静爻得月令趋旺或得月令之气而受日冲，为冲起暗动");
+              var yueCount = 0; 
+              for(var j=0;j<yueri["月令"].length;j++){ 
+                yueCount = yueCount+yueri["月令"][j][0];
               }  
+              if(yueCount>0){
+                jihe["暗动"].push(jin+"静爻得月令趋旺而受日冲，为冲起暗动");
+              }  
+              if((jihe['月令'][1]=='辰' && jin.substring(2,3)=='卯') ||
+                (jihe['月令'][1]=='未' && jin.substring(2,3)=='午') ||
+                (jihe['月令'][1]=='戌' && jin.substring(2,3)=='酉') ||
+                (jihe['月令'][1]=='丑' && jin.substring(2,3)=='子') 
+              ){
+                jihe["暗动"].push(jin+"静爻得月令之气而受日冲，为冲起暗动");
+              } 
               if(xunkong.indexOf(jin.substr(-2,1))!=-1){
                 jihe["暗动"].push(jin+"静爻正处于旬空状态下受日冲，为冲起暗动");
-              } 
+              }  
               for(bk in bianyao){
                 if(bianyao[bk][0].substr(-1,1)+"生"+jin.substr(-1,1)==shengKe(jin.substr(-1,1),bianyao[bk][0].substr(-1,1)) && yueCount<=0){
                   jihe["暗动"].push(jin+"静爻虽在月令休囚，但在受日冲的同时又得动爻来生旺，为冲起暗动，谓之动爻趋旺");
@@ -2945,12 +2952,12 @@ var curShenSha ={
         } 
         //单一判断爻的日月组合旺衰 有需要就用
         // console.log(yueAndRiYao("父母壬申金"))
-
+       
         //动变组合对用神的影响
         jihe = dongBianAndYongShen(jihe);
-
+        
         //暗动 
-        jihe = andong(jihe);
+        jihe = andong(jihe); 
         //静卦分析
         jihe = jinggua(jihe);
 
