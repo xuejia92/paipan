@@ -3021,7 +3021,7 @@ var curShenSha ={
       
 
       if(jihe["动变分析"]["结果"].length>0){
-        $("#jixiong").append("<br>动变分析结果：<ul>"); 
+        $("#jixiong").append("<br>动变分析：<ul>"); 
         for(var i=0;i<jihe["动变分析"]["结果"].length;i++){
           $("#jixiong").append("<li  style='list-style-type:disc;'>"+jihe["动变分析"]["结果"][i][2]+","+jihe["动变分析"]["结果"][i][1]+"</li>");
         }
