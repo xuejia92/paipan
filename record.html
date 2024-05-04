@@ -245,15 +245,14 @@ var form = layui.form
   $('.see').click(function(){
     var index = $(this).attr('attr');
     localData = localStorage.getItem("data")
-    localData = JSON.parse(localData)
-    console.log(localData[index],index)
+    localData = JSON.parse(localData) 
     data = localData[index]
     data['yuerizhi']=data['yuerizhi']==undefined?"":data['yuerizhi']
     data['remark']=data['remark']==undefined?"":data['remark']
     data['group']=data['group']==undefined?"":data['group']
-    location.href = "index.html?leibie=1&title="+data['title']+"&datetime="+data['datetime']+"&yao1="+data['yao1']+"&yao2="+data['yao2']+"&yao3="+data['yao3']+"&yao4="+data['yao4']+"&yao5="+data['yao5']+"&yao6="+data['yao6']+"&yuerizhi="+data['yuerizhi']+"&remark="+data['remark']+"&group="+data['group'];
+    location.href = "index.html?leibie=1&title="+data['title']+"&datetime="+data['datetime']+"&yao1="+data['yao1']+"&yao2="+data['yao2']+"&yao3="+data['yao3']+"&yao4="+data['yao4']+"&yao5="+data['yao5']+"&yao6="+data['yao6']+"&yuerizhi="+data['yuerizhi']+"&group="+data['group'];
   });
-
+  // +"&remark="+data['remark']
   
  
   $(".mod").click(function(){

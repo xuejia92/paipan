@@ -83,7 +83,7 @@ layui.use(['form', 'laydate','layer'], function(){
     // $("#yao4_sl").val(Request["yao4"]); 
     // $("#yao3_sl").val(Request["yao3"]); 
     // $("#yao2_sl").val(Request["yao2"]); 
-    // $("#yao1_sl").val(Request["yao1"]); 
+    // $("#yao1_sl").val(Request["yao1"]);  
 
     form.val('example', {
       "title": Request["title"]  
@@ -97,7 +97,7 @@ layui.use(['form', 'laydate','layer'], function(){
       ,"yao1": Request["yao1"]  
       ,"group": Request["group"]  
       ,"yuerizhi":  typeof(Request["yuerizhi"])!="undefined"?Request["yuerizhi"]:""  
-      ,"remark":  typeof(Request["remark"])!="undefined"?Request["remark"]:""  
+      ,"remark":  ""   
     });
   } 
  
@@ -196,13 +196,24 @@ layui.use(['form', 'laydate','layer'], function(){
     //  yao6=3
      //测试结束 
 
+    localData = localStorage.getItem("data")
+    localData = JSON.parse(localData)
+    index = -1
+    for(var i=0;i<localData.length;i++){
+      if(Request["title"]==localData[i]["title"] &&
+         Request["group"]==localData[i]["group"] &&
+         Request["datetime"]==localData[i]["datetime"] 
+      ){
+         index = i
+      }
+    } 
     $("#yaowei").append()
     $("#title").text(title);
     $("#theTime").text(datetime); 
     $("#fenzu").text(group); 
     $("#beimian").text(yao1+","+yao2+","+yao3+","+yao4+","+yao5+","+yao6); 
     $("#leibie").text(leibie==1?"事态卦":"心态卦");
-    $("#pizhu").html(typeof(Request["remark"])!="undefined"?Request["remark"]:"");
+    $("#pizhu").html(index!=-1?localData[index]["remark"]:"");
 
     //八卦判断 321 654 传的是阴阳1,0
     this.bagua = function(yao){   
