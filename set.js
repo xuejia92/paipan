@@ -199,14 +199,17 @@ layui.use(['form', 'laydate','layer'], function(){
     localData = localStorage.getItem("data")
     localData = JSON.parse(localData)
     index = -1
-    for(var i=0;i<localData.length;i++){
-      if(Request["title"]==localData[i]["title"] &&
-         Request["group"]==localData[i]["group"] &&
-         Request["datetime"]==localData[i]["datetime"] 
-      ){
-         index = i
-      }
-    } 
+    if(localData!=null){
+      for(var i=0;i<localData.length;i++){
+        if(Request["title"]==localData[i]["title"] &&
+           Request["group"]==localData[i]["group"] &&
+           Request["datetime"]==localData[i]["datetime"] 
+        ){
+           index = i
+        }
+      } 
+    }
+    
     $("#yaowei").append()
     $("#title").text(title);
     $("#theTime").text(datetime); 
@@ -2462,21 +2465,21 @@ var curShenSha ={
           }  
           if(dongyaoWuxin+"生"+shiyaoWuxin==shengKe(shiyaoWuxin,dongyaoWuxin)){
             jihe["世爻分析"]["结果"].push([dongyao,"吉","动爻"+dongyao+"生世爻"+shiyao]);  //动变组合对用神的影响
-          } 
-
-          //动变爻生产三合局生用神
-          var bianyaoDizhi = [];
+          }  
+          
+          var bianyaoDizhiTmp = [];
           for(var key in jihe["变爻"]){
-            bianyaoDizhi.push(jihe["变爻"][key][0].substr(-2,1));
-            bianyaoDizhi.push(jihe["变爻"][key][1].substr(-2,1));
-          } 
+            bianyaoDizhiTmp.push(jihe["变爻"][key][0].substr(-2,1));
+            bianyaoDizhiTmp.push(jihe["变爻"][key][1].substr(-2,1));
+          }  
           //爻被动变组合形成三合局来生
-          if(sanhe=sanHeJu(bianyaoDizhi)){
+          if(sanhe=sanHeJu(bianyaoDizhiTmp)){
+            //动变爻生产三合局生用神  
             if(sanhe[0]+"生"+yongshenWuxin==shengKe(yongshenWuxin,sanhe[0])){
               jihe["动变分析"].push([sanhe[1],"吉",sanhe[1]+"三合局生用神"+yongshen]);  //动变组合对用神的影响
             } 
-            if(sanhe[0]+"生"+shiyaoWuxin==shengKe(shiyaoWuxin,sanhe[0])){
-              jihe["世爻分析"]["结果"].push([sanhe[1],"吉",sanhe[1]+"三合局生世爻"+shiyao]);  //动变组合对用神的影响
+            if(sanhe[0]+"生"+shiyaoWuxin==shengKe(shiyaoWuxin,sanhe[0])){ 
+              jihe["动变分析"].push([sanhe[1],"吉",sanhe[1]+"三合局生世爻"+shiyao]);  //动变组合对用神的影响
             } 
           }  
 
@@ -2523,7 +2526,7 @@ var curShenSha ={
               jihe["动变分析"].push([dongyao,"凶","动爻"+dongyao+"克用神"+yongshen]);  //动变组合对用神的影响
             }  
             if(dongyaoWuxin+"克"+shiyaoWuxin==shengKe(shiyaoWuxin,dongyaoWuxin)){
-              jihe["世爻分析"]["结果"].push([dongyao,"凶","动爻"+dongyao+"克世爻"+shiyao]);  //动变组合对用神的影响
+              jihe["动变分析"]["结果"].push([dongyao,"凶","动爻"+dongyao+"克世爻"+shiyao]);  //动变组合对用神的影响
             }  
 
             //爻被动变组合形成三合局来克
@@ -2532,7 +2535,7 @@ var curShenSha ={
                 jihe["动变分析"].push([sanhe[1],"凶",sanhe[1]+"三合局克用神"+yongshen]);  //动变组合对用神的影响
               } 
               if(sanhe[0]+"克"+shiyaoWuxin==shengKe(shiyaoWuxin,sanhe[0])){
-                jihe["世爻分析"]["结果"].push([sanhe[1],"凶",sanhe[1]+"三合局克世爻"+shiyao]);  //动变组合对用神的影响
+                jihe["动变分析"].push([sanhe[1],"凶",sanhe[1]+"三合局克世爻"+shiyao]);  //动变组合对用神的影响
               } 
             } 
 
@@ -2540,9 +2543,10 @@ var curShenSha ={
             if(bianyaoWuxin+"克"+dongyaoWuxin==shengKe(dongyaoWuxin,bianyaoWuxin)){
               jihe["动变分析"].push([dongyao,"凶","变爻"+bianyao+"回头克动爻"+dongyao]);  //动变组合对用神的影响
             }  
-
+            
             //爻动而化退神 
             if(bianyaoWuxin==dongyaoWuxin && dz.indexOf(bianyaoDizhi)<dz.indexOf(dongyaoDizhi)){
+              
               jihe["动变分析"].push([dongyao,"凶","变爻"+bianyao+"化退神"]);  //动变组合对用神的影响
             } 
 
@@ -3033,6 +3037,20 @@ var curShenSha ={
 
       if(jihe["动变分析"]["结果"].length>0){
         $("#jixiong").append("<br>动变分析：<ul>"); 
+ 
+        var newArr = [];
+        arr = jihe["动变分析"]["结果"];
+        for(var i = 0; i < arr.length; i++){  
+          if(newArr.length==0){
+            newArr.push(arr[i])
+            continue;
+          }
+          if(newArr[0].indexOf(arr[i][0]) == -1){
+              newArr.push(arr[i])
+          }
+        } 
+        jihe["动变分析"]["结果"] = newArr;
+
         for(var i=0;i<jihe["动变分析"]["结果"].length;i++){
           $("#jixiong").append("<li  style='list-style-type:disc;'>"+jihe["动变分析"]["结果"][i][2]+","+jihe["动变分析"]["结果"][i][1]+"</li>");
         }
