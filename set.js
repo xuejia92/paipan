@@ -2526,12 +2526,13 @@ var curShenSha ={
               jihe["动变分析"].push([dongyao,"凶","动爻"+dongyao+"克用神"+yongshen]);  //动变组合对用神的影响
             }  
             if(dongyaoWuxin+"克"+shiyaoWuxin==shengKe(shiyaoWuxin,dongyaoWuxin)){
-              jihe["动变分析"]["结果"].push([dongyao,"凶","动爻"+dongyao+"克世爻"+shiyao]);  //动变组合对用神的影响
+              jihe["动变分析"].push([dongyao,"凶","动爻"+dongyao+"克世爻"+shiyao]);  //动变组合对用神的影响
             }  
-
-            //爻被动变组合形成三合局来克
-            if(sanhe=sanHeJu(bianyaoDizhi)){
-              if(sanhe[0]+"克"+yongshenWuxin==shengKe(yongshenWuxin,sanhe[0])){
+            
+            
+            //爻被动变组合形成三合局来克 
+            if(sanhe){   
+              if(sanhe[0]+"克"+yongshenWuxin==shengKe(yongshenWuxin,sanhe[0])){   
                 jihe["动变分析"].push([sanhe[1],"凶",sanhe[1]+"三合局克用神"+yongshen]);  //动变组合对用神的影响
               } 
               if(sanhe[0]+"克"+shiyaoWuxin==shengKe(shiyaoWuxin,sanhe[0])){
@@ -2630,12 +2631,13 @@ var curShenSha ={
       for(key in jihe["动变分析"]["无用动爻"]){
         wuyongDonyao.push(jihe["动变分析"]["无用动爻"][key][0])
       }
-      
+       
       for(key in jihe["动变分析"]){
         if(key=="无用动爻" || key=="结果") continue;  
-        if(wuyongDonyao.indexOf(jihe["动变分析"][key][0])==-1){ 
-          jihe["动变分析"]["结果"].push(jihe["动变分析"][key]);
-        }
+        jihe["动变分析"]["结果"].push(jihe["动变分析"][key]);
+        // if(wuyongDonyao.indexOf(jihe["动变分析"][key][0])==-1){ 
+          
+        // }
       } 
       return jihe;
     }
@@ -2692,9 +2694,9 @@ var curShenSha ={
             }  
           } 
       }
-      //问事若用神得旺相，同时世爻若受日令冲动，谓之用趋世兴。意为用神得旺而令世爻受冲兴起暗动。
-      if(bianyao.length==0){
-        if(jihe["用神分析"]["日月组合"]=="旺"){
+      //问事若用神得旺相，同时世爻若受日令冲动，谓之用趋世兴。意为用神得旺而令世爻受冲兴起暗动。 
+      if(JSON.stringify(bianyao)=='{}'){   
+        if(jihe["用神分析"]["日令"][0][0]+jihe["用神分析"]["月令"][0][0]>0){  
           for(var i=0;i<jihe["世爻分析"]["日月组合"]["日令"].length;i++){
             if(jihe["世爻分析"]["日月组合"]["日令"][i][1]=="日冲"){
               jihe["暗动"].push(jihe["主世"][0]+"用神得旺相，同时世爻若受日令冲动，谓之用趋世兴。意为用神得旺而令世爻受冲兴起暗动。");
