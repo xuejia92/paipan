@@ -2431,13 +2431,24 @@ var curShenSha ={
       if(yueLinFen+riLinFen<0) result["日月组合"] = "衰";
       return result;
     }
-
-    //三合局判断
+ 
+    /**
+     * 三合局判断函数
+     * 根据传入的地支组合判断是否形成三合局，并返回相应的五行属性、三合局名称及主导地支。
+     * 
+     * @param {string} dizhiZu 地支组合，由多个地支字符组成的字符串。
+     * @return {Array|boolean} 如果形成三合局，则返回一个包含五行属性、三合局名称及主导地支的数组；否则返回false。
+     */
     function sanHeJu(dizhiZu){
+      // 判断是否形成水局
       if(dizhiZu.indexOf("申")!=-1 && dizhiZu.indexOf("子") && dizhiZu.indexOf("辰")!=-1) return ["水","申子辰合水局","子"];
+      // 判断是否形成火局
       if(dizhiZu.indexOf("寅")!=-1 && dizhiZu.indexOf("午") && dizhiZu.indexOf("戌")!=-1) return ["火","寅午戌合火局","午"];
+      // 判断是否形成木局
       if(dizhiZu.indexOf("亥")!=-1 && dizhiZu.indexOf("卯") && dizhiZu.indexOf("未")!=-1) return ["木","亥卯未合木局","卯"];
+      // 判断是否形成金局
       if(dizhiZu.indexOf("丑")!=-1 && dizhiZu.indexOf("酉") && dizhiZu.indexOf("巳")!=-1) return ["金","巳酉丑合金局","酉"];
+      // 如果没有形成任何三合局，返回false
       return false;
     }
 
@@ -2527,8 +2538,7 @@ var curShenSha ={
             }  
             if(dongyaoWuxin+"克"+shiyaoWuxin==shengKe(shiyaoWuxin,dongyaoWuxin)){
               jihe["动变分析"].push([dongyao,"凶","动爻"+dongyao+"克世爻"+shiyao]);  //动变组合对用神的影响
-            }  
-            
+            }   
             
             //爻被动变组合形成三合局来克 
             if(sanhe){   
