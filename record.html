@@ -27,20 +27,21 @@
   </div>
   <br>
   <br>
-<div>
-    <div id="group1" style="float: left; width: 25%; background: red; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">自占</div>
+<div id="table">
+    <!-- <div id="group1" style="float: left; width: 25%; background: red; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">自占</div>
     <div id="group2" style="float: left; width: 25%; background: grey; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">他占</div>
     <div id="group3" style="float: left; width: 25%; background: grey; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">220案例</div>
     <div id="group4" style="float: left; width: 25%; background: grey; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">未分组</div> 
     <div id="group5" style="float: left; width: 25%; background: grey; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">老陈说易案例</div>
     <div id="group6" style="float: left; width: 25%; background: grey; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">网友案例</div>
     <div id="group7" style="float: left; width: 25%; background: grey; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">案例</div>
-    <div id="group8" style="float: left; width: 25%; background: grey; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">古筮真诠案例</div> 
+    <div id="group8" style="float: left; width: 25%; background: grey; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">古筮真诠案例</div>  -->
 </div> 
 <br><br>
 <table  border="1" style="    width: 100%; text-align: center;line-height: 170%;" id="hjhj"> 
   <th>占卜标题</th><th>时间</th><th>分组</th><th>批注</th> <th>操作</th>
 </table> 
+<script src="./group.js"></script>
 <script> 
 function GetRequest() {
       var url = location.search; //获取url中"?"符后的字串
@@ -73,174 +74,19 @@ var form = layui.form
       }  
     }  
   }  
-  if(fenzu=="自占"){
-    $("#group1").css("background","red");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey"); 
-  }
-  if(fenzu=="他占"){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","red");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-  }
-  if(fenzu=="220案例"){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","red");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-  }
-  if(fenzu=="未分组"){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","red");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-  }
-  if(fenzu=="老陈说易案例"){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","red");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-  }
-  if(fenzu=="网友案例"){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","red");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-  }
-  if(fenzu=="案例"){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","red");
-    $("#group8").css("background","grey");
-  }
-  if(fenzu=="古筮真诠案例"){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","red");
-  }
-  $("#group1").click(function(){
-    $("#group1").css("background","red");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey"); 
-    location.href="./record.html"+"?fenzu=自占";
-  });
-  $("#group2").click(function(){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","red");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-    location.href="./record.html"+"?fenzu=他占";
-  });
-  $("#group3").click(function(){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","red");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-    location.href="./record.html"+"?fenzu=220案例";
-  });
-  $("#group4").click(function(){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","red");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-    location.href="./record.html"+"?fenzu=未分组";
-  });
-  $("#group5").click(function(){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","red");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-    location.href="./record.html"+"?fenzu=老陈说易案例";
-  });
-  $("#group6").click(function(){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","red");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","grey");
-    location.href="./record.html"+"?fenzu=网友案例";
-  });
-  $("#group7").click(function(){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","red");
-    $("#group8").css("background","grey");
-    location.href="./record.html"+"?fenzu=案例";
-  });
-  $("#group8").click(function(){
-    $("#group1").css("background","grey");
-    $("#group2").css("background","grey");
-    $("#group3").css("background","grey");
-    $("#group4").css("background","grey");
-    $("#group5").css("background","grey");
-    $("#group6").css("background","grey");
-    $("#group7").css("background","grey");
-    $("#group8").css("background","red");
-    location.href="./record.html"+"?fenzu=古筮真诠案例";
-  }); 
+ 
+  //循环groupList对象  分组 
+  for(var i=0;i<groupList.length;i++){  
+    $("#table").append('<div id="group'+(i+1)+'" style="float: left; width: 25%; background: grey; text-align: center;height: 30px;font-size: 22px;font-weight: bold;">'+groupList[i]+'</div> ');
+    if(groupList[i]==fenzu){
+      $("#group"+(i+1)).css("background","red");
+    }
+    $('#group'+(i+1)).click(function(){  
+      var group = $(this).text(); 
+      location.href="./record.html"+"?fenzu="+group;
+    }); 
+  }  
+   
 
   $('.see').click(function(){
     var index = $(this).attr('attr');
@@ -388,8 +234,18 @@ var form = layui.form
         return;
      } 
      var blob = new Blob([content], {type: "text/plain;charset=utf-8"});
-     saveAs(blob, "save.txt");
- });
+     var currentDate = new Date(); 
+      // 获取年、月、日、时、分、秒
+      var year = currentDate.getFullYear();
+      var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // 月份从0开始，需要加1
+      var day = ('0' + currentDate.getDate()).slice(-2);
+      var hours = ('0' + currentDate.getHours()).slice(-2);
+      var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+      var seconds = ('0' + currentDate.getSeconds()).slice(-2); 
+      // 格式化时间字符串
+      var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds; 
+      saveAs(blob, "save-" + formattedTime + ".txt"); 
+ }); 
 </script>
 </body>
 </html>

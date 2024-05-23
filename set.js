@@ -183,6 +183,23 @@ layui.use(['form', 'laydate','layer'], function(){
       jsonData=JSON.stringify(arrayObj) 
       localStorage.setItem("data", jsonData); 
       layer.msg("保存成功", {icon: 1,time:1000},function(){
+        var content =localStorage.getItem("data");    
+        if(content==null) {
+            layer.msg("没有数据", {icon: 5});
+            return;
+        } 
+        var blob = new Blob([content], {type: "text/plain;charset=utf-8"});
+        var currentDate = new Date(); 
+        // 获取年、月、日、时、分、秒
+        var year = currentDate.getFullYear();
+        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // 月份从0开始，需要加1
+        var day = ('0' + currentDate.getDate()).slice(-2);
+        var hours = ('0' + currentDate.getHours()).slice(-2);
+        var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+        var seconds = ('0' + currentDate.getSeconds()).slice(-2); 
+        // 格式化时间字符串
+        var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds; 
+        saveAs(blob, "save-" + formattedTime + ".txt");
         // location.href="./record.html?fenzu="+group
      });   
     }); 
